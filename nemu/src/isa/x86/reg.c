@@ -44,7 +44,7 @@ void isa_reg_display() {
 		/*pa1.1*/
 		int i;
 		for(i = R_EAX;i <= R_EDI;i ++){
-				printf("%s: %x  %u\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
+				printf("%s:  0x%8x  %u\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
 		}
 }
 

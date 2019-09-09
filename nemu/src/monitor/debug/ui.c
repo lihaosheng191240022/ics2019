@@ -106,13 +106,37 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_si(char *args){
-		/*printf("this is cmd_si\n");*/
 		cpu_exec(1);
 		return 0;
 }
 static int cmd_x(char *args){
 		/*printf("this is cmd_x\n");*/
 		
+  char *arg = strtok(NULL, " ");
+
+		if (arg == NULL) {
+    /* no argument given:show warning information*/
+				printf("invalid argument: input x <num> <addr>\n");
+				return 0;
+		}
+		else{
+				uint32_t num;
+				if(sscanf(arg,"%u",&num)!=1){
+						printf("invalid argument: input x <num> <addr>\n");
+						return 0;
+				}
+				arg = strtok(NULL, " ");
+				uint32_t addr;
+				if(sscanf(arg,"%x",&addr)!=1){
+						printf("invalid argument: input x <num> <addr>\n");
+						return 0;
+				}
+				for(int i=0;i<num;i++){
+						printf("0x%8x:  %8x\n",addr+4*i,(unsigned)(pmem[addr+4*i]));
+				}
+
+				//printf("Unknown command '%s'\n", arg);
+		}
 		return 0;
 }
 
