@@ -132,7 +132,12 @@ static int cmd_x(char *args){
 						return 0;
 				}
 				for(int i=0;i<num;i++){
-						printf("0x%8x:  %8x\n",addr+4*i,(unsigned)(pmem[addr+4*i]));
+						//printf("0x%08x:  %08x\n",addr+4*i,*((unsigned *)(&pmem[addr+4*i])));
+						printf("0x%08x:  ",addr+4*i);
+						for(int j=0;j<4;j++){
+								printf("%02x ",*(unsigned char *)(&pmem[addr+4*i+j]));
+						}
+						printf("\n");
 				}
 
 				//printf("Unknown command '%s'\n", arg);
