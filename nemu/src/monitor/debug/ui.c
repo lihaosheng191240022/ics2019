@@ -38,6 +38,12 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+/*My commands begin*/
+static int cmd_info(char *args);
+static int cmd_si(char *args);
+static int cmd_x(char *args);
+/*My commands end*/
+
 static struct {
   char *name;
   char *description;
@@ -46,9 +52,10 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
   /* TODO: Add more commands */
-
+  { "info", "Show state of register/watchpoint", cmd_info },
+  { "si", "Step one instruction", cmd_si },
+	{ "x", "Print the content of memory(pmem)", cmd_x},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -74,6 +81,19 @@ static int cmd_help(char *args) {
     printf("Unknown command '%s'\n", arg);
   }
   return 0;
+}
+
+static int cmd_info(char *args){
+		printf("this is cmd_info\n");
+		return 0;
+}
+static int cmd_si(char *args){
+		printf("this is cmd_si\n");
+		return 0;
+}
+static int cmd_x(char *args){
+		printf("this is cmd_x\n");
+		return 0;
 }
 
 void ui_mainloop(int is_batch_mode) {
