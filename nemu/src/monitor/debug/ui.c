@@ -90,18 +90,19 @@ static int cmd_info(char *args){
 		/*printf("this is cmd_info\n");*/	
   char *arg = strtok(NULL, " ");
 
-  if (arg == NULL) {
+  if(arg == NULL){
     /* no argument given: show both registers and watchpoints*/
-    printf("r and w:\n");
-  }
-  else {
-    if(strcmp(arg,"r") == 0){
+		printf("registers:\n");
+		isa_reg_display();
+		printf("watchpoints:\n");
+  }else{
+		 	if(strcmp(arg,"r") == 0){
 				isa_reg_display();
-		}else if(strcmp(arg,"w") == 0){
-				printf("w:\n");
-		}else{
+			}else if(strcmp(arg,"w") == 0){
+				printf("watchpoints:\n");
+		  }else{
 				printf("Unknown command '%s'\n", arg);
-		}
+		  }
   }
   return 0;
 }
@@ -110,9 +111,7 @@ static int cmd_si(char *args){
 		return 0;
 }
 static int cmd_x(char *args){
-		/*printf("this is cmd_x\n");*/
-		
-  char *arg = strtok(NULL, " ");
+		char *arg = strtok(NULL, " ");
 
 		if (arg == NULL) {
     /* no argument given:show warning information*/
