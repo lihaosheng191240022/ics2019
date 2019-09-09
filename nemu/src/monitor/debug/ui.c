@@ -13,7 +13,7 @@ void cpu_exec(uint64_t);
 static char* rl_gets() {
   static char *line_read = NULL;
 
-  if (line_read) {
+  if (line_read) {   /*line_read != NULL???*/
     free(line_read);
     line_read = NULL;
   }
@@ -84,15 +84,31 @@ static int cmd_help(char *args) {
 }
 
 static int cmd_info(char *args){
-		printf("this is cmd_info\n");
-		return 0;
+		/*printf("this is cmd_info\n");*/	
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) {
+    /* no argument given: show both registers and watchpoints*/
+    printf("r and w:\n");
+  }
+  else {
+    if(strcmp(arg,"r") == 0){
+				printf("r:\n");
+		}else if(strcmp(arg,"w") == 0){
+				printf("w:\n");
+		}else{
+				printf("Unknown command '%s'\n", arg);
+		}
+  }
+  return 0;
 }
 static int cmd_si(char *args){
-		printf("this is cmd_si\n");
+		/*printf("this is cmd_si\n");*/
+		cpu_exec(1);
 		return 0;
 }
 static int cmd_x(char *args){
-		printf("this is cmd_x\n");
+		/*printf("this is cmd_x\n");*/
 		return 0;
 }
 
