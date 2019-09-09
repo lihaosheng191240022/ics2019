@@ -41,6 +41,11 @@ void reg_test() {
 }
 
 void isa_reg_display() {
+		/*pa1.1*/
+		int i;
+		for(i = R_EAX;i <= R_EDI;i ++){
+				printf("%s: %x  %u\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
+		}
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {

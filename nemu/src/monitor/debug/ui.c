@@ -8,6 +8,9 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
+/***pa1.1***/
+extern void isa_reg_display(void);
+
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -93,7 +96,7 @@ static int cmd_info(char *args){
   }
   else {
     if(strcmp(arg,"r") == 0){
-				printf("r:\n");
+				isa_reg_display();
 		}else if(strcmp(arg,"w") == 0){
 				printf("w:\n");
 		}else{
@@ -109,6 +112,7 @@ static int cmd_si(char *args){
 }
 static int cmd_x(char *args){
 		/*printf("this is cmd_x\n");*/
+		
 		return 0;
 }
 
