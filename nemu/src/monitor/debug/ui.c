@@ -127,7 +127,7 @@ static int cmd_x(char *args){
 				}
 				arg = strtok(NULL, " ");
 				uint32_t addr;
-				if(sscanf(arg,"%x",&addr)!=1){
+				if((arg == NULL) || sscanf(arg,"%x",&addr)!=1){
 						printf("invalid argument: input x <num> <addr>\n");
 						return 0;
 				}
