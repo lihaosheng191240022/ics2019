@@ -146,6 +146,7 @@ static int cmd_x(char *args){
 		return 0;
 }
 static int cmd_p(char *args){
+	printf("value:\n");
 	return 0;
 }
 void ui_mainloop(int is_batch_mode) {
