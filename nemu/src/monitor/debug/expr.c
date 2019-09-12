@@ -5,6 +5,8 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+/***pa1.2***/
+#include<stdlib.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM   /***pa1.2***/
@@ -149,21 +151,22 @@ uint32_t expr(char *e, bool *success) {
 	*success = true;
 	/***calculate the token expr***/
 	printf("make token successfully\n");
-	eval(0, nr_token-1);
-  return 0;
+	return eval(0, nr_token-1);
 }
 
 static uint32_t eval(int p, int q){
 	if(p > q){
 		printf("Bad expression\n");
+		return 0;
 	}else if(p == q){
 		printf("this is exact a number\n");
+		return strtol(tokens[p].str, NULL, 10);/*this can be better*/
 	}else if(check_parentheses(p, q) == true){
 		return eval(p+1, q-1);
 	}else{
 		printf("proceeding\n");
+		return 0;
 	}
-	return 0;
 }
 static bool check_parentheses(int p, int q){
 	return true;
