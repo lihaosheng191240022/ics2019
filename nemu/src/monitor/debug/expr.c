@@ -232,6 +232,7 @@ static uint32_t get_mainopt(int p, int q){
 			if(prior(tokens[pos].type)<=curprior){
 				curprior = prior(tokens[pos].type);
 				curpos = pos;
+				printf("%d %d\n",curprior,curpos);
 			}else{
 				continue;
 			}
