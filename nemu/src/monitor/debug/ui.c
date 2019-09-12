@@ -156,7 +156,7 @@ static int cmd_p(char *args){
 		bool success = false;
 		value = expr(arg, &success);
 		if(success){
-			printf("value:%d\n",value);/*I choose int instead of unsigned, any bugs??*/
+			printf("value:%u\n",value);/*I choose unsigned instead of int, any bugs??*/
 			return 0;
 		}else{
 			printf("invalid expr\n");
