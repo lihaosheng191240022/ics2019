@@ -140,6 +140,7 @@ static bool make_token(char *e) {
 /***functions to calculate the "token expr"***/
 static uint32_t eval(int p, int q);
 static bool check_parentheses(int p, int q);
+static uint32_t get_mainopt(int p, int q);
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -165,7 +166,21 @@ static uint32_t eval(int p, int q){
 		return eval(p+1, q-1);
 	}else{
 		printf("proceeding\n");
-		return 0;
+		int op=get_mainopt(p, q);
+		uint32_t val1=eval(p, op-1);
+		uint32_t val2=eval(op+1, q);
+		switch(tokens[op].type){
+			case '+':
+								return val1+val2;
+			case '-':
+								return val1-val2;
+			case '*':
+								return val1*val2;
+			case '/':
+								return val1/val2;
+			default:
+								Assert(0,"invalid mainopt in expr\n");
+		}
 	}
 }
 static bool check_parentheses(int p, int q){
@@ -189,4 +204,38 @@ static bool check_parentheses(int p, int q){
 		return false;
 	}
 	return true;
+}
+/*this macro should be changed when pa1.3*/
+#define prior(x) (x=='*'||x=='/')?(2):(1)
+static uint32_t get_mainopt(int p, int q){
+	int in_parentheses = 0;
+	int curpos = p;
+	int curprior = 2;
+	int pos = p;
+	for(; pos <= q; pos++){/*pos < q???*/
+		if(tokens[pos].type=='('){
+			in_parentheses++;
+			continue;
+		}
+		if(tokens[pos].type==')'){
+			in_parentheses--;
+			continue;
+		}
+		if(tokens[pos].type!='+' && tokens[pos].type!='-' &&
+				tokens[pos].type!='*' && tokens[pos].type!='/'){
+			continue;
+		}
+
+		if(in_parentheses){
+			continue;
+		}else{
+			if(prior(tokens[pos].type)<=curprior){
+				curprior = prior(tokens[pos].type);
+				curpos = pos;
+			}else{
+				continue;
+			}
+		}
+	}
+	return curpos;
 }
