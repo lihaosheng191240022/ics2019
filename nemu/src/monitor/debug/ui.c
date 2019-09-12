@@ -146,8 +146,23 @@ static int cmd_x(char *args){
 		return 0;
 }
 static int cmd_p(char *args){
-	printf("value:\n");
-	return 0;
+  char *arg = strtok(NULL, "\0");/*can't be split by <SPACE>!!, modify it later'*/
+	uint32_t value = 0;
+  if(arg == NULL){
+    /* no argument given*/
+		printf("invalid argument: input p <expr>\n");
+		return 0;
+  }else{
+		bool success = false;
+		value = expr(arg, &success);
+		if(success){
+			printf("value:%d\n",value);/*I choose int instead of unsigned, any bugs??*/
+			return 0;
+		}else{
+			printf("invalid expr\n");
+			return 0;
+		}
+	}
 }
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {
