@@ -206,7 +206,7 @@ static bool check_parentheses(int p, int q){
 	return true;
 }
 /*this macro should be changed when pa1.3*/
-#define prior(x) ((x=='*'||x=='/')?(2):(1))
+#define prior(x) ((x=='*'||x=='/')?(2):(1))/*anytime you should add ()!!!*/
 static uint32_t get_mainopt(int p, int q){
 	int in_parentheses = 0;
 	int curpos = p;
