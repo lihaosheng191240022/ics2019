@@ -169,5 +169,24 @@ static uint32_t eval(int p, int q){
 	}
 }
 static bool check_parentheses(int p, int q){
+	/*Use the stack to memorize the ( and ), but still limited*/
+	if(tokens[p].type!='('||tokens[q].type!=')'){
+		return false;
+	}
+	int ptr = p+1, matchnum = 0;
+	for(; ptr < q; ptr++){
+		if(tokens[ptr].type == '('){
+			matchnum++;
+		}else if(tokens[ptr].type == ')'){
+			matchnum--;
+		}
+
+		if(matchnum<0){
+			return false;
+		}
+	}
+	if(matchnum != 0){
+		return false;
+	}
 	return true;
 }
