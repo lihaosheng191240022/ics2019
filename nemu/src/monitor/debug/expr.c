@@ -28,7 +28,7 @@ static struct rule {
 	
 	/***pa1.2***/
   {"-", '-'},            
-  {"\*", '*'},
+  {"\\*", '*'},
   {"/", '/'},
   {"[1-9][0-9]*|0", TK_NUM},
   {"(", '('},
@@ -148,22 +148,23 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
 	*success = true;
 	/***calculate the token expr***/
-	
-	
+	printf("make token successfully\n");
+	eval(0, nr_token-1);
   return 0;
 }
 
 static uint32_t eval(int p, int q){
 	if(p > q){
-
+		printf("Bad expression\n");
 	}else if(p == q){
-
+		printf("this is exact a number\n");
 	}else if(check_parentheses(p, q) == true){
-
+		return eval(p+1, q-1);
 	}else{
-
+		printf("proceeding\n");
 	}
+	return 0;
 }
-static check_parentheses(int p, int q){
-
+static bool check_parentheses(int p, int q){
+	return true;
 }
