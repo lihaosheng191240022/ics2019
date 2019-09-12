@@ -87,11 +87,42 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
-          default: TODO();
+        switch (rules[i].token_type) {/***pa1.2***/
+					case TK_NOTYPE:
+													break;
+					case '+':
+													tokens[nr_token].type = '+';
+													nr_token++;
+													break;
+					case '-':
+													tokens[nr_token].type = '-';
+													nr_token++;
+													break;
+					case '*':
+													tokens[nr_token].type = '*';
+													nr_token++;
+													break;
+					case '/':
+													tokens[nr_token].type = '/';
+													nr_token++;
+													break;
+					case '(':
+													tokens[nr_token].type = '(';
+													nr_token++;
+													break;
+					case ')':
+													tokens[nr_token].type = ')';
+													nr_token++;
+													break;
+				  default: 
+													tokens[nr_token].type = rules[i].token_type;
+													strncpy(tokens[nr_token].str,substr_start,substr_len);
+													Assert(strlen(tokens[nr_token].str)==substr_len,"strncpy wrongly used\n");
+													nr_token++;
+													break;
         }
 
-        break;
+        break;/*what does this mean? Oh, I got it, there is a for loop and a while loop*/
       }
     }
 
@@ -104,6 +135,10 @@ static bool make_token(char *e) {
   return true;
 }
 
+/***functions to calculate the "token expr"***/
+static uint32_t eval(int p, int q);
+static bool check_parentheses(int p, int q);
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -111,7 +146,24 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
+	*success = true;
+	/***calculate the token expr***/
+	
+	
   return 0;
+}
+
+static uint32_t eval(int p, int q){
+	if(p > q){
+
+	}else if(p == q){
+
+	}else if(check_parentheses(p, q) == true){
+
+	}else{
+
+	}
+}
+static check_parentheses(int p, int q){
+
 }
