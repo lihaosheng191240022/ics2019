@@ -14,8 +14,12 @@ static char buf[65536];
 static int expr_end = 0;/*use to point to the next location in buf for generation*/
 
 static inline void gen_num(){
-	buf[expr_end] = '0' + rand()%10;
-	expr_end++;
+	//buf[expr_end] = '0' + rand()%10;/*error TODO: num in expr only has one digit*/
+	//expr_end++;
+	for(int i=0;i<=rand()%10;i++){
+		buf[expr_end] = '0' + rand()%10;/*this will generate number like 0001*/
+		expr_end++;
+	}
 }
 static inline void gen(char c){
 	buf[expr_end] = c;
@@ -34,13 +38,19 @@ static inline uint32_t choose(uint32_t n){
 	return (rand()%n);
 }
 
+#define SPACE if(rand()%2){gen(' ');}/*still stupid way to add random <SPACE>*/
+
 static inline void gen_rand_expr() { /*gen_rand_expr is a random&&recursion func!!*/
   //buf[0] = '\0';
 	//if(expr_end>=20)	return;/*control the length of rand_expr, fail*/
 	switch(choose(3)){
-		case 0:	gen_num();if(expr_end>=20) return; break;/*bad way to control the length*/
-		case 1: gen('(');gen_rand_expr();gen(')');break;
-		default:	gen_rand_expr();gen_rand_op();gen_rand_expr();break;
+		case 0:	SPACE gen_num(); SPACE
+						//if(expr_end>=20) return;/*bad way to control the length of expr*/ 
+						break;
+		case 1: SPACE gen('('); SPACE gen_rand_expr(); SPACE gen(')'); SPACE
+						break;
+		default:	SPACE gen_rand_expr(); SPACE gen_rand_op(); SPACE gen_rand_expr(); SPACE
+						break;
 	}
 }
 
