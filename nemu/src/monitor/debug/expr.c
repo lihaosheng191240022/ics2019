@@ -119,6 +119,7 @@ static bool make_token(char *e) {
 													break;
 				  default: 
 													tokens[nr_token].type = rules[i].token_type;
+													strcpy(tokens[nr_token].str, "\0");/*clear last token*/
 													strncpy(tokens[nr_token].str,substr_start,substr_len);
 													Assert(strlen(tokens[nr_token].str)==substr_len,"strncpy wrongly used\n");
 													nr_token++;
