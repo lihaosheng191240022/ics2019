@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 	char str[500];
 	unsigned num;
 	bool success;	
-	for(int i = 0;i < 10;i++){
+	for(int i = 0;i < 1;i++){
 		scanf("%u %[^\n]", &num, str);
 		val = expr(str, &success);
 		if(num != val){
