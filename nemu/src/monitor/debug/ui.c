@@ -109,8 +109,20 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_si(char *args){
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL){
 		cpu_exec(1);
-		return 0;
+	}	else {
+		uint32_t num;
+		if(sscanf(arg,"%u",&num)!=1){
+			printf("invalid argument: input si [num]\n");
+			return 0;
+		} else {
+			cpu_exec(num);
+		}
+	}
+	
+	return 0;
 }
 static int cmd_x(char *args){
 		char *arg = strtok(NULL, " ");
