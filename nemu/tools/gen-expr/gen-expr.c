@@ -16,7 +16,15 @@ static int expr_end = 0;/*use to point to the next location in buf for generatio
 static inline void gen_num(){
 	//buf[expr_end] = '0' + rand()%10;/*error TODO: num in expr only has one digit*/
 	//expr_end++;
-	for(int i=0;i<=rand()%10;i++){
+	int len = rand()%4;/*only generate at most 4 digit number*/
+	if (len != 0){
+		buf[expr_end] = '1' + rand()%9;
+	}else{
+		buf[expr_end] = '0' + rand()%10;
+	}
+	expr_end++;
+
+	for(int i=1;i<=len;i++){
 		buf[expr_end] = '0' + rand()%10;/*this will generate number like 0001*/
 		expr_end++;
 	}
@@ -85,7 +93,9 @@ int main(int argc, char *argv[]) {
 
     int ret = system("gcc /tmp/.code.c -o /tmp/.expr");/*and generate a executable file*/
     if (ret != 0) continue;
-
+		
+		//int iswrong = system("/tmp/.code.c");/*this way fail*/
+		//if (iswrong == -1) continue;
     fp = popen("/tmp/.expr", "r");/*this is a pipe!! /tmp/.expr is a command!!!*/
     assert(fp != NULL);
 
