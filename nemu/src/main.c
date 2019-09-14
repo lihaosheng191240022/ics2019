@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 		if(num != val){
 			printf("%d: error\n", i);
 		} else {
-			printf("success: %u\n", val);
+			printf("success%d: %u\n", i, val);
 		}
 	}
 	/*============================================*/
