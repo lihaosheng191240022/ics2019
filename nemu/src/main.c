@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
 		val = expr(str, &success);
 		if(num != val){
 			printf("%d: error\n", i);
+		} else {
+			printf("success: %u\n", val);
 		}
 	}
 	/*============================================*/
