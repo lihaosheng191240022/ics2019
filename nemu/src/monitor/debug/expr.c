@@ -162,12 +162,12 @@ static uint32_t eval(int p, int q){
 		printf("Bad expression\n");
 		return 0;
 	}else if(p == q){
-		printf("this is exact a number\n");
+		//printf("this is exact a number\n");
 		return strtol(tokens[p].str, NULL, 10);/*this can be better*/
 	}else if(check_parentheses(p, q) == true){
 		return eval(p+1, q-1);
 	}else{
-		printf("proceeding\n");
+		//printf("proceeding\n");
 		int op=get_mainopt(p, q);
 		uint32_t val1=eval(p, op-1);
 		uint32_t val2=eval(op+1, q);
@@ -234,7 +234,7 @@ static uint32_t get_mainopt(int p, int q){
 			if(prior(tokens[pos].type)<=curprior){
 				curprior = prior(tokens[pos].type);
 				curpos = pos;
-				printf("%d %d\n",curprior,curpos);
+				//printf("%d %d\n",curprior,curpos);
 			}else{
 				continue;
 			}
