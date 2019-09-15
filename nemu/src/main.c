@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
 	/*Random test expr*/
-	rand_expr_test();	
+  rand_expr_test();	
 	
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
@@ -28,7 +28,7 @@ static void rand_expr_test(){
 	char str[500];
 	unsigned num;
 	bool success;	
-	for(int i = 0;i < 100;i++){
+	for(int i = 0;i < 0;i++){
 		scanf("%u %[^\n]", &num, str);
 		val = expr(str, &success);
 		if(num != val){
