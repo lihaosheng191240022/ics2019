@@ -8,7 +8,6 @@ int init_monitor(int, char *[]);
 void ui_mainloop(int);
 /***pa1.2 random test***/
 uint32_t expr(char *e, bool *success);
-
 static void rand_expr_test();
 
 int main(int argc, char *argv[]) {
@@ -38,6 +37,5 @@ static void rand_expr_test(){
 			printf("success%d: %u\n", i+1, val);
 		}
 	}
-	/*============================================*/
 
 }
