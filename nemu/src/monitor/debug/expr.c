@@ -32,10 +32,10 @@ static struct rule {
   {"-", '-'},            
   {"\\*", '*'},
   {"/", '/'},
+	{"0x[0-9a-fA-F]*", TK_HEX},
   {"[1-9][0-9]*|0", TK_NUM},
   {"\\(", '('},
   {"\\)", ')'},
-	{"0x[0-9]*", TK_HEX},
 	{"\\$e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
 	{"!=", TK_UNEQ},
 	{"&&", TK_AND}
