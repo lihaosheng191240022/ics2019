@@ -46,6 +46,8 @@ static int cmd_info(char *args);
 static int cmd_si(char *args);
 static int cmd_x(char *args);
 static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
 /*My commands end*/
 
 static struct {
@@ -60,7 +62,9 @@ static struct {
   { "info", "Show state of register/watchpoint", cmd_info },
   { "si", "Step one instruction", cmd_si },
 	{ "x", "Print the content of memory(pmem)", cmd_x},
-	{ "p", "Print the value of expression", cmd_p}
+	{ "p", "Print the value of expression", cmd_p},
+	{ "w", "Set watchpoint", cmd_w},
+	{ "d", "Delete watchpoint", cmd_d}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -176,6 +180,12 @@ static int cmd_p(char *args){
 			return 0;
 		}
 	}
+}
+static int cmd_w(char *args){
+	return 0;
+}
+static int cmd_d(char *args){
+	return 0;
 }
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {
