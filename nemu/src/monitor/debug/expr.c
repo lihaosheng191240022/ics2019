@@ -9,7 +9,7 @@
 #include<stdlib.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM   /***pa1.2***/
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_ID   /***pa1.2***/
 
   /* TODO: Add more token types */
 
@@ -34,7 +34,10 @@ static struct rule {
   {"/", '/'},
   {"[1-9][0-9]*|0", TK_NUM},
   {"\\(", '('},
-  {"\\)", ')'}
+  {"\\)", ')'},
+	{"0x[0-9]*", TK_HEX},
+	{"\%e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
+	{"[a-zA-Z_]\\w*", TK_ID}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
