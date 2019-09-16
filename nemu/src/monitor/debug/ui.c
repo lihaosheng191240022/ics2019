@@ -94,10 +94,11 @@ static int cmd_info(char *args){
 
   if(arg == NULL){
     /* no argument given: show both registers and watchpoints*/
-		printf("registers:\n");
-		isa_reg_display();
-		printf("watchpoints:\n");
-  }else{
+		//printf("registers:\n");
+		//isa_reg_display();
+		//printf("watchpoints:\n");
+		printf("invalid argument: input info [r/w]\n");
+	}else{
 		 	if(strcmp(arg,"r") == 0){
 				isa_reg_display();
 			}else if(strcmp(arg,"w") == 0){
