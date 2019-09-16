@@ -9,7 +9,7 @@
 #include<stdlib.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_ID   /***pa1.2***/
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_UNEQ, TK_AND   /***pa1.2***/
 
   /* TODO: Add more token types */
 
@@ -37,7 +37,8 @@ static struct rule {
   {"\\)", ')'},
 	{"0x[0-9]*", TK_HEX},
 	{"\\$e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
-	{"[a-zA-Z_]\\w*", TK_ID}
+	{"!=", TK_UNEQ},
+	{"&&", TK_AND}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -97,32 +98,21 @@ static bool make_token(char *e) {
 					case TK_NOTYPE:
 													break;
 					case '+':
-													tokens[nr_token].type = '+';
-													nr_token++;
-													break;
 					case '-':
-													tokens[nr_token].type = '-';
-													nr_token++;
-													break;
 					case '*':
-													tokens[nr_token].type = '*';
-													nr_token++;
-													break;
 					case '/':
-													tokens[nr_token].type = '/';
-													nr_token++;
-													break;
 					case '(':
-													tokens[nr_token].type = '(';
-													nr_token++;
-													break;
 					case ')':
-													tokens[nr_token].type = ')';
+													tokens[nr_token].type = rules[i].token_type;
 													nr_token++;
 													break;
-				  default: 
+				  case TK_NUM: 
+					case TK_HEX:
+					case TK_REG:
+					case TK_UNEQ:
+					case TK_AND:
 													tokens[nr_token].type = rules[i].token_type;
-													memset(tokens[nr_token].str, '\0', 32);/*clear last token*/
+													memset(tokens[nr_token].str, '\0', 32);
 													strncpy(tokens[nr_token].str,substr_start,substr_len);
 													Assert(strlen(tokens[nr_token].str)==substr_len,"strncpy wrongly used\n");
 													nr_token++;
