@@ -36,7 +36,7 @@ static struct rule {
   {"\\(", '('},
   {"\\)", ')'},
 	{"0x[0-9]*", TK_HEX},
-	{"\%e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
+	{"\\$e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
 	{"[a-zA-Z_]\\w*", TK_ID}
 };
 
