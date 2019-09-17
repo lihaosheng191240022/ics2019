@@ -10,7 +10,8 @@
 void cpu_exec(uint64_t);
 /***pa1.1***/
 extern void isa_reg_display(void);
-
+extern WP *new_wp();
+extern WP *delete_wp(int index);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -182,10 +183,26 @@ static int cmd_p(char *args){
 	}
 }
 static int cmd_w(char *args){
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL){
+		WP *wp = new_wp();
+		printf("watchpoint %d: hello\n", wp->NO);
+		return 0;
+	}
 	return 0;
 }
 static int cmd_d(char *args){
-	return 0;
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL){
+		printf("invalid argument: input d <watchpoint_num>\n");
+		return 0;
+	}else{
+		int index = 0;
+		sscanf(arg, "%d",&index);
+		delete_wp(index);
+		printf("delete watchpoint %d: hello\n", index);
+		return 0;
+	}
 }
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {
