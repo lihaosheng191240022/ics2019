@@ -112,6 +112,7 @@ static bool make_token(char *e) {
 				  case TK_NUM: 
 					case TK_HEX:
 					case TK_REG:
+					case TK_EQ:
 					case TK_UNEQ:
 					case TK_AND:
 													tokens[nr_token].type = rules[i].token_type;
@@ -119,6 +120,9 @@ static bool make_token(char *e) {
 													strncpy(tokens[nr_token].str,substr_start,substr_len);
 													Assert(strlen(tokens[nr_token].str)==substr_len,"strncpy wrongly used\n");
 													nr_token++;
+													break;
+					default:
+													Assert(0, "invalid token type\n");
 													break;
         }
 
