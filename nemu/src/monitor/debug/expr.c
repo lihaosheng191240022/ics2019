@@ -194,6 +194,12 @@ static uint32_t eval(int p, int q){
 	}else{
 		//printf("proceeding\n");
 		int op=get_mainopt(p, q);
+		if(tokens[op].type==TK_DEREF){
+			uint32_t val=eval(op+1, q);
+			Assert(val>=0x1000, "Memory access denied\n");
+			return pmem[val];
+		}
+
 		uint32_t val1=eval(p, op-1);
 		uint32_t val2=eval(op+1, q);
 		switch(tokens[op].type){
@@ -211,6 +217,8 @@ static uint32_t eval(int p, int q){
 								return val1!=val2;
 			case TK_AND:
 								return val1&&val2;
+			case TK_DEREF:
+
 			default:
 								Assert(0,"invalid mainopt in expr\n");
 		}
