@@ -12,8 +12,8 @@
 uint32_t isa_reg_str2val(const char *s, bool *success);
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_UNEQ, TK_AND   /***pa1.2***/
-
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_UNEQ, TK_AND,   /***pa1.2***/
+									 TK_DEREF
   /* TODO: Add more token types */
 
 };
@@ -143,6 +143,7 @@ static bool make_token(char *e) {
 static uint32_t eval(int p, int q);
 static bool check_parentheses(int p, int q);
 static uint32_t get_mainopt(int p, int q);
+static bool is_before_deref(int type);/*handle dereference*/
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -154,6 +155,14 @@ uint32_t expr(char *e, bool *success) {
 	*success = true;
 	/***calculate the token expr***/
 	printf("make token successfully\n");
+
+	/*handle dereference*/
+	for(int i=0;i<nr_token;i++){
+		if(tokens[i].type=='*'&&(i==0||is_before_deref(tokens[i-1].type))){
+			tokens[i].type=TK_DEREF;
+		}
+	}
+
 	return eval(0, nr_token-1);
 }
 
@@ -268,6 +277,7 @@ static uint32_t get_mainopt(int p, int q){
 }
 static uint32_t is_opt(uint32_t x){
 	switch(x){
+		case TK_DEREF:
 		case '+':
 		case '-':
 		case '*':
@@ -282,6 +292,8 @@ static uint32_t is_opt(uint32_t x){
 }
 static uint32_t opt_prior(uint32_t opt){
 	switch(opt){
+		case TK_DEREF:
+							return 2;
 		case '*':
 		case '/':
 							return 3;
@@ -295,5 +307,21 @@ static uint32_t opt_prior(uint32_t opt){
 							return 11;
 		default:
 							return -1;
+	}
+}
+static bool is_before_deref(int type){
+	switch(type){
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '(':
+		case TK_EQ:
+		case TK_UNEQ:
+		case TK_AND:
+		case TK_DEREF:
+							return true;
+		default:
+							return false;
 	}
 }
