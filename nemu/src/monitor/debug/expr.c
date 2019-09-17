@@ -170,9 +170,8 @@ static uint32_t eval(int p, int q){
 	if(p > q){
 		printf("Bad expression\n");
 		return 0;
-	}else if(p == q){
-		//printf("this is exact a number or a register\n");
-		if(tokens[p].type == TK_REG){
+	}else if(p == q){														/*this is exact a number*/
+		if(tokens[p].type == TK_REG){							/*a register number*/
 			bool success = false;
 			uint32_t regval = isa_reg_str2val(tokens[p].str, &success);
 			if(!success){
@@ -181,13 +180,13 @@ static uint32_t eval(int p, int q){
 			}else{
 				return regval;
 			}
-		}else if(tokens[p].type == TK_HEX){/*a hexadecimal number*/
+		}else if(tokens[p].type == TK_HEX){				/*a hexadecimal number*/
 			uint32_t hexval = 0;
 			sscanf(tokens[p].str, "%x", &hexval);
 			return hexval;
 
-		}else{/*a decimal number*/
-			return strtol(tokens[p].str, NULL, 10);/*this can be better*/
+		}else{																		/*a decimal number*/
+			return strtol(tokens[p].str, NULL, 10);	/*this can be better*/
 		}
 	}else if(check_parentheses(p, q) == true){
 		return eval(p+1, q-1);
@@ -225,7 +224,7 @@ static uint32_t eval(int p, int q){
 	}
 }
 static bool check_parentheses(int p, int q){
-	/*Use the stack to memorize the ( and ), but still limited*/
+	/*Use the stack to memorize the ( and ), but still not well implemented*/
 	if(tokens[p].type!='('||tokens[q].type!=')'){
 		return false;
 	}
