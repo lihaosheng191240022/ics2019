@@ -40,11 +40,11 @@ WP *new_wp(){
 void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	/*delete from head Llist*/
 	WP *before_wp = head;
-	while(1){/*BIG FAULT!!!*/
+	while(before_wp!=NULL){/*BIG FAULT!!!*/
 		if(before_wp->next==wp){
 			break;
 		}
-		if(before_wp==NULL){
+		if(before_wp->next==NULL){
 			printf("this watchpoint has been freed or never used\n");
 			return;
 		}	
