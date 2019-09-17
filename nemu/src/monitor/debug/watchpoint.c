@@ -8,11 +8,12 @@ static WP *head = NULL, *free_ = NULL;
 
 /*for debugging*/
 void show_me_free();
+static int wp_cnt = 1;
 
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
-    wp_pool[i].NO = i;
+    wp_pool[i].NO = 0;
     wp_pool[i].next = &wp_pool[i + 1];
   }
   wp_pool[NR_WP - 1].next = NULL;
@@ -30,6 +31,8 @@ WP *new_wp(){
 	while(find_tail->next != NULL){
 		find_tail = find_tail->next;
 	}
+	free_->NO = wp_cnt;
+	wp_cnt++;
 	find_tail->next = free_;
 	free_ = free_->next;
 	(find_tail->next)->next = NULL;
@@ -56,8 +59,15 @@ void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	free_ = wp;
 }
 void delete_wp(int index){
-	if(index >= NR_WP){
-		printf("out of wp_pool's range\n");
+	WP *search = head->next;
+	while(search!=NULL){
+		if(search->NO==index){
+			break;
+		}
+		search = search->next;
+	}
+	if(search==NULL){
+		printf("this watchpoint has been deleted or never created\n");
 		return;
 	}
 	free_wp(&wp_pool[index]);
