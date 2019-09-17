@@ -155,8 +155,24 @@ static uint32_t eval(int p, int q){
 		printf("Bad expression\n");
 		return 0;
 	}else if(p == q){
-		//printf("this is exact a number\n");
-		return strtol(tokens[p].str, NULL, 10);/*this can be better*/
+		//printf("this is exact a number or a register\n");
+		if(tokens[p].type == TK_REG){
+			bool success = false;
+			uint32_t regval = isa_reg_str2val(tokens[p].str, &success);
+			if(!success){
+				printf("invalid reg: input like $eax\n");
+				return 0;
+			}else{
+				return regval;
+			}
+		}else if(tokens[p].type == TK_HEX){/*a hexadecimal number*/
+			uint32_t hexval = 0;
+			sscanf(tokens[p].str, "%x", &hexval);
+			return hexval;
+
+		}else{/*a decimal number*/
+			return strtol(tokens[p].str, NULL, 10);/*this can be better*/
+		}
 	}else if(check_parentheses(p, q) == true){
 		return eval(p+1, q-1);
 	}else{
@@ -173,6 +189,12 @@ static uint32_t eval(int p, int q){
 								return val1*val2;
 			case '/':
 								return val1/val2;
+			case TK_EQ:
+								return val1==val2;
+			case TK_UNEQ:
+								return val1!=val2;
+			case TK_AND:
+								return val1&&val2;
 			default:
 								Assert(0,"invalid mainopt in expr\n");
 		}
@@ -201,11 +223,14 @@ static bool check_parentheses(int p, int q){
 	return true;
 }
 /*this macro should be changed when pa1.3*/
-#define prior(x) ((x=='*'||x=='/')?(2):(1))/*anytime you should add ()!!!*/
+//#define prior(x) ((x=='*'||x=='/')?(2):(1))/*anytime you should add ()!!!*/
+static uint32_t is_opt(uint32_t x);
+static uint32_t opt_prior(uint32_t opt);
+
 static uint32_t get_mainopt(int p, int q){
 	int in_parentheses = 0;
 	int curpos = p;
-	int curprior = 2;
+	int curprior = 0;/*highest prior*/
 	int pos = p;
 	for(; pos <= q; pos++){/*pos < q???*/
 		if(tokens[pos].type=='('){
@@ -216,16 +241,15 @@ static uint32_t get_mainopt(int p, int q){
 			in_parentheses--;
 			continue;
 		}
-		if(tokens[pos].type!='+' && tokens[pos].type!='-' &&
-				tokens[pos].type!='*' && tokens[pos].type!='/'){
+		if(!is_opt(tokens[pos].type)){
 			continue;
 		}
 
 		if(in_parentheses){
 			continue;
 		}else{
-			if(prior(tokens[pos].type)<=curprior){
-				curprior = prior(tokens[pos].type);
+			if(opt_prior(tokens[pos].type)>=curprior){/*the least&&last prior is the mainopt*/
+				curprior = opt_prior(tokens[pos].type);
 				curpos = pos;
 				//printf("%d %d\n",curprior,curpos);
 			}else{
@@ -234,4 +258,35 @@ static uint32_t get_mainopt(int p, int q){
 		}
 	}
 	return curpos;
+}
+static uint32_t is_opt(uint32_t x){
+	switch(x){
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case TK_EQ:
+		case TK_UNEQ:
+		case TK_AND:
+							return 1;
+		default:
+							return 0;
+	}
+}
+static uint32_t opt_prior(uint32_t opt){
+	switch(opt){
+		case '*':
+		case '/':
+							return 3;
+		case '+':
+		case '-':
+							return 4;
+		case TK_EQ:
+		case TK_UNEQ:
+							return 7;
+		case TK_AND:
+							return 11;
+		default:
+							return -1;
+	}
 }

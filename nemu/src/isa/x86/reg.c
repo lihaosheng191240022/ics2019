@@ -49,5 +49,13 @@ void isa_reg_display() {
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+	int i;
+	for(i = R_EAX;i <= R_EDI;i ++ ){
+		if(strcmp(s, "$" + regsl[i]) == 0){
+			*success = true;
+		 return cpu.gpr[i]._32;	
+		}
+	}
+	*success = false;
+ 	return 0;
 }
