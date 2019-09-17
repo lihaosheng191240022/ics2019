@@ -6,6 +6,9 @@
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 
+/*for debugging*/
+static void show_me_free();
+
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
@@ -30,6 +33,8 @@ WP *new_wp(){
 	find_tail->next = free_;
 	free_ = free_->next;
 	(find_tail->next)->next = NULL;
+	/*as the func name said*/
+	show_me_free();
 	return find_tail->next;
 }
 
@@ -50,4 +55,13 @@ void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 }
 WP *delete_wp(int index){
 	return &wp_pool[index];
+}
+
+static void show_me_free(){
+	WP *each = free_;
+	while(each != NULL){
+		printf("%d ", free_->NO);
+		each = each->next;
+	}
+	printf("\n");
 }
