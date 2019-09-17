@@ -7,7 +7,7 @@ static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 
 /*for debugging*/
-static void show_me_free();
+void show_me_free();
 
 void init_wp_pool() {
   int i;
@@ -34,7 +34,6 @@ WP *new_wp(){
 	free_ = free_->next;
 	(find_tail->next)->next = NULL;
 	/*as the func name said*/
-	show_me_free();
 	return find_tail->next;
 }
 
@@ -57,7 +56,7 @@ void delete_wp(int index){
 	free_wp(&wp_pool[index]);
 }
 
-static void show_me_free(){
+void show_me_free(){
 	WP *each = free_;
 	while(each != NULL){
 		printf("%d ", each->NO);
