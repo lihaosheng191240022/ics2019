@@ -60,7 +60,7 @@ WP *delete_wp(int index){
 static void show_me_free(){
 	WP *each = free_;
 	while(each != NULL){
-		printf("%d ", free_->NO);
+		printf("%d ", each->NO);
 		each = each->next;
 	}
 	printf("\n");
