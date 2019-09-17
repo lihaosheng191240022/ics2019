@@ -53,8 +53,8 @@ void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	wp->next = free_;
 	free_ = wp;
 }
-WP *delete_wp(int index){
-	return &wp_pool[index];
+void delete_wp(int index){
+	free_wp(&wp_pool[index]);
 }
 
 static void show_me_free(){

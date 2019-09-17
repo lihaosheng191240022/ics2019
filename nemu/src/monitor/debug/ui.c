@@ -11,7 +11,7 @@ void cpu_exec(uint64_t);
 /***pa1.1***/
 extern void isa_reg_display(void);
 extern WP *new_wp();
-extern WP *delete_wp(int index);
+extern void delete_wp(int index);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
