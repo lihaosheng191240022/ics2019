@@ -53,6 +53,10 @@ void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	free_ = wp;
 }
 void delete_wp(int index){
+	if(index >= NR_WP){
+		printf("out of wp_pool's range\n");
+		return;
+	}
 	free_wp(&wp_pool[index]);
 }
 
