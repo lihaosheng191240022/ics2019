@@ -8,6 +8,9 @@
 /***pa1.2***/
 #include<stdlib.h>
 
+/***pa1.3***/
+uint32_t isa_reg_str2val(const char *s, bool *success);
+
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_UNEQ, TK_AND   /***pa1.2***/
 
