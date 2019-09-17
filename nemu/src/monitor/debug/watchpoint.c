@@ -39,6 +39,10 @@ void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	while(before_wp->next != wp){
 		before_wp = before_wp->next;
 	}
+	if(before_wp == NULL){
+		printf("this watchpoint has been freed or never used\n");
+		return;
+	}
 	before_wp->next = wp->next;
 	/*add to free_ Llist*/
 	wp->next = free_;
