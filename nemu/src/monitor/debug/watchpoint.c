@@ -40,7 +40,7 @@ WP *new_wp(){
 void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	/*delete from head Llist*/
 	WP *before_wp = head;
-	while(before_wp->next!=wp && before_wp->next!=NULL){/*BIG FAULT!!!*/
+	while((before_wp->next!=wp) && (before_wp->next!=NULL)){/*BIG FAULT!!!*/
 		before_wp = before_wp->next;
 	}
 	if(before_wp == NULL){
