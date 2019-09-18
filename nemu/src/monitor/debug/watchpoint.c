@@ -70,7 +70,7 @@ void delete_wp(int index){
 		printf("this watchpoint has been deleted or never created\n");
 		return;
 	}
-	free_wp(&wp_pool[index]);
+	free_wp(search);
 }
 
 void show_me_free(){
