@@ -187,7 +187,7 @@ static int cmd_w(char *args){
 	char *arg = strtok(NULL, " ");
 	if(arg == NULL){
 		/*show me free*/
-		show_me_free();
+		//show_me_free();
 		WP *wp = new_wp();
 		show_me_free();
 		printf("watchpoint %d: hello\n", wp->NO);
@@ -203,7 +203,7 @@ static int cmd_d(char *args){
 	}else{
 		int index = 0;
 		sscanf(arg, "%d",&index);
-		show_me_free();
+		//show_me_free();
 		delete_wp(index);
 		show_me_free();
 		//printf("delete watchpoint %d: hello\n", index);

@@ -74,7 +74,15 @@ void delete_wp(int index){
 }
 
 void show_me_free(){
+	WP *used = head; 
 	WP *each = free_;
+	printf("used: \n");
+	while(used != NULL){
+		printf("%d ", used->NO);
+		used = used->next;
+	}
+	printf("\n");
+	printf("free: \n");
 	while(each != NULL){
 		printf("%d ", each->NO);
 		each = each->next;
