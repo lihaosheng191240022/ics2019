@@ -6,9 +6,9 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
-
-  /* TODO: Add more members if necessary */
-
+	
+  /*pa1.3 TODO: Add more members if necessary */
+	char wp_expr[32];
 
 } WP;
 

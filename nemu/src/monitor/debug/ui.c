@@ -10,7 +10,7 @@
 void cpu_exec(uint64_t);
 /***pa1.1***/
 extern void isa_reg_display(void);
-extern WP *new_wp();
+extern WP *new_wp(char *expr, bool *success);
 extern void delete_wp(int index);
 extern void show_me_free();
 
@@ -184,16 +184,24 @@ static int cmd_p(char *args){
 	}
 }
 static int cmd_w(char *args){
-	char *arg = strtok(NULL, " ");
+	char *arg = strtok(NULL, "\n");
 	if(arg == NULL){
-		/*show me free*/
+		//WP *wp = new_wp();
 		//show_me_free();
-		WP *wp = new_wp();
+		//printf("watchpoint %d: hello\n", wp->NO);
+		printf("invalid argument: input w <EXPR>\n");
+		return 0;
+	}else{
+		bool success = false;
+		WP *wp = new_wp(arg, &success);
 		show_me_free();
-		printf("watchpoint %d: hello\n", wp->NO);
+		if(success){
+			printf("watchpoint %d: %s\n", wp->NO, arg);
+		}else{
+			printf("invalid expression: %s\n", arg);
+		}
 		return 0;
 	}
-	return 0;
 }
 static int cmd_d(char *args){
 	char *arg = strtok(NULL, " ");

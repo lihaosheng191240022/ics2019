@@ -25,13 +25,16 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP *new_wp(){
+WP *new_wp(char *expr, bool *success){
 	Assert(free_ != NULL, "watchpoint pool shortage\n");
 	WP *find_tail = head;
 	while(find_tail->next != NULL){
 		find_tail = find_tail->next;
 	}
 	free_->NO = wp_cnt;
+	memset(free_->wp_expr, '\0', 32);/*clear first*/
+	strcpy(free_->wp_expr, expr);
+	Assert(strlen(expr)<32, "watchpoint expr is too long\n");
 	wp_cnt++;
 	find_tail->next = free_;
 	free_ = free_->next;
