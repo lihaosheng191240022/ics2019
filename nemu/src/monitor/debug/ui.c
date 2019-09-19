@@ -13,7 +13,7 @@ extern void isa_reg_display(void);
 extern WP *new_wp(char *expr);
 extern void delete_wp(int index);
 extern void show_me_free();
-
+extern void show_all_wp();
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -109,6 +109,7 @@ static int cmd_info(char *args){
 				isa_reg_display();
 			}else if(strcmp(arg,"w") == 0){
 				printf("watchpoints:\n");
+				show_all_wp();
 		  }else{
 				printf("Unknown command '%s'\n", arg);
 		  }
