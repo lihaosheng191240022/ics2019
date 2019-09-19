@@ -58,7 +58,15 @@ void cpu_exec(uint64_t n) {
               "To capture more trace, you can modify the LOG_MAX macro in %s\n\n", __FILE__);
   }
 
-    /* TODO: check watchpoints here. */
+    /*pa1.3 TODO: check watchpoints here. */
+	WP *check = get_head()->next;
+	while(check!=NULL){
+		/*calculate the wp_expr*/
+		/*compare with old_val*/
+		/*if equal, go on; if unequal, save and update the old_val*/
+	}
+	/*print all changed wp*/
+	/*set the STOP mode*/
 
 #endif
 

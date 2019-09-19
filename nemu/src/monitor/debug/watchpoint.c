@@ -8,6 +8,8 @@ static WP *head = NULL, *free_ = NULL;
 
 /*for debugging*/
 void show_me_free();
+void show_all_wp();
+WP *get_head();
 static int wp_cnt = 1;
 
 void init_wp_pool() {
@@ -46,6 +48,7 @@ WP *new_wp(char *in_expr){
 
 	memset(free_->wp_expr, '\0', 32);/*clear first*/
 	strcpy(free_->wp_expr, in_expr);
+	free_->old_val = val;
 	wp_cnt++;
 	find_tail->next = free_;
 	free_ = free_->next;
@@ -109,4 +112,10 @@ void show_all_wp(){
 		printf("%d: %s\n", used->NO, used->wp_expr);
 		used = used->next;
 	}
+}
+WP *get_head(){
+	if(head==NULL){
+		Assert(0, "head pointer is NULL\n");
+	}
+	return head;
 }
