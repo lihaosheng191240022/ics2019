@@ -10,7 +10,7 @@
 void cpu_exec(uint64_t);
 /***pa1.1***/
 extern void isa_reg_display(void);
-extern WP *new_wp(char *expr, bool *success);
+extern WP *new_wp(char *expr);
 extern void delete_wp(int index);
 extern void show_me_free();
 
@@ -192,14 +192,10 @@ static int cmd_w(char *args){
 		printf("invalid argument: input w <EXPR>\n");
 		return 0;
 	}else{
-		bool success = false;
-		WP *wp = new_wp(arg, &success);
+		WP *wp = new_wp(arg);
 		show_me_free();
-		if(success){
-			printf("watchpoint %d: %s\n", wp->NO, arg);
-		}else{
-			printf("invalid expression: %s\n", arg);
-		}
+		printf("create watchpoint%d: %s\n", wp->NO, wp->wp_expr);
+		Assert(strcmp(wp->wp_expr, arg)==0, "wp_expr not equal input expr\n");
 		return 0;
 	}
 }
