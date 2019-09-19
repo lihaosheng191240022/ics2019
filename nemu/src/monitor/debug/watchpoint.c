@@ -54,7 +54,7 @@ WP *new_wp(char *in_expr){
 	return find_tail->next;
 }
 
-void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
+static void free_wp(WP *wp){/*need any check whether wp was exactly in free_ Llist??*/
 	/*delete from head Llist*/
 	WP *before_wp = head;
 	while(before_wp!=NULL){/*why use while(1) is segmentation fault???*/
@@ -102,4 +102,10 @@ void show_me_free(){
 		each = each->next;
 	}
 	printf("\n");
+}
+void show_all_wp(){
+	WP *used = head->next;
+	while(used != NULL){
+		printf("%d: %s\n", used->NO, used->wp_expr);
+	}
 }
