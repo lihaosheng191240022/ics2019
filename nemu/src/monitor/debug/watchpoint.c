@@ -107,5 +107,6 @@ void show_all_wp(){
 	WP *used = head->next;
 	while(used != NULL){
 		printf("%d: %s\n", used->NO, used->wp_expr);
+		used = used->next;
 	}
 }
