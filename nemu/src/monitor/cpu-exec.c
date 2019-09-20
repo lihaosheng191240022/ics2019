@@ -59,14 +59,31 @@ void cpu_exec(uint64_t n) {
   }
 
     /*pa1.3 TODO: check watchpoints here. */
+	static uint32_t changed_wp[32][3];
+	int next_changed_wp = 0;
 	WP *check = get_head()->next;
+	bool success = false;
 	while(check!=NULL){
 		/*calculate the wp_expr*/
-		/*compare with old_val*/
-		/*if equal, go on; if unequal, save and update the old_val*/
+		uint32_t new_val = expr(check->wp_expr, &success);
+		if(success){
+			if(new_val != check->old_val){
+				changed_wp[next_changed_wp]={check->NO, check->old_val, new_val};
+				check->old_val = new_val;
+				next_changed_wp++;
+			}
+		}else{
+			Assert(0,"invalid wp_expr\n");
+		}
 	}
-	/*print all changed wp*/
-	/*set the STOP mode*/
+	Assert(next_changed_wp<32, "too many changed_wps\n");
+	for(int j=0;j<next_changed_wp;j++){
+		printf("watchpoint %d has changed\n", changed_wp[j][0]);
+		printf("old value: %u\nnew value: %u\n", changed_wp[j][1], changed_wp[j][2]);
+	}
+	if(next_chaned_wp != 0){
+		nemu_state.state = NEMU_STOP;
+	}
 
 #endif
 
