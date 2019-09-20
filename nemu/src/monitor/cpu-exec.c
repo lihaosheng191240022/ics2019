@@ -12,6 +12,10 @@
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
 
+/***pa1.3***/
+extern WP *get_head();
+extern uint32_t expr(char *e, bool *success);
+
 NEMUState nemu_state = {.state = NEMU_STOP};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {
@@ -68,7 +72,9 @@ void cpu_exec(uint64_t n) {
 		uint32_t new_val = expr(check->wp_expr, &success);
 		if(success){
 			if(new_val != check->old_val){
-				changed_wp[next_changed_wp]={check->NO, check->old_val, new_val};
+				changed_wp[next_changed_wp][0] = check->NO;
+				changed_wp[next_changed_wp][1] = check->old_val;
+				changed_wp[next_changed_wp][2] = new_val;
 				check->old_val = new_val;
 				next_changed_wp++;
 			}
@@ -81,7 +87,7 @@ void cpu_exec(uint64_t n) {
 		printf("watchpoint %d has changed\n", changed_wp[j][0]);
 		printf("old value: %u\nnew value: %u\n", changed_wp[j][1], changed_wp[j][2]);
 	}
-	if(next_chaned_wp != 0){
+	if(next_changed_wp != 0){
 		nemu_state.state = NEMU_STOP;
 	}
 
