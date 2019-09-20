@@ -81,6 +81,7 @@ void cpu_exec(uint64_t n) {
 		}else{
 			Assert(0,"invalid wp_expr\n");
 		}
+		check = check->next;
 	}
 	Assert(next_changed_wp<32, "too many changed_wps\n");
 	for(int j=0;j<next_changed_wp;j++){
