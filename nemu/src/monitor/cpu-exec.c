@@ -64,6 +64,7 @@ void cpu_exec(uint64_t n) {
 
     /*pa1.3 TODO: check watchpoints here. */
 	static uint32_t changed_wp[32][3];
+	static char changed_wp_expr[32][32];
 	int next_changed_wp = 0;
 	WP *check = get_head()->next;
 	bool success = false;
@@ -75,6 +76,8 @@ void cpu_exec(uint64_t n) {
 				changed_wp[next_changed_wp][0] = check->NO;
 				changed_wp[next_changed_wp][1] = check->old_val;
 				changed_wp[next_changed_wp][2] = new_val;
+				strcpy(changed_wp_expr[next_changed_wp],check->wp_expr);
+				Assert(strlen(check->wp_expr)<32, "too long wp_expr\n");
 				check->old_val = new_val;
 				next_changed_wp++;
 			}
@@ -85,7 +88,7 @@ void cpu_exec(uint64_t n) {
 	}
 	Assert(next_changed_wp<32, "too many changed_wps\n");
 	for(int j=0;j<next_changed_wp;j++){
-		printf("watchpoint %d: %s\n", changed_wp[j][0], check->wp_expr);
+		printf("watchpoint %d: %s\n", changed_wp[j][0], changed_wp_expr[j]);
 		printf("old value: %u\nnew value: %u\n", changed_wp[j][1], changed_wp[j][2]);
 	}
 	if(next_changed_wp != 0){
