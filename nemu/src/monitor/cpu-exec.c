@@ -85,7 +85,7 @@ void cpu_exec(uint64_t n) {
 	}
 	Assert(next_changed_wp<32, "too many changed_wps\n");
 	for(int j=0;j<next_changed_wp;j++){
-		printf("watchpoint %d has changed\n", changed_wp[j][0]);
+		printf("watchpoint %d: %s\n", changed_wp[j][0], check->wp_expr);
 		printf("old value: %u\nnew value: %u\n", changed_wp[j][1], changed_wp[j][2]);
 	}
 	if(next_changed_wp != 0){
