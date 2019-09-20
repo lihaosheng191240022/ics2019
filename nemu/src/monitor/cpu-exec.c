@@ -93,7 +93,7 @@ void cpu_exec(uint64_t n) {
 	}
 	if(next_changed_wp != 0){
 		nemu_state.state = NEMU_STOP;
-		printf("pc: %x\n",cpu.pc);
+		printf("pc now at: %x\n",cpu.pc);
 	}
 
 #endif
