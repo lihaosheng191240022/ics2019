@@ -89,7 +89,7 @@ void cpu_exec(uint64_t n) {
 	Assert(next_changed_wp<32, "too many changed_wps\n");
 	for(int j=0;j<next_changed_wp;j++){
 		printf("watchpoint %d: %s\n", changed_wp[j][0], changed_wp_expr[j]);
-		printf("old value: %u\nnew value: %u\n", changed_wp[j][1], changed_wp[j][2]);
+		printf("old value: %x %u\nnew value: %x %u\n", changed_wp[j][1], changed_wp[j][1], changed_wp[j][2], changed_wp[j][2]);
 	}
 	if(next_changed_wp != 0){
 		nemu_state.state = NEMU_STOP;
