@@ -49,6 +49,9 @@ static inline void update_pc(void) {
 }
 
 void display_inv_msg(vaddr_t pc);
+/*declare exec_xxx functions*/
+make_EHelper(push);
+make_EHelper(call);
 
 #ifdef DEBUG
 #define print_asm(...) \

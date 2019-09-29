@@ -30,7 +30,7 @@ static inline void rtl_push(const rtlreg_t* src1) {
 	cpu.esp -= 4;
 	rtlreg_t tmp = *src1;
 	for(int i=cpu.esp;i<cpu.esp+4;i++){
-		p[i] = tmp & 0xff;
+		pmem[i] = tmp & 0xff;
 		tmp >>= 8;
 	}	
 }
