@@ -49,7 +49,7 @@ static inline void update_pc(void) {
 }
 
 void display_inv_msg(vaddr_t pc);
-/*declare exec_xxx functions*/
+/*declare*/
 make_EHelper(push);
 make_EHelper(call);
 make_EHelper(sub);
