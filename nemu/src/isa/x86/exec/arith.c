@@ -9,7 +9,7 @@ make_EHelper(add) {
 make_EHelper(sub) {
 	rtlreg_t tmp;
 	rtlreg_t src1;
-	rtl_sext(&src1, &(id_src->val), decinfo.width);
+	rtl_sext(&src1, &(id_src->val), id_src->width);
 	Assert(decinfo.width==2||decinfo.width==4, "WRONG HERE\n");
 	rtl_sub(&tmp,&(id_dest->val),&src1);
 	rtl_sr(id_dest->reg, &tmp, decinfo.width);

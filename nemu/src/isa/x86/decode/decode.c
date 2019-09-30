@@ -188,7 +188,6 @@ make_DHelper(test_I) {
 }
 
 make_DHelper(SI2E) {
-	printf("SI2E:decinfo.width=%d\n", decinfo.width);
   assert(id_dest->width == 2 || id_dest->width == 4);
   decode_op_rm(pc, id_dest, true, NULL, false);/*decode ModR/M byte*/
   id_src->width = 1;
