@@ -34,7 +34,10 @@ make_EHelper(call) {
 }
 
 make_EHelper(ret) {
-  TODO();
+  rtlreg_t tmp;
+	rtl_pop(&tmp);
+	Assert(tmp>=0x100000, "Invalid return position\n");
+	decinfo.seq_pc = tmp;
 
   print_asm("ret");
 }
