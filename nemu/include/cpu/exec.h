@@ -53,6 +53,8 @@ void display_inv_msg(vaddr_t pc);
 make_EHelper(push);
 make_EHelper(call);
 make_EHelper(sub);
+make_EHelper(xor);
+make_EHelper(ret);
 
 #ifdef DEBUG
 #define print_asm(...) \
