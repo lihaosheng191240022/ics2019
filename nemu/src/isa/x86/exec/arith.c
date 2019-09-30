@@ -10,12 +10,11 @@ make_EHelper(sub) {
 	rtlreg_t tmp;
 	rtlreg_t src1;
 	rtl_sext(&src1, &(id_src->val), id_src->width);
-	Assert(decinfo.width==2||decinfo.width==4, "WRONG HERE\n");
 	rtl_sub(&tmp,&(id_dest->val),&src1);
-	rtl_sr(id_dest->reg, &tmp, decinfo.width);
+	rtl_sr(id_dest->reg, &tmp, id_dest->width);
 	/*set EFLAGS*/
-	rtl_update_ZF(&tmp, decinfo.width);
-	rtl_update_SF(&tmp, decinfo.width);
+	rtl_update_ZF(&tmp, id_dest->width);
+	rtl_update_SF(&tmp, id_dest->width);
 	//rtl_is_sub_overflow();
 	//rtl_is_sub_carry();
   print_asm_template2(sub);
