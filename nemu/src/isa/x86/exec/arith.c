@@ -8,7 +8,10 @@ make_EHelper(add) {
 
 make_EHelper(sub) {
 	rtlreg_t tmp;
-	rtl_sub(&tmp,&(id_dest->val),&(id_src->val));
+	rtlreg_t src1;
+	rtl_sext(&src1, &(id_src->val), decinfo.width);
+	Assert(decinfo.width==2||decinfo.width==4, "WRONG HERE\n");
+	rtl_sub(&tmp,&(id_dest->val),&src1);
 	rtl_sr(id_dest->reg, &tmp, decinfo.width);
 	/*set EFLAGS*/
 	rtl_update_ZF(&tmp, decinfo.width);

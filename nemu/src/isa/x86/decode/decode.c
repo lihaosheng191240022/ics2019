@@ -189,7 +189,7 @@ make_DHelper(test_I) {
 
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
-  decode_op_rm(pc, id_dest, true, NULL, false);/*what???don't need reg field???'*/
+  decode_op_rm(pc, id_dest, true, NULL, false);/*decode ModR/M byte*/
   id_src->width = 1;
   decode_op_SI(pc, id_src, true);
   if (id_dest->width == 2) {
