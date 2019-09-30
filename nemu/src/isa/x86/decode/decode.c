@@ -33,7 +33,7 @@ static inline make_DopHelper(SI) {
    */
   /*pa2.1*/
 	uint32_t tmp = instr_fetch(pc, op->width);
-	op->simm = (op->width==1)? ((signed char)tmp):((int)tmp);
+	op->simm = (op->width==1)? ((int)(signed char)tmp):((int)tmp);
 
   rtl_li(&op->val, op->simm);
 
@@ -189,7 +189,7 @@ make_DHelper(test_I) {
 
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
-  decode_op_rm(pc, id_dest, true, NULL, false);
+  decode_op_rm(pc, id_dest, true, NULL, false);/*what???don't need reg field???'*/
   id_src->width = 1;
   decode_op_SI(pc, id_src, true);
   if (id_dest->width == 2) {

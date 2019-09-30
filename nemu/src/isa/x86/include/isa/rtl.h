@@ -38,13 +38,17 @@ static inline void rtl_push(const rtlreg_t* src1) {
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
-  TODO();
+	uint8_t *tmp_p = &pmem[cpu.esp];
+  rtlreg_t tmp = *((rtlreg_t *)tmp_p);
+	*dest = tmp;
+	cpu.esp += 4;
 }
 
 static inline void rtl_is_sub_overflow(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1, const rtlreg_t* src2, int width) {
   // dest <- is_overflow(src1 - src2)
-  TODO();
+	TODO();
+	
 }
 
 static inline void rtl_is_sub_carry(rtlreg_t* dest,
@@ -65,12 +69,18 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
   TODO();
 }
 
+//#define eflags_CF 0
+//#define eflags_ZF 6 
+//#define eflags_SF 7
+//#define eflags_IF 9
+//#define eflags_OF 11
+
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    TODO(); \
+    cpu.EFLAGS = *src; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    TODO(); \
+    *dest = cpu.EFLAGS; \
   }
 
 make_rtl_setget_eflags(CF)
@@ -80,12 +90,29 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  TODO();
+	/*pa2.1*/
+	rtlreg_t tmp = -1;
+	rtlreg_t setZF = 0x00000040 | cpu.EFLAGS;
+	rtlreg_t clrZF = 0xffffffbf & cpu.EFLAGS;
+	tmp >>= ((4-width)*8);
+	if((tmp & *result)==0){
+		rtl_set_ZF(&setZF);
+	}else{
+		rtl_set_ZF(&clrZF);
+	}
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  TODO();
+  rtlreg_t tmp = *result;
+	tmp >>= (8*width-1);
+	rtlreg_t setSF = 0x00000080 | cpu.EFLAGS;
+	rtlreg_t clrSF = 0xffffff7f & cpu.EFLAGS;
+	if(tmp==1){
+		rtl_set_SF(&setSF);
+	}else{
+		rtl_set_SF(&clrSF);
+	}
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
