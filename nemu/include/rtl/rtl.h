@@ -145,14 +145,14 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 			case 1:	tmp = *src1 | 0xffffff00; break;
 			case 2:	tmp = *src1 | 0xffff0000; break;
 			case 4:	tmp = *src1; break;
-			default:	Assert(0, "rtl_signext failed\n");
+			default:	Assert(0, "rtl_signext failed, width is %d\n", width);
 		}
 	}else/*if positive*/{
 		switch(width){
 			case 1:	tmp = *src1 & 0x000000ff; break;
 			case 2: tmp = *src1 & 0x0000ffff; break;
 			case 4: tmp = *src1; break;
-			default: Assert(0, "rtl_signext2 failed\n");
+			default: Assert(0, "rtl_signext2 failed, width is %d\n", width);
 		}
 	}
 	*dest = tmp;
