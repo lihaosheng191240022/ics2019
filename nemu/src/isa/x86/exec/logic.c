@@ -8,8 +8,10 @@ make_EHelper(test) {
 }
 
 make_EHelper(and) {
-  TODO();
-
+  /*pa2.2 just copy xor below*/
+	rtlreg_t tmp;
+	rtl_and(&tmp, &(id_dest->val), &(id_src->val));
+	rtl_sr(id_dest->reg, &tmp, id_dest->width);
   print_asm_template2(and);
 }
 
