@@ -1,9 +1,17 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
-
-  print_asm_template2(add);
+  /*[pa2.2 add.c*/
+	rtlreg_t tmp;
+	rtl_add(&tmp, &(id_dest->val), &(id_src->val));
+	rtl_sr(id_dest->reg, &tmp, id_dest->width);
+	/*update EFLAGS*/
+	rtl_update_ZF(&tmp, id_dest->width);
+	rtl_update_SF(&tmp, id_dest->width);
+	//rtl_is_add_overflow();
+	//rtl_is_add_carry();
+  
+	print_asm_template2(add);
 }
 
 make_EHelper(sub) {

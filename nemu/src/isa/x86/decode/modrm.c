@@ -8,7 +8,7 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   int base_reg = -1, index_reg = -1, scale = 0;
   rtl_li(&s0, 0);
 
-  if (m->R_M == R_ESP) {
+  if (m->R_M == R_ESP) {/*has SIB when r/m=100*/
     SIB s;
     s.val = instr_fetch(pc, 1);
     base_reg = s.base;
@@ -77,6 +77,7 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   rm->type = OP_TYPE_MEM;
 }
 
+/*rm means r/m, reg means reg field*/
 void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool load_reg_val) {
   ModR_M m;
   m.val = instr_fetch(pc, 1);
@@ -93,7 +94,7 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
 #endif
   }
 
-  if (m.mod == 3) {
+  if (m.mod == 3) {/*means no SIB or offset bytes, and means r/m represents a gpr*/
     rm->type = OP_TYPE_REG;
     rm->reg = m.R_M;
     if (load_rm_val) {
@@ -104,7 +105,7 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
     sprintf(rm->str, "%%%s", reg_name(m.R_M, rm->width));
 #endif
   }
-  else {
+  else {/*means may have SIB or offset byte(s)*/
     load_addr(pc, &m, rm);
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
