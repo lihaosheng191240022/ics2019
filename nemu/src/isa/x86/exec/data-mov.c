@@ -6,8 +6,11 @@ make_EHelper(mov) {
 }
 
 make_EHelper(push) {
-  /*pa2.1*/
-	rtl_push(&id_dest->val);
+  /*pa2.1, pa2.2*/
+	if(pmem[*pc-2]==0xff)
+		rtl_push(&s0);
+	else
+		rtl_push(&id_dest->val);
 
   print_asm_template1(push);
 }
