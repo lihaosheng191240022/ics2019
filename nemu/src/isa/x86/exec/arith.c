@@ -29,9 +29,13 @@ make_EHelper(sub) {
 }
 
 make_EHelper(cmp) {
-  TODO();
-
-  print_asm_template2(cmp);
+  /*pa2.2 add.c*/
+	rtl_sub(&s0, &(id_dest->val), &(id_src->val));
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
+	//rtl_is_sub_overflow();
+	//rtl_is_sub_carry();
+ 	print_asm_template2(cmp);
 }
 
 make_EHelper(inc) {
