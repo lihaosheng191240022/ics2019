@@ -151,7 +151,7 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
    /* *src==0 or 1*/Assert((*src==0)||(*src==1),"set_eflags is not correct\n");\
 	  int index = concat(eflags_, f);\
 		rtlreg_t mask = 1<<index;\
-		cpu.EFLAGS = (src==1)?(cpu.EFLAGS | mask):(cpu.EFLAGS & (~mask));\
+		cpu.EFLAGS = (*src==1)?(cpu.EFLAGS | mask):(cpu.EFLAGS & (~mask));\
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
    /**/\
