@@ -1,7 +1,7 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  /*[pa2.2 add.c*/
+  /*pa2.2 add.c*/
 	rtl_add(&s0, &(id_dest->val), &(id_src->val));
 	rtl_sr(id_dest->reg, &s0, id_dest->width);
 	/*update EFLAGS*/
@@ -16,17 +16,21 @@ make_EHelper(add) {
 }
 
 make_EHelper(sub) {
-	rtlreg_t tmp;
-	rtlreg_t src1;
-	rtl_sext(&src1, &(id_src->val), id_src->width);
-	rtl_sub(&tmp,&(id_dest->val),&src1);
-	rtl_sr(id_dest->reg, &tmp, id_dest->width);
+	/*pa2.2 add.c*/
+	//rtlreg_t tmp;
+	//rtlreg_t src1;
+	//rtl_sext(&src1, &(id_src->val), id_src->width);--no-need
+	rtl_sub(&s0,&(id_dest->val),&(id_src->val));
+	rtl_sr(id_dest->reg, &s0, id_dest->width);
 	/*set EFLAGS*/
-	rtl_update_ZF(&tmp, id_dest->width);
-	rtl_update_SF(&tmp, id_dest->width);
-	//rtl_is_sub_overflow();
-	//rtl_is_sub_carry();
-  print_asm_template2(sub);
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
+	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	rtl_set_OF(&s1);
+	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
+	rtl_set_CF(&s1);
+  
+	print_asm_template2(sub);
 }
 
 make_EHelper(cmp) {
