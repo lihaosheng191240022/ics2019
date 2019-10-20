@@ -137,25 +137,25 @@ static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  rtlreg_t tmp = *src1;
-	tmp >>= (8*width-1);
-	tmp &= 1;
-	if(tmp==1)/*negative*/{
+  t0 = *src1;
+	t0 >>= (8*width-1);
+	t0 &= 1;
+	if(t0==1)/*negative*/{
 		switch(width){
-			case 1:	tmp = *src1 | 0xffffff00; break;
-			case 2:	tmp = *src1 | 0xffff0000; break;
-			case 4:	tmp = *src1; break;
+			case 1:	t1 = *src1 | 0xffffff00; break;
+			case 2:	t1 = *src1 | 0xffff0000; break;
+			case 4:	t1 = *src1; break;
 			default:	Assert(0, "rtl_signext failed, width is %d\n", width);
 		}
 	}else/*if positive*/{
 		switch(width){
-			case 1:	tmp = *src1 & 0x000000ff; break;
-			case 2: tmp = *src1 & 0x0000ffff; break;
-			case 4: tmp = *src1; break;
+			case 1:	t1 = *src1 & 0x000000ff; break;
+			case 2: t1 = *src1 & 0x0000ffff; break;
+			case 4: t1 = *src1; break;
 			default: Assert(0, "rtl_signext2 failed, width is %d\n", width);
 		}
 	}
-	*dest = tmp;
+	*dest = t1;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,

@@ -3,6 +3,7 @@
 
 #include "rtl/rtl.h"
 
+//#define FORTEST
 /* RTL pseudo instructions */
 
 static inline void rtl_lr(rtlreg_t* dest, int r, int width) {
@@ -32,16 +33,24 @@ static inline void rtl_push(const rtlreg_t* src1) {
 	for(int i=cpu.esp;i<cpu.esp+4;i++){
 		pmem[i] = t0 & 0xff;
 		t0 >>= 8;
-	}	
+	}
+#ifdef FORTEST
+	rtlreg_t *p = (rtlreg_t *)(cpu.esp);
+	Assert(*p==t0, "rtl_push is wrong\n");	
+#endif
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
 	uint8_t *tmp_p = &pmem[cpu.esp];
-  rtlreg_t tmp = *((rtlreg_t *)tmp_p);
-	*dest = tmp;
+  t0 = *((rtlreg_t *)tmp_p);
+	*dest = t0;
 	cpu.esp += 4;
+#ifdef FORTEST
+	rtlreg_t *p = (rtlreg_t *)(cpu.esp-4);
+	Assert(*p==t0, "rtl_pop is wrong\n");
+#endif
 }
 
 static inline void rtl_is_sub_overflow(rtlreg_t* dest,
