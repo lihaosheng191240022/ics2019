@@ -46,7 +46,7 @@ void isa_reg_display() {
 		for(i = R_EAX;i <= R_EDI;i ++){
 				printf("%s:  0x%08x  %u\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
 		}
-		printf("  pc:  0x%08x  %u\n",cpu.pc, cpu.pc);
+		printf(" pc:  0x%08x  %u\n",cpu.pc, cpu.pc);
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
