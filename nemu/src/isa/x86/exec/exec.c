@@ -5,7 +5,7 @@ static inline void set_width(int width) {
   /*PA2.2: adjust for movzx*/
 	if(width == 3){/*movzbw, movzbl*/
 		decinfo.src.width = decinfo.src2.width = 1;
-		//decinfo.dest.width = decinfo.isa.is_operand_size_16 ? 2 : 4; will do it in make_EHelper(movzx)
+		decinfo.dest.width = decinfo.isa.is_operand_size_16 ? 2 : 4; //will do it in make_EHelper(movzx)
 		return;
 	}
 	if(width == 5){/*movzwl*/
@@ -33,7 +33,7 @@ static make_EHelper(name) { \
 
 /* 0x80, 0x81, 0x83 */
 make_group(gp1,
-    EMPTY, EMPTY, EMPTY, EMPTY,
+    /*0x83 /0 add*/IDEXW(I2E, add, 3), EMPTY, EMPTY, EMPTY,
     /*0x83 /4 and*/EX(and), /*0x83 /5 sub*/EX(sub), EMPTY, EMPTY)
 
 /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
