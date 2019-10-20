@@ -35,8 +35,8 @@ static inline void rtl_push(const rtlreg_t* src1) {
 		t0 >>= 8;
 	}
 #ifdef FORTEST
-	rtlreg_t *p = (rtlreg_t *)(cpu.esp);
-	Assert(*p==t0, "rtl_push is wrong\n");	
+	vaddr_t p = cpu.esp;
+	Assert(*((rtlreg_t *)(&pmem[p]))==t0, "rtl_push is wrong\n");	
 #endif
 }
 
@@ -48,8 +48,8 @@ static inline void rtl_pop(rtlreg_t* dest) {
 	*dest = t0;
 	cpu.esp += 4;
 #ifdef FORTEST
-	rtlreg_t *p = (rtlreg_t *)(cpu.esp-4);
-	Assert(*p==t0, "rtl_pop is wrong\n");
+	vaddr_t p = cpu.esp-4;
+	Assert(*((rtlreg_t *)(&pmem[p]))==t0, "rtl_pop is wrong\n");	
 #endif
 }
 
