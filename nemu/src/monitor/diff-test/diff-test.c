@@ -71,7 +71,7 @@ void init_difftest(char *ref_so_file, long img_size) {
   ref_difftest_setregs(&cpu);
 }
 
-static void checkregs(CPU_state *ref, vaddr_t pc) {
+static void checkregs(CPU_state *ref, vaddr_t pc) {/*isa_difftest_checkregs->checkregs*/
   if (!isa_difftest_checkregs(ref, pc)) {
     extern void isa_reg_display(void);
     isa_reg_display();
