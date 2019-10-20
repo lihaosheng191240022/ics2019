@@ -26,7 +26,7 @@ make_EHelper(jmp_rm) {
 
 make_EHelper(call) {
   // the target address is calculated at the decode stage
-  /*pa2.1 only call rel32*/
+  /*pa2.1 only call rel32, but relv actually*/
 	rtl_push(&decinfo.seq_pc);
 	decinfo.seq_pc += id_dest->val;
 
@@ -34,10 +34,9 @@ make_EHelper(call) {
 }
 
 make_EHelper(ret) {
-  rtlreg_t tmp;
-	rtl_pop(&tmp);
-	Assert(tmp>=0x100000, "Invalid return position\n");
-	decinfo.seq_pc = tmp;
+	rtl_pop(&s0);
+	Assert(s0>=0x100000, "Invalid return position\n");
+	decinfo.seq_pc = s0;
 
   print_asm("ret");
 }
