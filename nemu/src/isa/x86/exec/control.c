@@ -28,7 +28,13 @@ make_EHelper(call) {
   // the target address is calculated at the decode stage
   /*pa2.1 only call rel32, but relv actually*/
 	rtl_push(&decinfo.seq_pc);
-	decinfo.seq_pc += id_dest->val;
+	if(decinfo.opcode==0xe8){
+		decinfo.seq_pc += id_dest->val;
+	}else if(decinfo.opcode==0xff&&decinfo.isa.ext_opcode==2){
+		decinfo.seq_pc = id_dest->val;
+	}else{
+		Assert(0, "pc=%08x: call need more function\n", cpu.pc);
+	}
 
   print_asm("call %x", decinfo.jmp_pc);
 }
