@@ -77,6 +77,7 @@ make_EHelper(imul2);
 make_EHelper(cltd);
 make_EHelper(idiv);
 make_EHelper(jmp);
+make_EHelper(test);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
