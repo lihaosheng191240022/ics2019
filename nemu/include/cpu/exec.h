@@ -66,6 +66,7 @@ make_EHelper(movzx);
 make_EHelper(test);
 make_EHelper(jcc);
 make_EHelper(leave);
+make_EHelper(adc);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
