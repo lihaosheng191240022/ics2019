@@ -114,7 +114,11 @@ make_EHelper(setcc) {
 
   rtl_setcc(&s0, cc);
   operand_write(id_dest, &s0);
-
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: setcc need more function\n", cpu.pc);
+	}
   print_asm("set%s %s", get_cc_name(cc), id_dest->str);
 }
 
