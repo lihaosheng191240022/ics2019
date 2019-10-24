@@ -27,7 +27,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
     case CC_L:	rtl_get_SF(&t0);
 								rtl_get_OF(&t1);
 								t0 ^= t1;
-								printf("pc=%08x: dest=%u", cpu.pc, t0);
+								printf("pc=%08x: dest=%u\n", cpu.pc, t0);
 								*dest = t0;/*if SF^OF==1, set 1; else set 0*/break;
     case CC_LE:	rtl_get_SF(&t0);
 								rtl_get_OF(&t1);
