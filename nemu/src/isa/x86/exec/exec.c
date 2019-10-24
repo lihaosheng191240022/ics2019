@@ -64,7 +64,7 @@ make_group(gp7,
 /* TODO: Add more instructions!!! */
 
 static OpcodeEntry opcode_table [512] = {
-  /* 0x00 */	EMPTY, /*0x01 add*/IDEX(G2E, add), EMPTY, EMPTY,
+  /* 0x00 */	EMPTY, /*0x01 add*/IDEX(G2E, add), EMPTY, /*03 add r/mv to rv*/IDEX(E2G, add),
   /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x08 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x0c */	EMPTY, EMPTY, EMPTY, EX(2byte_esc),
