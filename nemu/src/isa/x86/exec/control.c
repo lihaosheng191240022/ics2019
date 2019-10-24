@@ -6,6 +6,7 @@ make_EHelper(jmp) {
   if(decinfo.opcode==0xeb||decinfo.opcode==0xe9){
 		rtl_j(decinfo.jmp_pc);
 	}else if(decinfo.opcode==0xff){
+		printf("addr=%08x\nval=%08x\n", id_dest->addr, id_dest->val);
 		rtl_j(id_dest->addr);
 	}else{
 		Assert(0, "pc=%08x: jmp need more function\n", cpu.pc);
