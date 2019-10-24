@@ -46,8 +46,8 @@ static inline void rtl_pop(rtlreg_t* dest) {
 	uint8_t *tmp_p = &pmem[cpu.esp];
   t0 = *((rtlreg_t *)tmp_p);
 	*dest = t0;
-	printf("now stack top is: %x", t0);
-	printf("and we pop out: %x", *dest);
+	printf("now stack top is: %x\n", t0);
+	printf("and we pop out: %x\n", *dest);
 	cpu.esp += 4;
 #ifdef FORTEST
 	vaddr_t p = cpu.esp-4;
