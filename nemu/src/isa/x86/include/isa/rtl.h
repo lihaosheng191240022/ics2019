@@ -195,10 +195,13 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
   t0 = *result;
-	t0 >>= (8*width-1);
-	//rtlreg_t setSF = 0x00000080 | cpu.EFLAGS;
-	//rtlreg_t clrSF = 0xffffff7f & cpu.EFLAGS;
-	if(t0==1){
+	//t0 >>= (8*width-1);
+	switch(width){
+		case 1:	t0 &= 0x80;break;
+		case 2: t0 &= 0x8000;break;
+		case 4: t0 &= 0x80000000;break;	
+	}
+	if(t0!=0){
 		t1 = 1;
 		rtl_set_SF(&t1);
 	}else{
