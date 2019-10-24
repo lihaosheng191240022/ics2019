@@ -6,6 +6,7 @@ size_t strlen(const char *s) {
   size_t i = 0;
 	while(s[i] != '\0'){
 		i++;
+		printf("strlen...\n");
 	}
 	return i;
 }
@@ -15,6 +16,7 @@ char *strcpy(char* dst,const char* src) {
 	size_t i = 0;
 	while(src[i] != '\0'){
 		dst[i] = src[i];
+		printf("strcpy...\n");
 	}
 	dst[i] = src[i];
 	return dst;
@@ -39,6 +41,7 @@ char* strcat(char* dst, const char* src) {
 		dst[i] = src[j];
 		i++;
 		j++;
+		printf("strcat...\n");
 	}
 	dst[i] = src[j];
   return dst;
@@ -48,6 +51,7 @@ int strcmp(const char* s1, const char* s2) {
 	size_t i = 0;
 	while(s1[i] == s2[i] && s1[i] != '\0'){
 		i++;
+		printf("strcmp...\n");
 	}
 	if(s1[i] == s2[i]){
 		return 0;
