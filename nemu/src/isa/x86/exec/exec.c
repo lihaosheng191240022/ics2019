@@ -33,7 +33,7 @@ static make_EHelper(name) { \
 
 /* 0x80, 0x81, 0x83 */
 make_group(gp1,
-    /*0x83 /0 add*/IDEXW(I2E, add, 3), EMPTY, EMPTY, EMPTY,
+    /*0x83 /0 add*/EXW(add, 3), EMPTY, EMPTY, EMPTY,
     /*0x83 /4 and*/EX(and), /*0x83 /5 sub*/EX(sub), EMPTY, EMPTY)
 
 /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
@@ -104,7 +104,7 @@ static OpcodeEntry opcode_table [512] = {
 	/* 0x78 */	IDEXW(J, jcc, 1), IDEXW(J, jcc, 1), IDEXW(J, jcc, 1), IDEXW(J, jcc, 1),
 	/* 0x7c */	IDEXW(J, jcc, 1), IDEXW(J, jcc, 1), IDEXW(J, jcc, 1), IDEXW(J, jcc, 1),
   
-	/* 0x80 */	IDEXW(I2E, gp1, 1), IDEX(I2E, gp1), EMPTY, IDEX(SI2E, gp1),
+	/* 0x80 */	IDEXW(I2E, gp1, 1), IDEX(I2E, gp1), EMPTY, IDEXW(SI2E, gp1, 3),
   /* 0x84 */	/*84 test*/IDEXW(G2E, test, 1), /*85 test*/IDEX(G2E, test), EMPTY, EMPTY,
   /* 0x88 */	IDEXW(mov_G2E, mov, 1), IDEX(mov_G2E, mov), IDEXW(mov_E2G, mov, 1), IDEX(mov_E2G, mov),
   /* 0x8c */	EMPTY, /*0x8d lea*/IDEX(lea_M2G, lea), EMPTY, EMPTY,
