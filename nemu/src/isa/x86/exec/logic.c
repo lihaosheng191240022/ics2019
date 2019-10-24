@@ -53,7 +53,13 @@ make_EHelper(or) {
 }
 
 make_EHelper(sar) {
-  TODO();
+  /*pa2.2*/
+	for(int i=0;i<id_src->val;i++){
+		id_dest->val /= 2;
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}
   // unnecessary to update CF and OF in NEMU
 	
   print_asm_template2(sar);
