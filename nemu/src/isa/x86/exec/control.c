@@ -3,7 +3,13 @@
 
 make_EHelper(jmp) {
   // the target address is calculated at the decode stage
-  rtl_j(decinfo.jmp_pc);
+  if(decinfo.opcode==0xeb||decinfo.opcode==0xe9){
+		rtl_j(decinfo.jmp_pc);
+	}else if(decinfo.opcode==0xff){
+		rtl_j(id_dest->addr);
+	}else{
+		Assert(0, "pc=%08x: jmp need more function\n", cpu.pc);
+	}
 
   print_asm("jmp %x", decinfo.jmp_pc);
 }
