@@ -45,9 +45,9 @@ make_EHelper(cmp) {
 	rtl_sub(&s0, &(id_src->val), &(id_dest->val));
 	rtl_update_ZFSF(&s0, id_src->width);
 
-	//rtlreg_t tmp;
-	//rtl_get_SF(&tmp);
-	//printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
+	rtlreg_t tmp;
+	rtl_get_SF(&tmp);
+	printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
 
 	rtl_is_sub_overflow(&s1, &s0, &(id_src->val), &(id_dest->val), id_dest->width);
 	assert(s1==0||s1==1);
