@@ -5,6 +5,8 @@ make_EHelper(add) {
 	rtl_add(&s0, &(id_dest->val), &(id_src->val));
 	if(id_dest->type==OP_TYPE_REG){
 		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else if(id_dest->type==OP_TYPE_MEM){
+		rtl_sm(&(id_dest->addr), &s0, id_dest->width);
 	}else{
 		Assert(0, "pc:%08x->add need more exec functions\n", cpu.pc);
 	}
