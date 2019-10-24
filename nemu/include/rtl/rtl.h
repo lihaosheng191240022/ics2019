@@ -134,10 +134,10 @@ static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
   // dest <- ~src1
   /*pa2.2*/
 	rtl_li(&t0, *src1);
-	printf("src1=%08x\n", *src1);
+	//printf("src1=%08x\n", *src1);
 	*dest = ~t0;
-	printf("dest=%08x\n", *dest);
-	Assert(((*dest) ^ (*src1))==0, "rtl_not is wrong\n");
+	//printf("dest=%08x\n", *dest);
+	Assert(((*dest) ^ (*src1))==-1, "rtl_not is wrong\n");
 }
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
