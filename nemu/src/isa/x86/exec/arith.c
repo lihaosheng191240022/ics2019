@@ -6,7 +6,7 @@ make_EHelper(add) {
 	if(id_dest->type==OP_TYPE_REG){
 		rtl_sr(id_dest->reg, &s0, id_dest->width);
 	}else{
-		Assert(0, "add need more exec functions\n");
+		Assert(0, "pc:%08x->add need more exec functions\n", cpu.pc);
 	}
 	/*update EFLAGS*/
 	//printf("add is successfully done\n");
