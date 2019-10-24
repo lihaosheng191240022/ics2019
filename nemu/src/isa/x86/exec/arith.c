@@ -3,7 +3,11 @@
 make_EHelper(add) {
   /*pa2.2 add.c*/
 	rtl_add(&s0, &(id_dest->val), &(id_src->val));
-	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else{
+		Assert(0, "add need more exec functions\n");
+	}
 	/*update EFLAGS*/
 	printf("add is successfully done\n");
 	rtl_update_ZF(&s0, id_dest->width);
