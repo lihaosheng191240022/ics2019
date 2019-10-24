@@ -112,7 +112,13 @@ make_EHelper(setcc) {
 }
 
 make_EHelper(not) {
-  TODO();
+  /*pa2.2*/
+	rtl_not(&s1, &(id_dest->val));
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s1, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: not need more functions\n", cpu.pc);
+	}
 
   print_asm_template1(not);
 }
