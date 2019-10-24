@@ -9,14 +9,14 @@ make_EHelper(add) {
 		Assert(0, "add need more exec functions\n");
 	}
 	/*update EFLAGS*/
-	printf("add is successfully done\n");
+	//printf("add is successfully done\n");
 	rtl_update_ZF(&s0, id_dest->width);
 	rtl_update_SF(&s0, id_dest->width);
 	rtl_is_add_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
 	rtl_set_OF(&s1);
 	rtl_is_add_carry(&s1, &s0, &(id_dest->val));
 	rtl_set_CF(&s1);
-  printf("EFLAGS is update after add\n");
+  //printf("EFLAGS is update after add\n");
 	print_asm_template2(add);
 }
 
