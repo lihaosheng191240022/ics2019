@@ -81,7 +81,7 @@ make_EHelper(sar) {
 make_EHelper(shl) {
   /*pa2.2*/
 	for(int i=0;i<id_src->val;i++){
-		id_dest->val *= 2;
+		id_dest->val <<= 1;
 	}
 	if(id_dest->type==OP_TYPE_REG){
 		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
@@ -90,15 +90,22 @@ make_EHelper(shl) {
 	}
 
   // unnecessary to update CF and OF in NEMU
-	rtl_update_ZF(&(id_dest->val), id_dest->width);
-	rtl_update_SF(&(id_dest->val), id_dest->width);
+	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
   print_asm_template2(shl);
 }
 
 make_EHelper(shr) {
-  TODO();
+  /*pa2.2*/
+	for(int i=0;i<id_src->val;i++){
+		id_dest->val >>= 1;
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: shr need more function\n", cpu.pc);
+	}
   // unnecessary to update CF and OF in NEMU
-
+	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
   print_asm_template2(shr);
 }
 
