@@ -80,6 +80,7 @@ make_EHelper(idiv);
 make_EHelper(jmp);
 make_EHelper(test);
 make_EHelper(movsx);
+make_EHelper(shr);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
