@@ -12,8 +12,7 @@ make_EHelper(add) {
 	}
 	/*update EFLAGS*/
 	//printf("add is successfully done\n");
-	rtl_update_ZF(&s0, id_dest->width);
-	rtl_update_SF(&s0, id_dest->width);
+	rtl_update_ZFSF(&s0, id_dest->width);
 	rtl_is_add_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
 	rtl_set_OF(&s1);
 	rtl_is_add_carry(&s1, &s0, &(id_dest->val));
@@ -30,8 +29,7 @@ make_EHelper(sub) {
 	rtl_sub(&s0,&(id_dest->val),&(id_src->val));
 	rtl_sr(id_dest->reg, &s0, id_dest->width);
 	/*set EFLAGS*/
-	rtl_update_ZF(&s0, id_dest->width);
-	rtl_update_SF(&s0, id_dest->width);
+	rtl_update_ZFSF(&s0, id_dest->width);
 	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
 	rtl_set_OF(&s1);
 	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
@@ -43,8 +41,7 @@ make_EHelper(sub) {
 make_EHelper(cmp) {
   /*pa2.2 add.c*/
 	rtl_sub(&s0, &(id_dest->val), &(id_src->val));
-	rtl_update_ZF(&s0, id_dest->width);
-	rtl_update_SF(&s0, id_dest->width);
+	rtl_update_ZFSF(&s0, id_dest->width);
 	//rtl_is_sub_overflow();
 	//rtl_is_sub_carry();
  	print_asm_template2(cmp);
@@ -57,7 +54,22 @@ make_EHelper(inc) {
 }
 
 make_EHelper(dec) {
-  TODO();
+  /*pa2.2*/
+	rtl_li(&s0, 1);
+	rtl_sub(&s1, &(id_dest->val), &s0);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s1, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: dec need more function\n", cpu.pc);
+	}
+	//update EFLAGS
+	rtl_update_ZFSF(&s1, id_dest->width);
+	rtl_is_sub_overflow(&s0, &s1, &(id_dest->val), &s0, id_dest->width);
+	assert(s0==0||s0==1);
+	rtl_set_OF(&s0);
+	rtl_is_sub_carry(&s0, &s1, &(id_dest->val));
+	assert(s0==0||s0==1);
+	rtl_set_CF(&s0);
 
   print_asm_template1(dec);
 }
