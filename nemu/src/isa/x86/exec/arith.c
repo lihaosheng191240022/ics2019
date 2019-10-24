@@ -31,8 +31,10 @@ make_EHelper(sub) {
 	/*set EFLAGS*/
 	rtl_update_ZFSF(&s0, id_dest->width);
 	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	assert(s1==0||s1==1);
 	rtl_set_OF(&s1);
 	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
+	assert(s1==0||s1==1);
 	rtl_set_CF(&s1);
   
 	print_asm_template2(sub);
@@ -42,9 +44,14 @@ make_EHelper(cmp) {
   /*pa2.2 add.c*/
 	rtl_sub(&s0, &(id_dest->val), &(id_src->val));
 	rtl_update_ZFSF(&s0, id_dest->width);
-	//rtl_is_sub_overflow();
-	//rtl_is_sub_carry();
- 	print_asm_template2(cmp);
+	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	assert(s1==0||s1==1);
+	rtl_set_OF(&s1);
+	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
+	assert(s1==0||s1==1);
+	rtl_set_CF(&s1);
+
+	print_asm_template2(cmp);
 }
 
 make_EHelper(inc) {
