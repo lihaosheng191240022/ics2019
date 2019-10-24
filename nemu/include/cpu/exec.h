@@ -67,6 +67,7 @@ make_EHelper(test);
 make_EHelper(jcc);
 make_EHelper(leave);
 make_EHelper(adc);
+make_EHelper(or);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
