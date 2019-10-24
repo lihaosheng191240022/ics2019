@@ -59,7 +59,9 @@ make_EHelper(inc) {
 	rtl_li(&s0, 1);
 	rtl_add(&s1, &(id_dest->val), &s0);
 	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &s1, id_dest->width);
+		rtl_sr(id_dest->reg, &s1, id_dest->width);	
+	}else if(id_dest->type==OP_TYPE_MEM){
+		rtl_sm(&(id_dest->addr), &s1, id_dest->width);
 	}else{
 		Assert(0, "pc=%08x: inc need more function\n", cpu.pc);
 	}
