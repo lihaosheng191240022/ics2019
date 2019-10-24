@@ -10,7 +10,7 @@ static inline void set_width(int width) {
 	}
 	if(width == 5){/*movzwl*/
 		decinfo.src.width = decinfo.src2.width = 2;
-		//decinfo.dest.width = 4; will do it in make_EHelper(movzx)
+		decinfo.dest.width = decinfo.isa.is_operand_size_16 ? 2 : 4;; //will do it in make_EHelper(movzx)
 		return;
 	}
 	/*adjust end*/
@@ -190,7 +190,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0xb0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xb4 */	EMPTY, EMPTY, /*0f b6 movzbv*/IDEXW(mov_E2G, movzx, 3), /*0f b7 movzwv*/IDEXW(mov_E2G, movzx, 5),
   /* 0xb8 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0xbc */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0xbc */	EMPTY, EMPTY, EMPTY, /*bf movsx*/IDEXW(E2G, movsx, 5),
   /* 0xc0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xc4 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xc8 */	EMPTY, EMPTY, EMPTY, EMPTY,
