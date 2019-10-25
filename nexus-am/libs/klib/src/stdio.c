@@ -64,7 +64,7 @@ int sprintf(char *out, const char *fmt, ...) {
 									}
 				default:	break;
 			}
-			i++;//this is necessary
+			i++;//this is necessary 
 		}
 		out[j] = '\0';
 	}
