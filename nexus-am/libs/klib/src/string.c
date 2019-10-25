@@ -16,6 +16,7 @@ char *strcpy(char* dst,const char* src) {
 	size_t i = 0;
 	while(src[i] != '\0'){
 		dst[i] = src[i];
+		i++;
 		//printf("strcpy...\n");
 	}
 	dst[i] = src[i];
