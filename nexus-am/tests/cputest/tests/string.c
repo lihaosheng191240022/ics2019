@@ -20,11 +20,11 @@ int main() {
 	nemu_assert(strcmp(s[0] + 3, s[1] + 3) == -1);
 	
 	/*mytest*/
-	strcpy(str, str1);
+	//strcpy(str, str1);
 	//nemu_assert(strcpy(str, str1) == str);
-	//nemu_assert(strcmp( strcat(strcpy(str, str1), s[3]), s[4]) == 0);
+	nemu_assert(strcmp( strcat(strcpy(str, str1), s[3]), s[4]) == 0);
 
-	//nemu_assert(memcmp(memset(str, '#', 5), s[5], 5) == 0);
+	nemu_assert(memcmp(memset(str, '#', 5), s[5], 5) == 0);
 
 	return 0;
 }
