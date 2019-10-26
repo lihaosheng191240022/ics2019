@@ -3,7 +3,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-void itoa(int num, char *s){
+void itoa2(int num, char *s){
 	size_t i = 0;
 	char buf[16] = {'\0'};
 	while(num!=0){
@@ -42,7 +42,7 @@ int sprintf(char *out, const char *fmt, ...) {
 				case 'd':{
 									int tmpd = va_arg(Argv, int);
 									char num[16] = {'\0'};
-									itoa(tmpd, num);
+									itoa2(tmpd, num);
 									for(int k = 0; k < 16; k++){
 										if(num[k]=='\0'){
 											break;
