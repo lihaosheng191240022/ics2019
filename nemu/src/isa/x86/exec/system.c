@@ -48,7 +48,12 @@ make_EHelper(in) {
 }
 
 make_EHelper(out) {
-  TODO();
+	/*pa2.3*/
+	if(id_src->width==1){
+		pio_write_b(id_dest->val, id_src->val);
+	}else{
+		Assert(0, "pc=%08x: out need more function\n", cpu.pc);
+	}	
 
   print_asm_template2(out);
 }
