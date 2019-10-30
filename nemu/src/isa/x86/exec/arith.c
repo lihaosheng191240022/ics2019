@@ -104,7 +104,20 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  /*pa2.2*/
+	if(id_dest->val==0){
+		rtl_li(&s0, 0);
+		rtl_set_CF(&s0);
+	}else{
+		rtl_li(&s0, 1);
+		rtl_set_CF(&s0);
+	}
+	id_dest->val = - id_dest->val;
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: neg need more function\n", cpu.pc);
+	}
 
   print_asm_template1(neg);
 }

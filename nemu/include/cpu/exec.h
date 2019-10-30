@@ -83,6 +83,8 @@ make_EHelper(test);
 make_EHelper(movsx);
 make_EHelper(shr);
 make_EHelper(sbb);
+make_EHelper(out);
+make_EHelper(neg);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \

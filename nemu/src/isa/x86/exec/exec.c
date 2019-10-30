@@ -43,7 +43,7 @@ make_group(gp2,
 
 /* 0xf6, 0xf7 */
 make_group(gp3,
-    /*f6 /0 test*/EX(test), EMPTY, /*f7 /2 not*/EX(not), EMPTY,
+    /*f6 /0 test*/EX(test), EMPTY, /*f7 /2 not*/EX(not), /*f7 /3 neg*/EX(neg),
     EMPTY, /*/5 imul*/EX(imul1), EMPTY, /*f7 /7 idiv*/EX(idiv))
 
 /* 0xfe */
@@ -133,7 +133,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0xe0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe4 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe8 */	/*0xe8 call r16/32*/IDEX(push_SI, call), /*e9 jmp*/IDEX(J, jmp), EMPTY, /*eb jmp*/IDEXW(J, jmp, 1),
-  /* 0xec */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0xec */	EMPTY, EMPTY, /*ee out*/IDEXW(out_a2dx, out, 1), EMPTY,
   /* 0xf0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf4 */	EMPTY, EMPTY, IDEXW(I2E, gp3, 1), IDEX(E, gp3),
   /* 0xf8 */	EMPTY, EMPTY, EMPTY, EMPTY,
