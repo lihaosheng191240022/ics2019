@@ -12,6 +12,10 @@
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
 
+/***pa1.3***/
+extern WP *get_head();
+extern uint32_t expr(char *e, bool *success);
+
 NEMUState nemu_state = {.state = NEMU_STOP};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {
@@ -58,7 +62,39 @@ void cpu_exec(uint64_t n) {
               "To capture more trace, you can modify the LOG_MAX macro in %s\n\n", __FILE__);
   }
 
-    /* TODO: check watchpoints here. */
+    /*pa1.3 TODO: check watchpoints here. */
+	static uint32_t changed_wp[32][3];
+	static char changed_wp_expr[32][32];
+	int next_changed_wp = 0;
+	WP *check = get_head()->next;
+	bool success = false;
+	while(check!=NULL){
+		/*calculate the wp_expr*/
+		uint32_t new_val = expr(check->wp_expr, &success);
+		if(success){
+			if(new_val != check->old_val){
+				changed_wp[next_changed_wp][0] = check->NO;
+				changed_wp[next_changed_wp][1] = check->old_val;
+				changed_wp[next_changed_wp][2] = new_val;
+				strcpy(changed_wp_expr[next_changed_wp],check->wp_expr);
+				Assert(strlen(check->wp_expr)<32, "too long wp_expr\n");
+				check->old_val = new_val;
+				next_changed_wp++;
+			}
+		}else{
+			Assert(0,"invalid wp_expr\n");
+		}
+		check = check->next;
+	}
+	Assert(next_changed_wp<32, "too many changed_wps\n");
+	for(int j=0;j<next_changed_wp;j++){
+		printf("watchpoint %d: %s\n", changed_wp[j][0], changed_wp_expr[j]);
+		printf("old value: 0x%08x %u\nnew value: 0x%08x %u\n", changed_wp[j][1], changed_wp[j][1], changed_wp[j][2], changed_wp[j][2]);
+	}
+	if(next_changed_wp != 0){
+		nemu_state.state = NEMU_STOP;
+		printf("pc now at: %x\n",cpu.pc);
+	}
 
 #endif
 

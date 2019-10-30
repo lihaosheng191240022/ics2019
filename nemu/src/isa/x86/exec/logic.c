@@ -2,47 +2,110 @@
 #include "cc.h"
 
 make_EHelper(test) {
-  TODO();
+  /*pa2.2: test only modify EFLAGS*/
+	rtl_and(&s0, &(id_dest->val), &(id_src->val));
+	s1 = 0;
+	rtl_set_OF(&s1);
+	rtl_set_CF(&s1);
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
 
   print_asm_template2(test);
 }
 
 make_EHelper(and) {
-  TODO();
+  /*pa2.2 just copy xor below*/
+	rtl_and(&s0, &(id_dest->val), &(id_src->val));
+	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	rtl_li(&s1, 0);
+	rtl_set_OF(&s1);
+	rtl_set_CF(&s1);
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
 
-  print_asm_template2(and);
+	print_asm_template2(and);
 }
 
 make_EHelper(xor) {
-  TODO();
+	/*pa2.1*/
+	rtl_xor(&s0, &(id_dest->val), &(id_src->val));
+	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	rtl_li(&s1, 0);
+	rtl_set_OF(&s1);
+	rtl_set_CF(&s1);
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
 
   print_asm_template2(xor);
 }
 
 make_EHelper(or) {
-  TODO();
+	/*pa2.2*/
+	rtl_or(&s0, &(id_dest->val), &(id_src->val));
+	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	rtl_li(&s1, 0);
+	rtl_set_OF(&s1);
+	rtl_set_CF(&s1);
+	rtl_update_ZF(&s0, id_dest->width);
+	rtl_update_SF(&s0, id_dest->width);
 
   print_asm_template2(or);
 }
 
 make_EHelper(sar) {
-  TODO();
+  /*pa2.2*/
+	Assert(decinfo.isa.ext_opcode==7, "pc=%08x: sar gas wrong ext_opcode\n", cpu.pc);
+	
+	s0 = 0x80000000 & id_dest->val;
+	if(s0==0){
+		for(int i=0;i<id_src->val;i++){
+			id_dest->val >>= 1;/*Is here really logic shift??*/
+		}
+	}else{
+		for(int i=0;i<id_src->val;i++){
+			id_dest->val >>= 1;
+			id_dest->val |= s0;
+		}
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: sar(shr) need more function\n", cpu.pc);
+	}
   // unnecessary to update CF and OF in NEMU
-
+	rtl_update_ZF(&(id_dest->val), id_dest->width);
+	rtl_update_SF(&(id_dest->val), id_dest->width);
   print_asm_template2(sar);
 }
 
 make_EHelper(shl) {
-  TODO();
-  // unnecessary to update CF and OF in NEMU
+  /*pa2.2*/
+	for(int i=0;i<id_src->val;i++){
+		id_dest->val <<= 1;
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: sal(shl) need more function\n", cpu.pc);
+	}
 
+  // unnecessary to update CF and OF in NEMU
+	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
   print_asm_template2(shl);
 }
 
 make_EHelper(shr) {
-  TODO();
+  /*pa2.2*/
+	for(int i=0;i<id_src->val;i++){
+		id_dest->val >>= 1;
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: shr need more function\n", cpu.pc);
+	}
   // unnecessary to update CF and OF in NEMU
-
+	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
   print_asm_template2(shr);
 }
 
@@ -51,12 +114,23 @@ make_EHelper(setcc) {
 
   rtl_setcc(&s0, cc);
   operand_write(id_dest, &s0);
-
+	if(id_dest->type==OP_TYPE_REG){
+		printf("pc=%08x: s0=%u\n", cpu.pc, s0);
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: setcc need more function\n", cpu.pc);
+	}
   print_asm("set%s %s", get_cc_name(cc), id_dest->str);
 }
 
 make_EHelper(not) {
-  TODO();
+  /*pa2.2*/
+	rtl_not(&s1, &(id_dest->val));
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s1, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: not need more functions\n", cpu.pc);
+	}
 
   print_asm_template1(not);
 }

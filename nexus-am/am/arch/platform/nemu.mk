@@ -14,7 +14,8 @@ LD_SCRIPT := $(AM_HOME)/am/src/$(ISA)/nemu/boot/loader.ld
 ifdef mainargs
 MAINARGS = -a $(mainargs)
 endif
-NEMU_ARGS = -b $(MAINARGS) -l $(shell dirname $(BINARY))/nemu-log.txt $(BINARY).bin
+##NEMU_ARGS = -b $(MAINARGS) -l $(shell dirname $(BINARY))/nemu-log.txt $(BINARY).bin
+NEMU_ARGS = $(MAINARGS) -l $(shell dirname $(BINARY))/nemu-log.txt $(BINARY).bin
 
 image:
 	@echo + LD "->" $(BINARY_REL).elf
@@ -24,7 +25,7 @@ image:
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(BINARY).elf $(BINARY).bin
 
 run:
-	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMU_ARGS)"
+	make -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMU_ARGS)"
 
 gdb: image
-	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) gdb ARGS="$(NEMU_ARGS)"
+	make -C $(NEMU_HOME) ISA=$(ISA) gdb ARGS="$(NEMU_ARGS)"

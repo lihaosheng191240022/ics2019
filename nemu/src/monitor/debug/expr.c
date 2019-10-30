@@ -5,10 +5,15 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+/***pa1.2***/
+#include<stdlib.h>
+
+/***pa1.3***/
+uint32_t isa_reg_str2val(const char *s, bool *success);
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
-
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_HEX, TK_REG, TK_UNEQ, TK_AND,   /***pa1.2***/
+									 TK_DEREF
   /* TODO: Add more token types */
 
 };
@@ -24,7 +29,19 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"==", TK_EQ},         // equal
+	
+	/***pa1.2***/
+  {"-", '-'},            
+  {"\\*", '*'},
+  {"/", '/'},
+	{"0x[0-9a-fA-F]*", TK_HEX},
+  {"[1-9][0-9]*|0", TK_NUM},
+  {"\\(", '('},
+  {"\\)", ')'},
+	{"\\$e(ax|cx|dx|bx|si|di|sp|bp)", TK_REG},
+	{"!=", TK_UNEQ},
+	{"&&", TK_AND}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -53,7 +70,8 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+/*memo: tokens[32]*/
+static Token tokens[500] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -79,11 +97,36 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
-          default: TODO();
+        switch (rules[i].token_type) {/***pa1.2***/
+					case TK_NOTYPE:
+													break;
+					case '+':
+					case '-':
+					case '*':
+					case '/':
+					case '(':
+					case ')':
+													tokens[nr_token].type = rules[i].token_type;
+													nr_token++;
+													break;
+				  case TK_NUM: 
+					case TK_HEX:
+					case TK_REG:
+					case TK_EQ:
+					case TK_UNEQ:
+					case TK_AND:
+													tokens[nr_token].type = rules[i].token_type;
+													memset(tokens[nr_token].str, '\0', 32);
+													strncpy(tokens[nr_token].str,substr_start,substr_len);
+													Assert(strlen(tokens[nr_token].str)==substr_len,"strncpy wrongly used\n");
+													nr_token++;
+													break;
+					default:
+													Assert(0, "invalid token type\n");
+													break;
         }
 
-        break;
+        break;/*what does this mean? Oh, I got it, there is a for loop and a while loop*/
       }
     }
 
@@ -96,6 +139,12 @@ static bool make_token(char *e) {
   return true;
 }
 
+/***functions to calculate the "token expr"***/
+static uint32_t eval(int p, int q);
+static bool check_parentheses(int p, int q);
+static uint32_t get_mainopt(int p, int q);
+static bool is_before_deref(int type);/*handle dereference*/
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -103,7 +152,183 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+	*success = true;
+	/***calculate the token expr***/
+	printf("make token successfully\n");
 
-  return 0;
+	/*handle dereference*/
+	for(int i=0;i<nr_token;i++){
+		if(tokens[i].type=='*'&&(i==0||is_before_deref(tokens[i-1].type))){
+			tokens[i].type=TK_DEREF;
+		}
+	}
+
+	return eval(0, nr_token-1);
+}
+
+static uint32_t eval(int p, int q){
+	if(p > q){
+		printf("Bad expression\n");
+		return 0;
+	}else if(p == q){														/*this is exact a number*/
+		if(tokens[p].type == TK_REG){							/*a register number*/
+			bool success = false;
+			uint32_t regval = isa_reg_str2val(tokens[p].str, &success);
+			if(!success){
+				printf("invalid reg: input like $eax\n");
+				return 0;
+			}else{
+				return regval;
+			}
+		}else if(tokens[p].type == TK_HEX){				/*a hexadecimal number*/
+			uint32_t hexval = 0;
+			sscanf(tokens[p].str, "%x", &hexval);
+			return hexval;
+
+		}else{																		/*a decimal number*/
+			return strtol(tokens[p].str, NULL, 10);	/*this can be better*/
+		}
+	}else if(check_parentheses(p, q) == true){
+		return eval(p+1, q-1);
+	}else{
+		//printf("proceeding\n");
+		int op=get_mainopt(p, q);
+		if(tokens[op].type==TK_DEREF){
+			uint32_t val=eval(op+1, q);
+			Assert(val>=0x1000, "Memory access denied\n");
+			return pmem[val];
+		}
+
+		uint32_t val1=eval(p, op-1);
+		uint32_t val2=eval(op+1, q);
+		switch(tokens[op].type){
+			case '+':
+								return val1+val2;
+			case '-':
+								return val1-val2;
+			case '*':
+								return val1*val2;
+			case '/':
+								return val1/val2;
+			case TK_EQ:
+								return val1==val2;
+			case TK_UNEQ:
+								return val1!=val2;
+			case TK_AND:
+								return val1&&val2;
+			case TK_DEREF:
+
+			default:
+								Assert(0,"invalid mainopt in expr\n");
+		}
+	}
+}
+static bool check_parentheses(int p, int q){
+	/*Use the stack to memorize the ( and ), but still not well implemented*/
+	if(tokens[p].type!='('||tokens[q].type!=')'){
+		return false;
+	}
+	int ptr = p+1, matchnum = 0;
+	for(; ptr < q; ptr++){
+		if(tokens[ptr].type == '('){
+			matchnum++;
+		}else if(tokens[ptr].type == ')'){
+			matchnum--;
+		}
+
+		if(matchnum<0){
+			return false;
+		}
+	}
+	if(matchnum != 0){
+		return false;
+	}
+	return true;
+}
+/*this macro should be changed when pa1.3*/
+//#define prior(x) ((x=='*'||x=='/')?(2):(1))/*anytime you should add ()!!!*/
+static uint32_t is_opt(uint32_t x);
+static uint32_t opt_prior(uint32_t opt);
+
+static uint32_t get_mainopt(int p, int q){
+	int in_parentheses = 0;
+	int curpos = p;
+	int curprior = 0;/*highest prior*/
+	int pos = p;
+	for(; pos <= q; pos++){/*pos < q???*/
+		if(tokens[pos].type=='('){
+			in_parentheses++;
+			continue;
+		}
+		if(tokens[pos].type==')'){
+			in_parentheses--;
+			continue;
+		}
+		if(!is_opt(tokens[pos].type)){
+			continue;
+		}
+
+		if(in_parentheses){
+			continue;
+		}else{
+			if(opt_prior(tokens[pos].type)>=curprior){/*the least&&last prior is the mainopt*/
+				curprior = opt_prior(tokens[pos].type);
+				curpos = pos;
+				//printf("%d %d\n",curprior,curpos);
+			}else{
+				continue;
+			}
+		}
+	}
+	return curpos;
+}
+static uint32_t is_opt(uint32_t x){
+	switch(x){
+		case TK_DEREF:
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case TK_EQ:
+		case TK_UNEQ:
+		case TK_AND:
+							return 1;
+		default:
+							return 0;
+	}
+}
+static uint32_t opt_prior(uint32_t opt){
+	switch(opt){
+		case TK_DEREF:
+							return 2;
+		case '*':
+		case '/':
+							return 3;
+		case '+':
+		case '-':
+							return 4;
+		case TK_EQ:
+		case TK_UNEQ:
+							return 7;
+		case TK_AND:
+							return 11;
+		default:
+							return -1;
+	}
+}
+static bool is_before_deref(int type){
+	switch(type){
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '(':
+		case TK_EQ:
+		case TK_UNEQ:
+		case TK_AND:
+		case TK_DEREF:
+							return true;
+		default:
+							return false;
+	}
 }

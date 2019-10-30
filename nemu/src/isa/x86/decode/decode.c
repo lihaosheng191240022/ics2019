@@ -31,7 +31,9 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
-  TODO();
+  /*pa2.1*/
+	uint32_t tmp = instr_fetch(pc, op->width);
+	op->simm = (op->width==1)? ((int8_t)tmp):((int32_t)tmp);
 
   rtl_li(&op->val, op->simm);
 
@@ -96,6 +98,8 @@ static inline make_DopHelper(O) {
  */
 make_DHelper(G2E) {
   decode_op_rm(pc, id_dest, true, id_src, true);
+	//rtl_is_sub_overflow();
+	//rtl_is_sub_carry();
 }
 
 make_DHelper(mov_G2E) {
@@ -187,7 +191,7 @@ make_DHelper(test_I) {
 
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
-  decode_op_rm(pc, id_dest, true, NULL, false);
+  decode_op_rm(pc, id_dest, true, NULL, false);/*decode ModR/M byte*/
   id_src->width = 1;
   decode_op_SI(pc, id_src, true);
   if (id_dest->width == 2) {

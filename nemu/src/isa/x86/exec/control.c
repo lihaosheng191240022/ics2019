@@ -3,7 +3,14 @@
 
 make_EHelper(jmp) {
   // the target address is calculated at the decode stage
-  rtl_j(decinfo.jmp_pc);
+  if(decinfo.opcode==0xeb||decinfo.opcode==0xe9){
+		rtl_j(decinfo.jmp_pc);
+	}else if(decinfo.opcode==0xff){
+		//printf("addr=%08x\nval=%08x\n", id_dest->addr, id_dest->val);
+		rtl_j(id_dest->val);
+	}else{
+		Assert(0, "pc=%08x: jmp need more function\n", cpu.pc);
+	}
 
   print_asm("jmp %x", decinfo.jmp_pc);
 }
@@ -26,13 +33,23 @@ make_EHelper(jmp_rm) {
 
 make_EHelper(call) {
   // the target address is calculated at the decode stage
-  TODO();
+  /*pa2.1 only call rel32, but relv actually*/
+	rtl_push(&decinfo.seq_pc);
+	if(decinfo.opcode==0xe8){
+		decinfo.seq_pc += id_dest->val;
+	}else if(decinfo.opcode==0xff&&decinfo.isa.ext_opcode==2){
+		decinfo.seq_pc = id_dest->val;
+	}else{
+		Assert(0, "pc=%08x: call need more function\n", cpu.pc);
+	}
 
   print_asm("call %x", decinfo.jmp_pc);
 }
 
 make_EHelper(ret) {
-  TODO();
+	rtl_pop(&s0);
+	Assert(s0>=0x100000, "Invalid return position\n");
+	decinfo.seq_pc = s0;
 
   print_asm("ret");
 }

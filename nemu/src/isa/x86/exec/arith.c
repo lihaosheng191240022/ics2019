@@ -1,31 +1,104 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
-
-  print_asm_template2(add);
+  /*pa2.2 add.c*/
+	rtl_add(&s0, &(id_dest->val), &(id_src->val));
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else if(id_dest->type==OP_TYPE_MEM){
+		rtl_sm(&(id_dest->addr), &s0, id_dest->width);
+	}else{
+		Assert(0, "pc:%08x->add need more exec functions\n", cpu.pc);
+	}
+	/*update EFLAGS*/
+	//printf("add is successfully done\n");
+	rtl_update_ZFSF(&s0, id_dest->width);
+	rtl_is_add_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	rtl_set_OF(&s1);
+	rtl_is_add_carry(&s1, &s0, &(id_dest->val));
+	rtl_set_CF(&s1);
+  //printf("EFLAGS is update after add\n");
+	print_asm_template2(add);
 }
 
 make_EHelper(sub) {
-  TODO();
-
-  print_asm_template2(sub);
+	/*pa2.2 add.c*/
+	//rtlreg_t tmp;
+	//rtlreg_t src1;
+	//rtl_sext(&src1, &(id_src->val), id_src->width);--no-need
+	rtl_sub(&s0,&(id_dest->val),&(id_src->val));
+	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	/*set EFLAGS*/
+	rtl_update_ZFSF(&s0, id_dest->width);
+	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	assert(s1==0||s1==1);
+	rtl_set_OF(&s1);
+	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
+	assert(s1==0||s1==1);
+	rtl_set_CF(&s1);
+  
+	print_asm_template2(sub);
 }
 
 make_EHelper(cmp) {
-  TODO();
+  /*pa2.2 add.c*/
+	rtl_sub(&s0, &(id_dest->val), &(id_src->val));
+	rtl_update_ZFSF(&s0, id_dest->width);
 
-  print_asm_template2(cmp);
+	rtlreg_t tmp;
+	rtl_get_SF(&tmp);
+	printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
+
+	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
+	assert(s1==0||s1==1);
+	rtl_set_OF(&s1);
+	rtl_is_sub_carry(&s1, &s0, &(id_dest->val));
+	assert(s1==0||s1==1);
+	rtl_set_CF(&s1);
+
+	print_asm_template2(cmp);
 }
 
 make_EHelper(inc) {
-  TODO();
+  /*pa2.2*/
+	rtl_li(&s0, 1);
+	rtl_add(&s1, &(id_dest->val), &s0);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s1, id_dest->width);	
+	}else if(id_dest->type==OP_TYPE_MEM){
+		rtl_sm(&(id_dest->addr), &s1, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: inc need more function\n", cpu.pc);
+	}
+	//update EFLAGS
+	rtl_update_ZFSF(&s1, id_dest->width);
+	rtl_is_add_overflow(&s0, &s1, &(id_dest->val), &s0, id_dest->width);
+	assert(s0==0||s0==1);
+	rtl_set_OF(&s0);
+	rtl_is_add_carry(&s0, &s1, &(id_dest->val));
+	assert(s0==0||s0==1);
+	rtl_set_CF(&s0);
 
   print_asm_template1(inc);
 }
 
 make_EHelper(dec) {
-  TODO();
+  /*pa2.2*/
+	rtl_li(&s0, 1);
+	rtl_sub(&s1, &(id_dest->val), &s0);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s1, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: dec need more function\n", cpu.pc);
+	}
+	//update EFLAGS
+	rtl_update_ZFSF(&s1, id_dest->width);
+	rtl_is_sub_overflow(&s0, &s1, &(id_dest->val), &s0, id_dest->width);
+	assert(s0==0||s0==1);
+	rtl_set_OF(&s0);
+	rtl_is_sub_carry(&s0, &s1, &(id_dest->val));
+	assert(s0==0||s0==1);
+	rtl_set_CF(&s0);
 
   print_asm_template1(dec);
 }

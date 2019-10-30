@@ -55,10 +55,10 @@ static inline long load_img() {
     assert(ret == 1);
 
     fclose(fp);
-
-    // mainargs
-    strcpy(guest_to_host(0), mainargs);
-  }
+		
+		//mainargs
+		strcpy(guest_to_host(0), mainargs);
+	}
   return size;
 }
 
