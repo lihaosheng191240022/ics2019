@@ -21,11 +21,13 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 	if((r[9]&0x00000040) != (eflags_QEMU&0x00000040)){//ZF=6
 		printf("diff:ZF differ\n");
 		printf("in QEMU, ZF=%d\n", ((eflags_QEMU&0x00000040)==0)?(0):(1));
+		printf("in NEMU, ZF=%d\n", ((r[9]&0x00000040)==0)?(0):(1));
 		flag = 1;
 	}
 	if((r[9]&0x00000080) != (eflags_QEMU&0x00000080)){//SF=7
 		printf("diff:SF differ\n");
 		printf("in QEMU, SF=%d\n", ((eflags_QEMU&0x00000080)==0)?(0):(1));
+		printf("in NEMU, SF=%d\n", ((r[9]&0x00000080)==0)?(0):(1));
 		flag = 1;
 	}
 	
