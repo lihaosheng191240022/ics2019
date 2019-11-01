@@ -125,7 +125,7 @@ make_EHelper(setcc) {
   rtl_setcc(&s0, cc);
   operand_write(id_dest, &s0);
 	if(id_dest->type==OP_TYPE_REG){
-		printf("pc=%08x: s0=%u\n", cpu.pc, s0);
+		//printf("pc=%08x: s0=%u\n", cpu.pc, s0);
 		rtl_sr(id_dest->reg, &s0, id_dest->width);
 	}else{
 		Assert(0, "pc=%08x: setcc need more function\n", cpu.pc);
