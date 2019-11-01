@@ -213,7 +213,9 @@ make_EHelper(imul1) {
   rtl_lr(&s0, R_EAX, id_dest->width);
   rtl_imul_lo(&s1, &id_dest->val, &s0);
 
-  switch (id_dest->width) {
+	rtl_update_ZFSF(&s1, id_dest->width);
+  
+	switch (id_dest->width) {
     case 1:
       rtl_sr(R_AX, &s1, 2);
       break;
@@ -253,7 +255,9 @@ make_EHelper(imul3) {
   rtl_imul_lo(&s0, &s1, &s0);
   operand_write(id_dest, &s0);
 
-  print_asm_template3(imul);
+	rtl_update_ZFSF(&s0, id_dest->width);
+  
+	print_asm_template3(imul);
 }
 
 make_EHelper(div) {
