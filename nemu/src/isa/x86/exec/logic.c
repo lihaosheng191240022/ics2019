@@ -83,6 +83,7 @@ make_EHelper(shl) {
 	//for(int i=0;i<id_src->val;i++){
 	//	id_dest->val <<= 1;
 	//}
+	printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
 	rtl_li(&s0, id_dest->val);
 	assert(id_src->val>=0);
 	s0 = s0 << (id_src->val);
@@ -93,7 +94,7 @@ make_EHelper(shl) {
 	}
 
   // unnecessary to update CF and OF in NEMU
-	printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
+	printf("pc=%08x: val=%08x\n", cpu.pc, s0);
 	rtl_update_ZFSF(&s0, id_dest->width);
   print_asm_template2(shl);
 }
