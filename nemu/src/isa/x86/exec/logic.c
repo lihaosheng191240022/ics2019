@@ -80,13 +80,13 @@ make_EHelper(sar) {
 
 make_EHelper(shl) {
   /*pa2.2*/
-	//for(int i=0;i<id_src->val;i++){
-	//	id_dest->val <<= 1;
-	//}
-	printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
 	rtl_li(&s0, id_dest->val);
-	assert(id_src->val>=0);
-	s0 = s0 << (id_src->val);
+	for(int i=0;i<id_src->val;i++){
+		s0 *= 2;
+	}
+	//printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
+	//assert(id_src->val>=0);
+	//s0 = s0 << (id_src->val);
 	if(id_dest->type==OP_TYPE_REG){
 		rtl_sr(id_dest->reg, &s0, id_dest->width);
 	}else{
