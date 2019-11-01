@@ -94,7 +94,7 @@ make_EHelper(shl) {
 	}
 
   // unnecessary to update CF and OF in NEMU
-	printf("pc=%08x: val=%08x\n", cpu.pc, s0);
+	//printf("pc=%08x: val=%08x\n", cpu.pc, s0);
 	if(id_src->val!=0){
 		rtl_update_ZFSF(&s0, id_dest->width);
 	}else{
