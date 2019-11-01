@@ -187,8 +187,10 @@ make_EHelper(sbb) {
 make_EHelper(mul) {
   rtl_lr(&s0, R_EAX, id_dest->width);
   rtl_mul_lo(&s1, &id_dest->val, &s0);
-
-  switch (id_dest->width) {
+	
+	rtl_update_ZFSF(&s1, id_dest->width);
+  
+	switch (id_dest->width) {
     case 1:
       rtl_sr(R_AX, &s1, 2);
       break;
