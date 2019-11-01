@@ -80,18 +80,21 @@ make_EHelper(sar) {
 
 make_EHelper(shl) {
   /*pa2.2*/
-	for(int i=0;i<id_src->val;i++){
-		id_dest->val <<= 1;
-	}
+	//for(int i=0;i<id_src->val;i++){
+	//	id_dest->val <<= 1;
+	//}
+	rtl_li(&s0, id_dest->val);
+	assert(id_src->val>=0);
+	s0 = s0 << (id_src->val);
 	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
 	}else{
 		Assert(0, "pc=%08x: sal(shl) need more function\n", cpu.pc);
 	}
 
   // unnecessary to update CF and OF in NEMU
 	printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
-	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
+	rtl_update_ZFSF(&s0, id_dest->width);
   print_asm_template2(shl);
 }
 
