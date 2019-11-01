@@ -90,6 +90,7 @@ make_EHelper(shl) {
 	}
 
   // unnecessary to update CF and OF in NEMU
+	printf("pc=%08x: val=%08x\n", cpu.pc, id_dest->val);
 	rtl_update_ZFSF(&(id_dest->val), id_dest->width);
   print_asm_template2(shl);
 }
