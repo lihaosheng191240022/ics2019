@@ -47,7 +47,7 @@ make_EHelper(cmp) {
 
 	rtlreg_t tmp;
 	rtl_get_SF(&tmp);
-	printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
+	//printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
 
 	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
 	assert(s1==0||s1==1);
