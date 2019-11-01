@@ -16,8 +16,14 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 			flag = 1;
 		}
 	}
-	if(r[i]!=*((uint32_t *)ref_ptr+i)){
-		printf("diff:EFLAGS differ\n");
+	//compare EFLAGS
+	uint32_t eflags_QEMU = *((uint32_t *)ref_ptr + i);
+	if((r[9]&0x00000040) != (eflags_QEMU&0x00000040)){//ZF=6
+		printf("diff:ZF differ\n");
+		flag = 1;
+	}
+	if((r[9]&0x00000080) != (eflags_QEMU&0x00000080)){//SF=7
+		printf("diff:SF differ\n");
 		flag = 1;
 	}
 	
