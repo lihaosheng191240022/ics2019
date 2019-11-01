@@ -5,15 +5,20 @@ extern void difftest_getregs(void *r);
 extern const char *regsl[];
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
  //TODO()
-	uint32_t r[9];/*8 gpr and pc*/
+	uint32_t r[10];/*8 gpr and pc and EFLAGS*/
 	difftest_getregs(r);
 	CPU_state *ref_ptr = ref_r;
 	int flag = 0;
-	for(int i=0;i<9;i++){
+	int i;
+	for(i=0;i<9;i++){
 		if(r[i]!=*((uint32_t *)ref_ptr+i)){
 			printf("diff:%s\n%08x in NEMU\n%08x in QEMU\n", regsl[i], r[i], *((uint32_t *)ref_ptr+i));
-		flag = 1;
+			flag = 1;
 		}
+	}
+	if(r[i]!=*((uint32_t *)ref_ptr+i)){
+		printf("diff:EFLAGS differ\n");
+		flag = 1;
 	}
 	
  	return (flag==0)?(true):(false);
