@@ -85,6 +85,7 @@ make_EHelper(shr);
 make_EHelper(sbb);
 make_EHelper(out);
 make_EHelper(neg);
+make_EHelper(mul);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
