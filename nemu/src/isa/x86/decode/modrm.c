@@ -22,10 +22,12 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   }
 
   if (m->mod == 0) {
-    if (base_reg == R_EBP) { base_reg = -1; }
+    
+		if (base_reg == R_EBP) { base_reg = -1; }
     else { disp_size = 0; }
-  }
-  else if (m->mod == 1) { disp_size = 1; }
+  
+	}else if (m->mod == 1) { disp_size = 1; }
+	
 	else{
 		assert(m->mod == 2);
 		if(decinfo.isa.is_operand_size_16){
@@ -121,6 +123,7 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
   }
   else {/*means may have SIB or offset byte(s)*/
     load_addr(pc, &m, rm);
+		printf("addr is %08x\n", rm->addr);
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
     }
