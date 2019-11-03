@@ -39,7 +39,13 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     /* has disp */
     disp = instr_fetch(pc, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
-		Assert(0, "this is a trick by yzh\n");
+		else if(disp_size == 2) {
+			disp = (int16_t)disp;
+		}else{
+			assert(disp_size == 4);
+			disp = (int32_t)disp;
+		}
+		//Assert(0, "this is a trick by yzh\n");
     rtl_addi(&s0, &s0, disp);
   }
 
