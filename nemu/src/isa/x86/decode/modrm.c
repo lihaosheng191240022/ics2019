@@ -13,7 +13,6 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     s.val = instr_fetch(pc, 1);
     base_reg = s.base;
     scale = s.ss;
-		assert(scale==1||scale==2||scale==4||scale==8);
 
     if (s.index != R_ESP) { index_reg = s.index; }
   }
@@ -24,7 +23,7 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 
   if (m->mod == 0) {
     
-		if (base_reg == R_EBP) { base_reg = -1; }
+		if (base_reg == R_EBP) { base_reg = -1;disp_size = 4; }
     else { disp_size = 0; }
   
 	}else if (m->mod == 1) { disp_size = 1; }
