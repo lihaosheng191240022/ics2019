@@ -8,13 +8,16 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   int base_reg = -1, index_reg = -1, scale = 0;
   rtl_li(&s0, 0);
 
-  if (m->R_M == R_ESP) {/*has SIB when r/m=100*/
+  if (m->R_M == R_ESP) {/*has SIB when r/m=100(R_ESP)*/
     SIB s;
     s.val = instr_fetch(pc, 1);
     base_reg = s.base;
     scale = s.ss;
 
     if (s.index != R_ESP) { index_reg = s.index; }
+		else {
+			assert(index_reg == -1);
+		}
   }
   else {
     /* no SIB */
@@ -49,8 +52,10 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 			disp = (int32_t)disp;
 		}
 		//Assert(0, "this is a trick by yzh\n");
-    rtl_addi(&s0, &s0, disp);
-  }
+    //rtl_addi(&s0, &s0, disp);
+		rtl_li(&s1, (rtlreg_t)disp);
+		rtl_add(&s0, &s0, &s1);//error here
+	}
 
   if (base_reg != -1) {
     rtl_add(&s0, &s0, &reg_l(base_reg));
