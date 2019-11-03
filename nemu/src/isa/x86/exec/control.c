@@ -53,7 +53,7 @@ make_EHelper(ret) {
 	}else{
 		decinfo.seq_pc = s0;
 	}
-	Assert(decinfo.seq_pc>=0x100000, "Invalid return position\n");
+	Assert(decinfo.seq_pc>=0x100000, "pc=%08x: Invalid return position\n", cpu.pc);
 	//decinfo.seq_pc = s0;
 
   print_asm("ret");
