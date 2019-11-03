@@ -22,6 +22,7 @@ int printf(const char *fmt, ...) {
 		_putc(fmt[i]);
 	}
 	_putc('\n');
+	/*
 	char out[64] = {'\0'};
 	va_list Argv;
 	va_start(Argv, fmt);
@@ -32,6 +33,7 @@ int printf(const char *fmt, ...) {
 		else							_putc(out[i]);
 	}
 	_putc('\n');
+	*/
 	return 0;
 }
 
