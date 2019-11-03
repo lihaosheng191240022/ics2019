@@ -16,6 +16,7 @@ make_EHelper(test) {
 make_EHelper(and) {
   /*pa2.2 just copy xor below*/
 	rtl_and(&s0, &(id_dest->val), &(id_src->val));
+	assert(id_dest->reg<=7);
 	rtl_sr(id_dest->reg, &s0, id_dest->width);
 	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);
