@@ -70,10 +70,18 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decinfo.isa.is_operand_size_16) {
-    TODO();
+    /*pa2.3 sign ext*/
+		//AL->AX
+		rtl_li(&s0, reg_b(R_AL));
+		rtl_sext(&s1, &s0, 1);
+		rtl_sr(R_AX, &s1, 2);
+
   }
   else {
-    TODO();
+    //AX->EAX
+		rtl_li(&s0, reg_w(R_AX));
+		rtl_sext(&s1, &s0, 2);
+		rtl_sr(R_EAX, &s1, 4);
   }
 
   print_asm(decinfo.isa.is_operand_size_16 ? "cbtw" : "cwtl");
