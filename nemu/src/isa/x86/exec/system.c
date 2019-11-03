@@ -42,7 +42,18 @@ void pio_write_w(ioaddr_t, uint32_t);
 void pio_write_b(ioaddr_t, uint32_t);
 
 make_EHelper(in) {
-  TODO();
+  switch(id_dest->width){
+		case 1:	id_dest->val = pio_read_b(id_src->val);break;
+		case 2:	id_dest->val = pio_read_w(id_src->val);break;
+		case 4:	id_dest->val = pio_read_l(id_src->val);break;
+		default:	Assert(0, "pc=%08x: in is wrong\n", cpu.pc);break;
+	}
+	if(id_dest->type==OP_TYPE_REG){
+		assert(id_dest->reg==0);
+		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: in is wrong\n", cpu.pc);
+	}
 
   print_asm_template2(in);
 }
