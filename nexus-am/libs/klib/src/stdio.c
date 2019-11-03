@@ -21,6 +21,15 @@ int printf(const char *fmt, ...) {
   for(size_t i=0;i<strlen(fmt);i++){
 		_putc(fmt[i]);
 	}
+	char out[64] = {'\0'};
+	va_list Argv;
+	va_start(Argv, fmt);
+	sprintf(out, fmt, Argv);
+	va_end(Argv);
+	for(size_t i=0;i<64;i++){
+		if(out[i]=='\0')	break;
+		else							_putc(out[i]);
+	}
 	_putc('\n');
 	return 0;
 }
@@ -35,14 +44,28 @@ int sprintf(char *out, const char *fmt, ...) {
 	size_t i = 0;
 	size_t len = strlen(fmt);
 	size_t j = 0;//point to next to-write ch
+	size_t state = 0;//normal state
 	while(i < len){
-		if(fmt[i] != '%'){
+		if(fmt[i]=='%'){
+			state = 1;
+			i++;
+		}
+		//based on state
+		if(state==0){
 			out[j] = fmt[i];
 			i++;
 			j++;
 		}else{
-			i++;
+			state = 1;//format state
 			switch(fmt[i]){
+				case '0':{
+									 state = 1;//stay format state
+									 break;
+								 }
+				case '2':{
+									 state = 1;//stay format state
+									 break;
+								 }
 				case 'd':{
 									int tmpd = va_arg(Argv, int);
 									char num[16] = {'\0'};
@@ -55,6 +78,7 @@ int sprintf(char *out, const char *fmt, ...) {
 											j++;
 										}
 									}
+									state = 0;
 									break;
 								 }
 				case 's': {
@@ -64,6 +88,7 @@ int sprintf(char *out, const char *fmt, ...) {
 										out[j] = tmps[k];
 										j++;
 									}
+									state = 0;
 									break;
 									}
 				default:	break;
