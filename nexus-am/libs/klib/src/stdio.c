@@ -18,22 +18,22 @@ void itoa2(int num, char *s){
 }
 
 int printf(const char *fmt, ...) {
-  for(size_t i=0;i<strlen(fmt);i++){
-		_putc(fmt[i]);
-	}
+  //for(size_t i=0;i<strlen(fmt);i++){
+	//	_putc(fmt[i]);
+	//}
 	//_putc('\n'); no need
-	/*
-	char out[64] = {'\0'};
+	
+	char buf[128] = {'\0'};
 	va_list Argv;
 	va_start(Argv, fmt);
-	sprintf(out, fmt, Argv);
+	sprintf(buf, fmt, Argv);
 	va_end(Argv);
 	for(size_t i=0;i<64;i++){
-		if(out[i]=='\0')	break;
-		else							_putc(out[i]);
+		if(buf[i]=='\0')	break;
+		else							_putc(buf[i]);
 	}
 	//_putc('\n'); no need
-	*/
+	
 	return 0;
 }
 
