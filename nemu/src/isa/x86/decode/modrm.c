@@ -58,17 +58,17 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 	}
 
   if (base_reg != -1) {
-    //rtl_add(&s0, &s0, &reg_l(base_reg));
-		rtl_addi(&s0, &s0, (int)reg_l(base_reg));
+    rtl_add(&s0, &s0, &reg_l(base_reg));
+		//rtl_addi(&s0, &s0, (int)reg_l(base_reg));
 	}
 
   if (index_reg != -1) {
     rtl_shli(&s1, &reg_l(index_reg), scale);
-    //rtl_add(&s0, &s0, &s1);
-    rtl_addi(&s0, &s0, (int)s1);
+    rtl_add(&s0, &s0, &s1);
+    //rtl_addi(&s0, &s0, (int)s1);
   }
   rtl_mv(&rm->addr, &s0);
-
+	Assert(cpu.pc!=0x104877, "base=%d, index=%d, scale=%d, disp=%d, addr=%08x\n", reg_l(base_reg), reg_l(index_reg), scale, disp, s0);
 #ifdef DEBUG
   char disp_buf[16];
   char base_buf[8];
