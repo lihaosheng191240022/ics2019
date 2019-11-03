@@ -9,7 +9,7 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very ba
       //read ms into buf(explained as uptime struct)
 			
 			uptime->hi = inl(RTC_ADDR);//TODO
-      uptime->lo = 0;//TODO
+      uptime->lo = inl(RTC_ADDR);//TODO
 			 
 			return sizeof(_DEV_TIMER_UPTIME_t);
 			
