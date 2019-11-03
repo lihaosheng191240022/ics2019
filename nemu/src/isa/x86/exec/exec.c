@@ -33,7 +33,7 @@ static make_EHelper(name) { \
 
 /* 0x80, 0x81, 0x83 */
 make_group(gp1,
-    /*0x83 /0 add*/EXW(add, 3), EMPTY, EMPTY, EMPTY,
+    /*0x83 /0 add*/EXW(add, 3), /*80 /1 or*/EX(or), EMPTY, EMPTY,
     /*0x83 /4 and*/EX(and), /*0x83 /5 sub*/EX(sub), EMPTY, /*83 /7 cmp*/EXW(cmp, 3))
 
 /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
