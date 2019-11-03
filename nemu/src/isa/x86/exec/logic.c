@@ -63,24 +63,25 @@ make_EHelper(or) {
 
 make_EHelper(sar) {
   /*pa2.2*/
-	Assert(decinfo.isa.ext_opcode==7, "pc=%08x: sar gas wrong ext_opcode\n", cpu.pc);
-	
-	s0 = 0x80000000 & id_dest->val;
+	Assert(decinfo.isa.ext_opcode==7, "pc=%08x: sar has wrong ext_opcode\n", cpu.pc);
+	rtl_li(&s1, id_dest->val);	
+	s0 = 0x80000000 & s1;
 	if(s0==0){
 		for(int i=0;i<id_src->val;i++){
-			id_dest->val >>= 1;/*Is here really logic shift??*/
+			s1 >>= 1;/*Is here really logic shift??*/
 		}
 	}else{
 		for(int i=0;i<id_src->val;i++){
-			id_dest->val >>= 1;
-			id_dest->val |= s0;
+			s1 >>= 1;
+			s1 |= s0;
 		}
 	}
-	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
-	}else{
-		Assert(0, "pc=%08x: sar(shr) need more function\n", cpu.pc);
-	}
+	operand_write(id_dest, &s1);
+	//if(id_dest->type==OP_TYPE_REG){
+	//	rtl_sr(id_dest->reg, &(id_dest->val), id_dest->width);
+	//}else{
+	//	Assert(0, "pc=%08x: sar(shr) need more function\n", cpu.pc);
+	//}
   // unnecessary to update CF and OF in NEMU
 	rtl_update_ZF(&(id_dest->val), id_dest->width);
 	rtl_update_SF(&(id_dest->val), id_dest->width);
