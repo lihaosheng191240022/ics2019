@@ -1,7 +1,7 @@
 #include "common.h"
 #include "device/map.h"
 
-#define PORT_IO_SPACE_MAX 65535
+#define PORT_IO_SPACE_MAX 65535 //port number 0x0000-0xffff
 
 #define NR_MAP 8
 static IOMap maps[NR_MAP] = {};

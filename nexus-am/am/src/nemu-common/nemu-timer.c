@@ -2,15 +2,16 @@
 #include <amdev.h>
 #include <nemu.h>
 
-size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
+size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very basic func
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
       _DEV_TIMER_UPTIME_t *uptime = (_DEV_TIMER_UPTIME_t *)buf;
-      //uptime->hi = 0;
-      //uptime->lo = 0;
-			//outl(RTC_ADDR, (uptime->hi) | (uptime->lo));
-      //return sizeof(_DEV_TIMER_UPTIME_t);
-			return (uptime->hi) | uptime->lo;
+      //read ms into buf(explained as uptime struct)
+			
+			uptime->hi = 0;//TODO
+      uptime->lo = inl(RTC_ADDR);//TODO
+      
+			return sizeof(_DEV_TIMER_UPTIME_t);
 			
 															 }
     case _DEVREG_TIMER_DATE: {
