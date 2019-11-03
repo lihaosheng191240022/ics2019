@@ -52,18 +52,20 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 			disp = (int32_t)disp;
 		}
 		//Assert(0, "this is a trick by yzh\n");
-    //rtl_addi(&s0, &s0, disp);
-		rtl_li(&s1, (rtlreg_t)disp);
-		rtl_add(&s0, &s0, &s1);//error here
+    rtl_addi(&s0, &s0, disp);
+		//rtl_li(&s1, (rtlreg_t)disp);
+		//rtl_add(&s0, &s0, &s1);//error here
 	}
 
   if (base_reg != -1) {
-    rtl_add(&s0, &s0, &reg_l(base_reg));
-  }
+    //rtl_add(&s0, &s0, &reg_l(base_reg));
+		rtl_addi(&s0, &s0, (int)reg_l(base_reg));
+	}
 
   if (index_reg != -1) {
     rtl_shli(&s1, &reg_l(index_reg), scale);
-    rtl_add(&s0, &s0, &s1);
+    //rtl_add(&s0, &s0, &s1);
+    rtl_addi(&s0, &s0, (int)s1);
   }
   rtl_mv(&rm->addr, &s0);
 
