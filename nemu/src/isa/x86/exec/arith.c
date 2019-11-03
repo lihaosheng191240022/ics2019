@@ -27,7 +27,11 @@ make_EHelper(sub) {
 	//rtlreg_t src1;
 	//rtl_sext(&src1, &(id_src->val), id_src->width);--no-need
 	rtl_sub(&s0,&(id_dest->val),&(id_src->val));
-	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: sub need more function\n", cpu.pc);
+	}
 	/*set EFLAGS*/
 	rtl_update_ZFSF(&s0, id_dest->width);
 	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
