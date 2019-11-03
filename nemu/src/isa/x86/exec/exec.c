@@ -72,7 +72,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0x14 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x18 */	EMPTY, EMPTY, EMPTY, /*1b sbb*/IDEX(E2G, sbb),
   /* 0x1c */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x20 */	/*20 and*/IDEXW(G2E, and, 1), /*and*//*IDEX(G2E, and)*/EMPTY, /*22 and*/IDEXW(E2G, and, 1), IDEX(E2G, and),
+  /* 0x20 */	/*20 and*/IDEXW(G2E, and, 1), /*and*/IDEX(G2E, and), /*22 and*/IDEXW(E2G, and, 1), IDEX(E2G, and),
   /* 0x24 */	IDEXW(I2a, and, 1), /*25 and*/IDEX(I2a, and), EMPTY, EMPTY,
   /* 0x28 */	/*28 sub*/IDEXW(G2E, sub, 1), /*29 sub*/IDEX(G2E, sub), IDEXW(E2G, sub, 1), IDEX(E2G, sub),
   /* 0x2c */	/*2c sub*/IDEXW(I2a, sub, 1), IDEX(I2a, sub), EMPTY, EMPTY,
