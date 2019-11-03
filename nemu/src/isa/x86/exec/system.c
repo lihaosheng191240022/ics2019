@@ -49,10 +49,16 @@ make_EHelper(in) {
 
 make_EHelper(out) {
 	/*pa2.3*/
-	if(id_src->width==1){
-		pio_write_b(id_dest->val, id_src->val);
-	}else{
-		Assert(0, "pc=%08x: out need more function\n", cpu.pc);
+	//if(id_src->width==1){
+	//	pio_write_b(id_dest->val, id_src->val);
+	//}else{
+		//Assert(0, "pc=%08x: out need more function\n", cpu.pc);	
+	//}
+	switch(id_src->width){
+		case 1:	pio_write_b(id_dest->val, id_src->val);break;
+		case 2:	pio_write_w(id_dest->val, id_src->val);break;
+		case 4:	pio_write_l(id_dest->val, id_src->val);break;
+		default:	Assert(0, "pc=%08x: out is wrong\n", cpu.pc);break;
 	}	
 
   print_asm_template2(out);
