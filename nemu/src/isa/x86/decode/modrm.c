@@ -26,6 +26,14 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     else { disp_size = 0; }
   }
   else if (m->mod == 1) { disp_size = 1; }
+	else{
+		assert(m->mod == 2);
+		if(decinfo.isa.is_operand_size_16){
+			disp_size = 2;
+		}else{
+			disp_size = 4;
+		}
+	}
 
   if (disp_size != 0) {
     /* has disp */
