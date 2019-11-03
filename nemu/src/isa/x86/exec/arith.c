@@ -51,8 +51,8 @@ make_EHelper(cmp) {
 	rtl_sub(&s0, &(id_dest->val), &(id_src->val));
 	rtl_update_ZFSF(&s0, id_dest->width);
 
-	rtlreg_t tmp;
-	rtl_get_SF(&tmp);
+	//rtlreg_t tmp;
+	//rtl_get_SF(&tmp);
 	//printf("pc=%08x: SF=%u\n", cpu.pc, tmp);
 
 	rtl_is_sub_overflow(&s1, &s0, &(id_dest->val), &(id_src->val), id_dest->width);
@@ -199,7 +199,7 @@ make_EHelper(mul) {
 	switch (id_dest->width) {
     case 1:
       rtl_sr(R_AX, &s1, 2);
-      break;
+			break;
     case 2:
       rtl_sr(R_AX, &s1, 2);
       rtl_shri(&s1, &s1, 16);

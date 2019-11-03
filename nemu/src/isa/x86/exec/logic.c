@@ -4,7 +4,7 @@
 make_EHelper(test) {
   /*pa2.2: test only modify EFLAGS*/
 	rtl_and(&s0, &(id_dest->val), &(id_src->val));
-	s1 = 0;
+	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);
 	rtl_set_CF(&s1);
 	rtl_update_ZF(&s0, id_dest->width);
@@ -35,7 +35,8 @@ make_EHelper(and) {
 make_EHelper(xor) {
 	/*pa2.1*/
 	rtl_xor(&s0, &(id_dest->val), &(id_src->val));
-	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	//rtl_sr(id_dest->reg, &s0, id_dest->width);
+	operand_write(id_dest, &s0);
 	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);
 	rtl_set_CF(&s1);
@@ -48,7 +49,9 @@ make_EHelper(xor) {
 make_EHelper(or) {
 	/*pa2.2*/
 	rtl_or(&s0, &(id_dest->val), &(id_src->val));
-	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	//rtl_sr(id_dest->reg, &s0, id_dest->width);
+	
+	operand_write(id_dest, &s0);
 	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);
 	rtl_set_CF(&s1);

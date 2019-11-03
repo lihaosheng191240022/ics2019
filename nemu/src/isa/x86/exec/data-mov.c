@@ -17,11 +17,11 @@ make_EHelper(push) {
 }
 
 make_EHelper(pop) {
-  rtl_pop(&id_dest->val);
+  rtl_pop(&s0);
 	/*pa2.2*/
-	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &(id_dest->val), 4);
-	}
+	//if(id_dest->type==OP_TYPE_REG){
+	//	rtl_sr(id_dest->reg, &(id_dest->val), 4);
+	operand_write(id_dest, &s0);
   print_asm_template1(pop);
 }
 
