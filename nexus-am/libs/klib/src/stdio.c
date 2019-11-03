@@ -21,7 +21,7 @@ int printf(const char *fmt, ...) {
   for(size_t i=0;i<strlen(fmt);i++){
 		_putc(fmt[i]);
 	}
-	_putc('\n');
+	//_putc('\n');
 	/*
 	char out[64] = {'\0'};
 	va_list Argv;
