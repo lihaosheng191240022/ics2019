@@ -18,7 +18,11 @@ void itoa2(int num, char *s){
 }
 
 int printf(const char *fmt, ...) {
-  return 0;
+  for(size_t i=0;i<strlen(fmt);i++){
+		_putc(fmt[i]);
+	}
+	_putc('\n');
+	return 0;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
