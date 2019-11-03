@@ -18,9 +18,9 @@ void itoa2(int num, char *s){
 }
 
 int printf(const char *fmt, ...) {
-  for(size_t i=0;i<strlen(fmt);i++){
-		_putc(fmt[i]);
-	}
+  //for(size_t i=0;i<strlen(fmt);i++){
+	//	_putc(fmt[i]);
+	//}
 	char out[64] = {'\0'};
 	va_list Argv;
 	va_start(Argv, fmt);
