@@ -17,7 +17,11 @@ make_EHelper(and) {
   /*pa2.2 just copy xor below*/
 	rtl_and(&s0, &(id_dest->val), &(id_src->val));
 	//assert(id_dest->reg<=7);
-	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	if(id_dest->type==OP_TYPE_REG){
+		rtl_sr(id_dest->reg, &s0, id_dest->width);
+	}else{
+		Assert(0, "pc=%08x: and need more function\n", cpu.pc);
+	}
 	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);
 	rtl_set_CF(&s1);
