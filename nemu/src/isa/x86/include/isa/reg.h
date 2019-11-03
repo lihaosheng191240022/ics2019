@@ -41,7 +41,7 @@ typedef struct {
 //pa2.3
 extern CPU_state cpu;
 static inline int check_reg_index(int index) {
-  Assert(index >= 0 && index < 8, "pc=%08x\n", cpu.pc);
+  Assert(index >= 0 && index < 8, "pc=%08x: index=%d\n", cpu.pc, index);
   return index;
 }
 
