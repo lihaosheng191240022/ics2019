@@ -92,11 +92,12 @@ make_EHelper(dec) {
   /*pa2.2*/
 	rtl_li(&s0, 1);
 	rtl_sub(&s1, &(id_dest->val), &s0);
-	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &s1, id_dest->width);
-	}else{
-		Assert(0, "pc=%08x: dec need more function\n", cpu.pc);
-	}
+	operand_write(id_dest, &s1);
+	//if(id_dest->type==OP_TYPE_REG){
+	//	rtl_sr(id_dest->reg, &s1, id_dest->width);
+	//}else{
+	//	Assert(0, "pc=%08x: dec need more function\n", cpu.pc);
+	//}
 	//update EFLAGS
 	rtl_update_ZFSF(&s1, id_dest->width);
 	rtl_is_sub_overflow(&s0, &s1, &(id_dest->val), &s0, id_dest->width);
