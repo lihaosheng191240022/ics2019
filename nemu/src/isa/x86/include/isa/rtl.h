@@ -17,7 +17,8 @@ static inline void rtl_lr(rtlreg_t* dest, int r, int width) {
 
 static inline void rtl_sr(int r, const rtlreg_t* src1, int width) {
   switch (width) {
-    case 4: rtl_mv(&reg_l(r), src1); return;
+    case 4: printf("hi\n");
+						rtl_mv(&reg_l(r), src1); return;
     case 1: rtl_host_sm(&reg_b(r), src1, 1); return;
     case 2: rtl_host_sm(&reg_w(r), src1, 2); return;
     default: assert(0);
