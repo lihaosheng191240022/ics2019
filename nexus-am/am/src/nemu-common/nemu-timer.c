@@ -8,7 +8,7 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
       _DEV_TIMER_UPTIME_t *uptime = (_DEV_TIMER_UPTIME_t *)buf;
       //uptime->hi = 0;
       //uptime->lo = 0;
-			outl(RTC_ADDR, ((uptime->hi)<<31LL) | (uptime->lo));
+			outl(RTC_ADDR, (uptime->hi) | (uptime->lo));
       return sizeof(_DEV_TIMER_UPTIME_t);
 			//return (uptime->hi<<32LL) | uptime->lo;
 															 }
