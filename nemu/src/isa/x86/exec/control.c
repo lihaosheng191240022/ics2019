@@ -48,8 +48,13 @@ make_EHelper(call) {
 
 make_EHelper(ret) {
 	rtl_pop(&s0);
-	//Assert(s0>=0x100000, "Invalid return position\n");
-	decinfo.seq_pc = s0;
+	if(decinfo.isa.is_operand_size_16){
+		decinfo.seq_pc = 0x0000ffff & s0;
+	}else{
+		decinfo.seq_pc = s0;
+	}
+	Assert(decinfo.seq_pc>=0x100000, "Invalid return position\n");
+	//decinfo.seq_pc = s0;
 
   print_asm("ret");
 }
