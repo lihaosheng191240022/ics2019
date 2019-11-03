@@ -66,7 +66,7 @@ make_group(gp7,
 static OpcodeEntry opcode_table [512] = {
   /* 0x00 */	EMPTY, /*0x01 add*/IDEX(G2E, add), EMPTY, /*03 add r/mv to rv*/IDEX(E2G, add),
   /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x08 */	EMPTY, /*09 or*/IDEX(G2E, or), /*0a or*/IDEXW(E2G, or, 1), EMPTY,
+  /* 0x08 */	EMPTY, /*09 or*/IDEX(G2E, or), /*0a or*/IDEXW(E2G, or, 1), /*0b or*/IDEX(E2G, or),
   /* 0x0c */	EMPTY, EMPTY, EMPTY, EX(2byte_esc),
   /* 0x10 */	EMPTY, EMPTY, EMPTY, /*13 adc r/mv to rv*/IDEX(E2G, adc),
   /* 0x14 */	EMPTY, EMPTY, EMPTY, EMPTY,
