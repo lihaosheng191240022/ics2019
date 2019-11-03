@@ -21,7 +21,7 @@ int printf(const char *fmt, ...) {
   for(size_t i=0;i<strlen(fmt);i++){
 		_putc(fmt[i]);
 	}
-	//_putc('\n');
+	//_putc('\n'); no need
 	/*
 	char out[64] = {'\0'};
 	va_list Argv;
@@ -32,7 +32,7 @@ int printf(const char *fmt, ...) {
 		if(out[i]=='\0')	break;
 		else							_putc(out[i]);
 	}
-	_putc('\n');
+	//_putc('\n'); no need
 	*/
 	return 0;
 }
