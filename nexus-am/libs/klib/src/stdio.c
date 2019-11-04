@@ -42,7 +42,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  va_list Argv;
+  strcpy(out, fmt);
+	/*
+	va_list Argv;
 	va_start(Argv, fmt);
 	size_t i = 0;
 	size_t len = strlen(fmt);
@@ -101,8 +103,8 @@ int sprintf(char *out, const char *fmt, ...) {
 		out[j] = '\0';
 	}
 
-
 	va_end(Argv);
+	*/
 	return 0;
 }
 
