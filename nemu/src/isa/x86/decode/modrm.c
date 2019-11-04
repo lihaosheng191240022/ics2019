@@ -8,13 +8,16 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   int base_reg = -1, index_reg = -1, scale = 0;
   rtl_li(&s0, 0);
 
-  if (m->R_M == R_ESP) {/*has SIB when r/m=100*/
+  if (m->R_M == R_ESP) {/*has SIB when r/m=100(R_ESP)*/
     SIB s;
     s.val = instr_fetch(pc, 1);
     base_reg = s.base;
     scale = s.ss;
 
     if (s.index != R_ESP) { index_reg = s.index; }
+		else {
+			assert(index_reg == -1);
+		}
   }
   else {
     /* no SIB */
@@ -22,29 +25,50 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
   }
 
   if (m->mod == 0) {
-    if (base_reg == R_EBP) { base_reg = -1; }
+    
+		if (base_reg == R_EBP) { base_reg = -1;disp_size = 4; }
     else { disp_size = 0; }
-  }
-  else if (m->mod == 1) { disp_size = 1; }
+  
+	}else if (m->mod == 1) { disp_size = 1; }
+	
+	else{
+		assert(m->mod == 2);
+		//if(decinfo.isa.is_operand_size_16){
+		//	disp_size = 2;
+		//}else{
+		//	disp_size = 4;
+		//}
+		disp_size = 4;//in 32-bit addressing mode
+	}
 
   if (disp_size != 0) {
     /* has disp */
     disp = instr_fetch(pc, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
-
+		else if(disp_size == 2) {
+			disp = (int16_t)disp;
+		}else{
+			assert(disp_size == 4);
+			disp = (int32_t)disp;
+		}
+		//Assert(0, "this is a trick by yzh\n");
     rtl_addi(&s0, &s0, disp);
-  }
+		//rtl_li(&s1, (rtlreg_t)disp);
+		//rtl_add(&s0, &s0, &s1);//error here
+	}
 
   if (base_reg != -1) {
     rtl_add(&s0, &s0, &reg_l(base_reg));
-  }
+		//rtl_addi(&s0, &s0, (int)reg_l(base_reg));
+	}
 
   if (index_reg != -1) {
     rtl_shli(&s1, &reg_l(index_reg), scale);
     rtl_add(&s0, &s0, &s1);
+    //rtl_addi(&s0, &s0, (int)s1);
   }
   rtl_mv(&rm->addr, &s0);
-
+	Assert(cpu.pc!=0x104877, "base=%d, index=%d, scale=%d, disp=%08x, addr=%08x\n", base_reg, index_reg, scale, disp, s0);
 #ifdef DEBUG
   char disp_buf[16];
   char base_buf[8];
@@ -107,6 +131,7 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
   }
   else {/*means may have SIB or offset byte(s)*/
     load_addr(pc, &m, rm);
+		//printf("addr is %08x\n", rm->addr);
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
     }
