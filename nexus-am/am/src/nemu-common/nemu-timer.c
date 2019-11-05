@@ -13,7 +13,7 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very ba
 			
 			uptime->hi = inl(RTC_ADDR);//TODO
       uptime->lo = inl(RTC_ADDR);//TODO
-			printf("hi=%d, lo=%d\n", uptime->hi, uptime->lo); 
+			//printf("hi=%d, lo=%d\n", uptime->hi, uptime->lo); 
 			return sizeof(_DEV_TIMER_UPTIME_t);
 			
 															 }
