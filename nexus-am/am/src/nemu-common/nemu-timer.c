@@ -3,13 +3,12 @@
 #include <nemu.h>
 
 //for test
-extern uint32_t uptime();
 static uint32_t boot_time;
 
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very basic func
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
-			uint32_t now_time = uptime();
+			uint32_t now_time = inl(RTC_ADDR);
 			uint32_t passed_time = now_time - boot_time;
       _DEV_TIMER_UPTIME_t *uptime = (_DEV_TIMER_UPTIME_t *)buf;
       //read ms into buf(explained as uptime struct)
@@ -35,5 +34,5 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very ba
 }
 
 void __am_timer_init() {
-	boot_time = uptime();
+	boot_time = inl(RTC_ADDR);
 }
