@@ -83,8 +83,7 @@ make_EHelper(sar) {
 	//	Assert(0, "pc=%08x: sar(shr) need more function\n", cpu.pc);
 	//}
   // unnecessary to update CF and OF in NEMU
-	rtl_update_ZF(&(id_dest->val), id_dest->width);
-	rtl_update_SF(&(id_dest->val), id_dest->width);
+	rtl_update_ZFSF(&s1, id_dest->width);
   print_asm_template2(sar);
 }
 
