@@ -133,7 +133,7 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
     load_addr(pc, &m, rm);
 		//printf("addr is %08x\n", rm->addr);
 		//test
-		Assert(cpu.pc!=0x100ead, "addr=%08x, val=%08x, width=%d\n", rm->addr, rm->val, rm->width);
+		//Assert(cpu.pc!=0x100ead, "addr=%08x, val=%08x, width=%d\n", rm->addr, rm->val, rm->width);
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
     }
