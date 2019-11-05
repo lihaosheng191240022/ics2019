@@ -68,7 +68,7 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     //rtl_addi(&s0, &s0, (int)s1);
   }
   rtl_mv(&rm->addr, &s0);
-	Assert(cpu.pc!=0x104877, "base=%d, index=%d, scale=%d, disp=%08x, addr=%08x\n", base_reg, index_reg, scale, disp, s0);
+	//Assert(cpu.pc!=0x104877, "base=%d, index=%d, scale=%d, disp=%08x, addr=%08x\n", base_reg, index_reg, scale, disp, s0);
 #ifdef DEBUG
   char disp_buf[16];
   char base_buf[8];
@@ -134,6 +134,8 @@ void read_ModR_M(vaddr_t *pc, Operand *rm, bool load_rm_val, Operand *reg, bool 
 		//printf("addr is %08x\n", rm->addr);
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
+			//test
+			Assert(cpu.pc!=0x100ead, "addr=%08x, val=%08x, width=%d\n", rm->addr, rm->val, rm->width);
     }
   }
 }
