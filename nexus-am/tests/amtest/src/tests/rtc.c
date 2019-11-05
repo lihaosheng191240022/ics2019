@@ -9,7 +9,7 @@ void rtc_test() {
 			;
 		}
     //test
-		printf("uptime=%d\n", uptime());
+		//printf("uptime=%d\n", uptime());
 		//end test
 		get_timeofday(&rtc);
     printf("%d-%d-%d %02d:%02d:%02d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
