@@ -2,6 +2,9 @@
 #include <amdev.h>
 #include <nemu.h>
 
+//for test
+#include<klib.h>
+
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very basic func
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
@@ -10,7 +13,7 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {//this is very ba
 			
 			uptime->hi = 0;//TODO
       uptime->lo = inl(RTC_ADDR);//TODO
-			 
+			printf("hi=%d, lo=%d\n", uptime->hi, uptime->lo); 
 			return sizeof(_DEV_TIMER_UPTIME_t);
 			
 															 }
