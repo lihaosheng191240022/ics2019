@@ -66,7 +66,7 @@ void __am_vga_init() {
 	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 	//printf("FB_ADDR=%x\n", FB_ADDR);
 	for(i = 0; i < size; i++){
-		fb[i] = i;
+		fb[i] = 0;
 	}
 	//for(i = 0; i < 10; i++){
 	//	printf("%x = %x\n", fb+i, fb[i]);
