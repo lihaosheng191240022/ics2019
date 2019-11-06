@@ -57,7 +57,7 @@ void __am_vga_init() {
 	int i;
 	int size = screen_width() * screen_height();
 	for(i = 0; i < size; i++){
-		fb[i] = i;
+		fb[i] = 0xff00;
 	}
 	draw_sync();
 
