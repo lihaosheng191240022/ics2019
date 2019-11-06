@@ -25,6 +25,7 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
       _DEV_VIDEO_INFO_t *info = (_DEV_VIDEO_INFO_t *)buf;
       info->width = W;
       info->height = H;
+			//printf("SCREEN_REG=%d\n", inl(SCREEN_ADDR));
       return sizeof(_DEV_VIDEO_INFO_t);
     }
   }
@@ -69,9 +70,9 @@ void __am_vga_init() {
 	for(i = 0; i < size; i++){
 		fb[i] = 0xff00;
 	}
-	//for(i = 0; i < 10; i++){
-	//	printf("%x = %x\n", fb+i, fb[i]);
-	//}
+	
+	printf("SCREEN=%d\n", inl(SCREEN_ADDR));
+	
 	draw_sync();
 
 }
