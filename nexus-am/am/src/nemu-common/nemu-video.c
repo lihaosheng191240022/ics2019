@@ -36,13 +36,15 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
     case _DEVREG_VIDEO_FBCTL: {
       _DEV_VIDEO_FBCTL_t *ctl = (_DEV_VIDEO_FBCTL_t *)buf;
 			int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
+			printf("x=%d, y=%d, w=%d, h=%d\n", x, y, w, h);
 			uint32_t *pixels = ctl->pixels;
 			//int cp_bytes = sizeof(uint32_t) * min(W, W-x);
 			int cp_pixel_num = min(W, W-x);
+			uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 			for(int j = 0; j < h && y + j < H; j++){
 				//memcpy(&fb[(y+j)*W+x], pixels, cp_bytes);
 				for(int k = 0; k < cp_pixel_num; k++){
-					//fb[(y+j)*W+x+k] = pixels[k];
+					fb[(y+j)*W+x+k] = pixels[k];
 					//fb[(y+j)*W+x+k] = 0xff00;
 				}
 				pixels += w;
