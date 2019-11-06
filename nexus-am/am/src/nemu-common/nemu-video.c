@@ -68,6 +68,9 @@ void __am_vga_init() {
 	for(i = 0; i < size; i++){
 		fb[i] = i;
 	}
+	for(i = 0; i < 10; i++){
+		printf("%x = %x", fb+i, fb[i]);
+	}
 	draw_sync();
 
 }
