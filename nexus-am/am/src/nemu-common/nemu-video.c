@@ -71,7 +71,7 @@ void __am_vga_init() {
 		fb[i] = 0xff00;
 	}
 	
-	printf("SCREEN=%d\n", inw(SCREEN_ADDR));
+	printf("SCREEN=%x\n", inl(SCREEN_ADDR));
 	
 	draw_sync();
 
