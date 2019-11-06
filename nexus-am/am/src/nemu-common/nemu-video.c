@@ -60,8 +60,9 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 void __am_vga_init() {
 	int i;
 	int size = screen_width() * screen_height();
-	printf("size=%d\n", size);
+	//printf("size=%d\n", size);
 	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+	printf("FB_ADDR=%x\n", FB_ADDR);
 	for(i = 0; i < size; i++){
 		fb[i] = 0xff00;
 	}
