@@ -2,6 +2,9 @@
 #include <amdev.h>
 #include <nemu.h>
 
+//test
+#include<klib.h>
+
 #define W 400
 #define H 300
 #define FPS 30
@@ -10,6 +13,7 @@
 extern int screen_width();
 extern int screen_height();
 extern void draw_sync();
+
 //static uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 static inline int min(int a, int b){
 	return (a < b) ? a : b;
@@ -56,6 +60,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 void __am_vga_init() {
 	int i;
 	int size = screen_width() * screen_height();
+	printf("size=%d\n", size);
 	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 	for(i = 0; i < size; i++){
 		fb[i] = 0xff00;
