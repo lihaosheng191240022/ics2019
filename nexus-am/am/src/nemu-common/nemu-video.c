@@ -10,7 +10,7 @@
 extern int screen_width();
 extern int screen_height();
 extern void draw_sync();
-uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+static uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 static inline int min(int a, int b){
 	return (a < b) ? a : b;
 }
