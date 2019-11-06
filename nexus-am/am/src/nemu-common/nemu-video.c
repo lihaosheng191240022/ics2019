@@ -62,9 +62,9 @@ void __am_vga_init() {
 	int size = screen_width() * screen_height();
 	//printf("size=%d\n", size);
 	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-	printf("FB_ADDR=%x\n", FB_ADDR);
+	//printf("FB_ADDR=%x\n", FB_ADDR);
 	for(i = 0; i < size; i++){
-		fb[i] = 0xff00;
+		fb[i] = i;
 	}
 	draw_sync();
 
