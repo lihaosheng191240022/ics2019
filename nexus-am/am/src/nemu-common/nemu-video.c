@@ -79,6 +79,7 @@ void __am_vga_init() {
 	printf("width=%d, height=%d\n", width, height);
 	uint32_t tmp_sync = inl(SYNC_ADDR);
 	printf("sync=%d\n", tmp_sync);	
+	outl(SYNC_ADDR, 1);
 	draw_sync();
 
 }
