@@ -38,7 +38,8 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 			for(int j = 0; j < h && y + j < H; j++){
 				//memcpy(&fb[(y+j)*W+x], pixels, cp_bytes);
 				for(int k = 0; k < cp_pixel_num; k++){
-					fb[(y+j)*W+x+k] = pixels[k];
+					//fb[(y+j)*W+x+k] = pixels[k];
+					fb[(y+j)*W+x+k] = 0xffffff;
 				}
 				pixels += w;
 			}
