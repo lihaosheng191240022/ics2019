@@ -10,7 +10,7 @@
 extern int screen_width();
 extern int screen_height();
 extern void draw_sync();
-static uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+//static uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 static inline int min(int a, int b){
 	return (a < b) ? a : b;
 }
@@ -39,7 +39,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 				//memcpy(&fb[(y+j)*W+x], pixels, cp_bytes);
 				for(int k = 0; k < cp_pixel_num; k++){
 					//fb[(y+j)*W+x+k] = pixels[k];
-					fb[(y+j)*W+x+k] = 0xff00;
+					//fb[(y+j)*W+x+k] = 0xff00;
 				}
 				pixels += w;
 			}
@@ -56,6 +56,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 void __am_vga_init() {
 	int i;
 	int size = screen_width() * screen_height();
+	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 	for(i = 0; i < size; i++){
 		fb[i] = 0xff00;
 	}
