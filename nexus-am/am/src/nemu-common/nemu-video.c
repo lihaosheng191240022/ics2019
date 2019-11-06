@@ -36,7 +36,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
     case _DEVREG_VIDEO_FBCTL: {
       _DEV_VIDEO_FBCTL_t *ctl = (_DEV_VIDEO_FBCTL_t *)buf;
 			int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
-			printf("x=%d, y=%d, w=%d, h=%d\n", x, y, w, h);
+			//printf("x=%d, y=%d, w=%d, h=%d\n", x, y, w, h);
 			uint32_t *pixels = ctl->pixels;
 			//int cp_bytes = sizeof(uint32_t) * min(W, W-x);
 			int cp_pixel_num = min(W, W-x);
@@ -68,9 +68,9 @@ void __am_vga_init() {
 	for(i = 0; i < size; i++){
 		fb[i] = i;
 	}
-	for(i = 0; i < 10; i++){
-		printf("%x = %x\n", fb+i, fb[i]);
-	}
+	//for(i = 0; i < 10; i++){
+	//	printf("%x = %x\n", fb+i, fb[i]);
+	//}
 	draw_sync();
 
 }
