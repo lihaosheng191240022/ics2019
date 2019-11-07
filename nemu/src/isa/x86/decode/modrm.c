@@ -26,9 +26,11 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 
   if (m->mod == 0) {
     
-		if (base_reg == R_EBP) { base_reg = -1;disp_size = 4; }
+		if (base_reg == R_EBP) { base_reg = -1;/*disp_size = 4;*/ }
     else { disp_size = 0; }
-  
+ 
+	}	
+	/*
 	}else if (m->mod == 1) { disp_size = 1; }
 	
 	else{
@@ -40,17 +42,19 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 		//}
 		disp_size = 4;//in 32-bit addressing mode
 	}
-
+	*/
   if (disp_size != 0) {
     /* has disp */
     disp = instr_fetch(pc, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
+		/*
 		else if(disp_size == 2) {
 			disp = (int16_t)disp;
 		}else{
 			assert(disp_size == 4);
 			disp = (int32_t)disp;
 		}
+		*/
 		//Assert(0, "this is a trick by yzh\n");
     rtl_addi(&s0, &s0, disp);
 		//rtl_li(&s1, (rtlreg_t)disp);
