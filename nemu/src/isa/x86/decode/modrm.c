@@ -24,9 +24,10 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     base_reg = m->R_M;
   }
 
+	//proceed disp_size below
   if (m->mod == 0) {
     
-		if (base_reg == R_EBP) { base_reg = -1;/*disp_size = 4;*/ }
+		if (base_reg == R_EBP) { base_reg = -1;assert(disp_size==4);}
     else { disp_size = 0; }
  
 	}	
@@ -58,20 +59,16 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
 		}
 		
 		//Assert(0, "this is a trick by yzh\n");
-    rtl_addi(&s0, &s0, disp);
-		//rtl_li(&s1, (rtlreg_t)disp);
-		//rtl_add(&s0, &s0, &s1);//error here
+    rtl_addi(&s0, &s0, disp);//s0 has been initialized to 0
 	}
 
   if (base_reg != -1) {
     rtl_add(&s0, &s0, &reg_l(base_reg));
-		//rtl_addi(&s0, &s0, (int)reg_l(base_reg));
 	}
 
   if (index_reg != -1) {
     rtl_shli(&s1, &reg_l(index_reg), scale);
     rtl_add(&s0, &s0, &s1);
-    //rtl_addi(&s0, &s0, (int)s1);
   }
   rtl_mv(&rm->addr, &s0);
 	//Assert(cpu.pc!=0x104877, "base=%d, index=%d, scale=%d, disp=%08x, addr=%08x\n", base_reg, index_reg, scale, disp, s0);
