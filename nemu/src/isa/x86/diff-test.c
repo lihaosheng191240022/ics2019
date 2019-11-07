@@ -5,7 +5,7 @@ extern void difftest_getregs(void *r);
 extern const char *regsl[];
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
  //TODO()
-	printf("$");
+	//printf("$");
 	uint32_t r[10];/*8 gpr and pc and EFLAGS*/
 	difftest_getregs(r);
 	CPU_state *ref_ptr = ref_r;
