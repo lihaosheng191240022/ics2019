@@ -9,7 +9,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 	uint32_t r[10];/*8 gpr and pc and EFLAGS*/
 	difftest_getregs(r);
 	CPU_state *ref_ptr = ref_r;
-	int flag = 0;
+	//int flag = 0;
 	int i;
 	for(i=0;i<9;i++){
 		//if(r[i]!=*((uint32_t *)ref_ptr+i)){
@@ -37,7 +37,8 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 		flag = 1;
 	}
 	*/
- 	return (flag==0)?(true):(false);
+	return false;
+ 	//return (flag==0)?(true):(false);
 }
 
 void isa_difftest_attach(void) {
