@@ -30,9 +30,10 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     else { disp_size = 0; }
  
 	}	
-	/*
-	}else if (m->mod == 1) { disp_size = 1; }
-	
+	else if (m->mod == 1) { 
+		disp_size = 1; 
+	}
+	/*	
 	else{
 		assert(m->mod == 2);
 		//if(decinfo.isa.is_operand_size_16){
@@ -47,14 +48,15 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     /* has disp */
     disp = instr_fetch(pc, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
-		/*
+		
 		else if(disp_size == 2) {
+			assert(0);/*should not reach here!*/
 			disp = (int16_t)disp;
 		}else{
 			assert(disp_size == 4);
 			disp = (int32_t)disp;
 		}
-		*/
+		
 		//Assert(0, "this is a trick by yzh\n");
     rtl_addi(&s0, &s0, disp);
 		//rtl_li(&s1, (rtlreg_t)disp);
