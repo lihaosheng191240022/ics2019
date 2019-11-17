@@ -1,7 +1,13 @@
 #include "cpu/exec.h"
 
 make_EHelper(lidt) {
-  TODO();
+  /*pa3.1*/
+	//idtr.Limit:idtr.Base
+	rtl_li(&s0, id_dest->addr);
+	cpu.idtr.Limit = *(uint16_t *)(&pmem[s0]);
+	s0 += 2;
+	cpu.idtr.Base = *(uint32_t *)(&pmem[s0]);
+	printf("\033[31;43m idtr.Limit=%d idtr.Base=%d\n", cpu.idtr.Limit, cpu.idtr.Base);
 
   print_asm_template1(lidt);
 }

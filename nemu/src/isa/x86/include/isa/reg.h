@@ -35,6 +35,10 @@ typedef struct {
 		};
   vaddr_t pc;
 	rtlreg_t EFLAGS;
+	struct{
+		uint16_t Limit;
+		uint32_t Base;
+	}idtr;//pa3.1
 
 } CPU_state;
 
