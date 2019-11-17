@@ -91,6 +91,7 @@ make_EHelper(in);
 make_EHelper(div);
 make_EHelper(cwtl);
 make_EHelper(lidt);
+make_EHelper(int);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \

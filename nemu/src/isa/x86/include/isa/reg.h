@@ -39,7 +39,7 @@ typedef struct {
 		uint16_t Limit;
 		uint32_t Base;
 	}idtr;//pa3.1
-
+	rtlreg_t cs;//pa3.1
 } CPU_state;
 
 //pa2.3
