@@ -25,19 +25,13 @@ make_EHelper(mov_cr2r) {
 
   difftest_skip_ref();
 }
-
+extern void raise_intr(uint32_t NO, vaddr_t ret_addr);
 make_EHelper(int) {
   rtl_li(&s0, id_dest->val);
 	rtl_push(&cpu.EFLAGS);
 	rtl_push(&cpu.cs);
 	rtl_push(&cpu.pc);
-	rtl_li(&s1, cpu.idtr.Base);
-	s1 += s0 * 8;//this is idt entry
-	s0 = 0x0000ffff & *(rtlreg_t *)(&pmem[s1]);
-	s1 += 4;
-	s0 |= 0xffff0000 & *(rtlreg_t *)(&pmem[s1]);
-	decinfo.seq_pc = (vaddr_t)s0;
-
+	raise_intr(s0, decinfo.seq_pc);
 
   print_asm("int %s", id_dest->str);
 
