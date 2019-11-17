@@ -32,6 +32,9 @@ make_EHelper(int) {
 	rtl_push(&cpu.cs);
 	rtl_push(&cpu.pc);
 	raise_intr(s0, decinfo.seq_pc);
+	rtl_pop(&cpu.pc);
+	rtl_pop(&cpu.cs);
+	rtl_pop(&cpu.EFLAGS);
 
   print_asm("int %s", id_dest->str);
 
