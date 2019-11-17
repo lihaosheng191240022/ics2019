@@ -1,6 +1,9 @@
 #include <am.h>
 #include <x86.h>
 
+//pa3.1
+#include<klib.h>
+
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 void __am_irq0();
@@ -40,7 +43,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), __am_vectrap, DPL_KERN);
 
   set_idt(idt, sizeof(idt));
-
+	printf("idt base = %08x\n", idt);
   // register event handler
   user_handler = handler;
 
