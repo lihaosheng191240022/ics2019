@@ -7,7 +7,7 @@ make_EHelper(lidt) {
 	cpu.idtr.Limit = *(uint16_t *)(&pmem[s0]);
 	s0 += 2;
 	cpu.idtr.Base = *(uint32_t *)(&pmem[s0]);
-	printf("\033[31;43m idtr.Limit=%d idtr.Base=%d\n\033[0m", cpu.idtr.Limit, cpu.idtr.Base);
+	printf("\033[31m idtr.Limit=%d idtr.Base=%08x\n\033[0m", cpu.idtr.Limit, cpu.idtr.Base);
 
   print_asm_template1(lidt);
 }
