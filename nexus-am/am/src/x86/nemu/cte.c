@@ -11,6 +11,11 @@ void __am_vecsys();
 void __am_vectrap();
 void __am_vecnull();
 
+void __am_vectrap(){
+	printf("__am_vectrap = %x\n", __am_vectrap);
+}
+
+
 _Context* __am_irq_handle(_Context *c) {
   _Context *next = c;
   if (user_handler) {
