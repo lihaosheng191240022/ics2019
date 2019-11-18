@@ -8,8 +8,8 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	s1 = 0x0000ffff & vaddr_read(s0, 4);
 	s0 += 4;
 	s1 |= 0xffff0000 & vaddr_read(s0, 4);
-	//void (* entry)() = (void (*)())s1;
-	//entry();
+	void (*entry)() = NULL;
+	entry();
 	printf("\033[36m exception entry = %08x\n\033[0m", s1);
 }
 
