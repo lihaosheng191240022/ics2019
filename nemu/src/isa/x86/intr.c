@@ -9,8 +9,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	s0 += 4;
 	s1 |= 0xffff0000 & vaddr_read(s0, 4);
 	printf("\033[36m exception entry = %08x\n\033[0m", s1);
-	//void (*entry)() = NULL;
-	//entry();
+	rtl_j(s1);
 }
 
 bool isa_query_intr(void) {
