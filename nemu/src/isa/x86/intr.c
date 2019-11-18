@@ -9,6 +9,11 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	s0 += 4;
 	s1 |= 0xffff0000 & vaddr_read(s0, 4);
 	void (*entry)() = NULL;
+	asm("mov %1, %0\n"
+			:"=r"(entry)
+			:"m"(s1)
+			);
+	
 	entry();
 	printf("\033[36m exception entry = %08x\n\033[0m", s1);
 }
