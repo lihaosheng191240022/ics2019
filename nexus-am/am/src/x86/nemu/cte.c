@@ -52,6 +52,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 
   set_idt(idt, sizeof(idt));
 	printf("idt base = %08x\n", idt);
+	printf("__am_vectrap = %x\n", __am_vectrap);
   // register event handler
   user_handler = handler;
 
