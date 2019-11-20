@@ -28,7 +28,6 @@ make_EHelper(mov_cr2r) {
 extern void raise_intr(uint32_t NO, vaddr_t ret_addr);
 make_EHelper(int) {
   rtl_li(&s0, id_dest->val);
-	//rtl_push(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
 	_my_debug_ printf("before int: cpu.pc=%08x, decinfo.pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
