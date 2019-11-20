@@ -28,10 +28,9 @@ make_EHelper(mov_cr2r) {
 extern void raise_intr(uint32_t NO, vaddr_t ret_addr);
 make_EHelper(int) {
   rtl_li(&s0, id_dest->val);
-	//rtl_push(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
-	_my_debug_ printf("cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
+	_my_debug_ printf("before int: cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
 #endif
 	rtl_push(&cpu.EFLAGS);
 	rtl_push(&cpu.cs);
@@ -40,9 +39,9 @@ make_EHelper(int) {
 #ifdef MYDEBUG
 	//printf("exit raise_intr\n");
 #endif
-	rtl_pop(&cpu.EFLAGS);
-	rtl_pop(&cpu.cs);
-	rtl_pop(&cpu.EFLAGS);
+	//rtl_pop(&cpu.EFLAGS);
+	//rtl_pop(&cpu.cs);
+	//rtl_pop(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x\n", cpu.pc, decinfo.seq_pc);
 #endif
@@ -52,10 +51,7 @@ make_EHelper(int) {
 }
 
 make_EHelper(iret) {
-  /*pa3.1*/
-	rtl_pop(&cpu.pc);
-	rtl_pop(&cpu.cs);
-	rtl_pop(&cpu.EFLAGS);
+  TODO();
 
   print_asm("iret");
 }
