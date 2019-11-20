@@ -26,7 +26,6 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 #ifdef MYDEBUG
 	_my_debug_ printf("after jmp to __am_vectrap: cpu.pc=%08x\n", cpu.pc);
 #endif
-	//printf("\033[38m hello\n\033[0m");
 }
 
 bool isa_query_intr(void) {
