@@ -46,7 +46,7 @@ make_EHelper(int) {
 #ifdef MYDEBUG
 	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
 #endif
-	decinfo.is_jmp = false;
+	//decinfo.is_jmp = false;
   print_asm("int %s", id_dest->str);
 
   difftest_skip_dut(1, 2);
