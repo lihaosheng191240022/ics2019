@@ -44,7 +44,7 @@ make_EHelper(int) {
 	rtl_pop(&cpu.cs);
 	rtl_pop(&cpu.EFLAGS);
 #ifdef MYDEBUG
-	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x\n", cpu.pc, decinfo.seq_pc);
+	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
 #endif
   print_asm("int %s", id_dest->str);
 
