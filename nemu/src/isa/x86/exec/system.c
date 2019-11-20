@@ -31,13 +31,14 @@ make_EHelper(int) {
 	//rtl_push(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
+	printf("cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
 #endif
 	rtl_push(&decinfo.seq_pc);
 	rtl_push(&cpu.cs);
 	rtl_push(&cpu.pc);
 	raise_intr(s0, decinfo.seq_pc);
 #ifdef MYDEBUG
-	printf("exit raise_intr\n");
+	//printf("exit raise_intr\n");
 #endif
 	rtl_pop(&cpu.pc);
 	rtl_pop(&cpu.cs);
