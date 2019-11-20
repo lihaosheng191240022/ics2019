@@ -29,6 +29,9 @@ extern void raise_intr(uint32_t NO, vaddr_t ret_addr);
 make_EHelper(int) {
   rtl_li(&s0, id_dest->val);
 	//rtl_push(&cpu.EFLAGS);
+#ifdef MYDEBUG
+	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
+#endif
 	rtl_push(&decinfo.seq_pc);
 	rtl_push(&cpu.cs);
 	rtl_push(&cpu.pc);
