@@ -31,7 +31,7 @@ make_EHelper(int) {
 	//rtl_push(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
-	_my_debug_ printf("cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
+	_my_debug_ printf("before int: cpu.pc=%08x, decinfo.pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
 #endif
 	rtl_push(&cpu.EFLAGS);
 	rtl_push(&cpu.cs);
