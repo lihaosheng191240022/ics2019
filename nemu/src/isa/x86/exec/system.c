@@ -33,6 +33,9 @@ make_EHelper(int) {
 	rtl_push(&cpu.cs);
 	rtl_push(&cpu.pc);
 	raise_intr(s0, decinfo.seq_pc);
+#ifdef MYDEBUG
+	printf("exit raise_intr\n");
+#endif
 	rtl_pop(&cpu.pc);
 	rtl_pop(&cpu.cs);
 	rtl_pop(&cpu.EFLAGS);
