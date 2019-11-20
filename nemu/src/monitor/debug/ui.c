@@ -80,7 +80,7 @@ static int cmd_b(char *args){
 	}else{
 		uint32_t pos;
 		sscanf(arg, "%x", &pos);
-		while(cpu.pc<=pos){
+		while(cpu.pc!=pos){
 			cpu_exec(1);
 		}
 	}
