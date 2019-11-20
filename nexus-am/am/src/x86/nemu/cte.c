@@ -14,6 +14,7 @@ void __am_vecnull();
 
 _Context* __am_irq_handle(_Context *c) {
   _Context *next = c;
+#ifdef MYDEBUG
 	printf("_Context c: c->edi=%08x\n", c->edi);
 	printf("_Context c: c->esi=%08x\n", c->esi);
 	printf("_Context c: c->ebp=%08x\n", c->ebp);
@@ -26,6 +27,8 @@ _Context* __am_irq_handle(_Context *c) {
 	printf("_Context c: c->eip=%08x\n", c->eip);
 	printf("_Context c: c->cs=%08x\n", c->cs);
 	printf("_Context c: c->eflags=%08x\n", c->eflags);
+#endif
+	printf("c->irq=%d\n", c->irq);
 	if (user_handler) {
     _Event ev = {0};
     switch (c->irq) {
