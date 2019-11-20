@@ -40,7 +40,7 @@ make_EHelper(int) {
 #ifdef MYDEBUG
 	//printf("exit raise_intr\n");
 #endif
-	rtl_pop(&cpu.pc);
+	rtl_pop(&cpu.EFLAGS);
 	rtl_pop(&cpu.cs);
 	rtl_pop(&cpu.EFLAGS);
 #ifdef MYDEBUG
