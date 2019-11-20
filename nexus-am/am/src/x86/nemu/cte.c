@@ -14,9 +14,9 @@ void __am_vecnull();
 
 _Context* __am_irq_handle(_Context *c) {
   _Context *next = c;
-#ifdef MYDEBUG
-	_my_debug_ printf("hello, boy\n");	
-#endif
+	//-----
+	printf("hello, boy\n");	
+	//-----
 	if (user_handler) {
     _Event ev = {0};
     switch (c->irq) {
