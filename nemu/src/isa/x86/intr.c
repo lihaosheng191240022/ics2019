@@ -8,6 +8,9 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	printf("idtr.Limit=%d\n", cpu.idtr.Limit);
 #endif
 	s0 = cpu.idtr.Base + 8 * NO;
+#ifdef MYDEBUG
+	printf("irq entry is %08x\n", s0);
+#endif
 	s1 = 0x0000ffff & vaddr_read(s0, 4);
 	s0 += 4;
 	s1 |= 0xffff0000 & vaddr_read(s0, 4);
