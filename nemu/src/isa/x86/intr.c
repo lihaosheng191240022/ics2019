@@ -15,7 +15,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	s0 += 4;
 	s1 |= 0xffff0000 & vaddr_read(s0, 4);
 #ifdef MYDEBUG
-	//printf("\033[36m exception entry = %08x\n\033[0m", s1);
+	printf("\033[36m exception entry = %08x\n\033[0m", s1);
 	printf("before jmp to __am_vectrap: cpu.pc=%08x\n", cpu.pc);
 #endif
 	rtl_j(s1);
