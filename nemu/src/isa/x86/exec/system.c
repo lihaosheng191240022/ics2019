@@ -31,7 +31,7 @@ make_EHelper(int) {
 	//rtl_push(&cpu.EFLAGS);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
-	printf("cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
+	_my_debug_ printf("cpu.pc=%08x, decinfo.pc=%08x\n", cpu.pc, decinfo.seq_pc);
 #endif
 	rtl_push(&cpu.EFLAGS);
 	rtl_push(&cpu.cs);
@@ -44,7 +44,7 @@ make_EHelper(int) {
 	rtl_pop(&cpu.cs);
 	rtl_pop(&cpu.EFLAGS);
 #ifdef MYDEBUG
-	printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x\n", cpu.pc, decinfo.seq_pc);
+	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x\n", cpu.pc, decinfo.seq_pc);
 #endif
   print_asm("int %s", id_dest->str);
 
