@@ -79,7 +79,7 @@ static int cmd_b(char *args){
 		printf("invalid argument: input b xxxx\n");
 	}else{
 		uint32_t pos;
-		sscanf(arg, "%d", &pos);
+		sscanf(arg, "%x", &pos);
 		while(cpu.pc<=pos){
 			cpu_exec(1);
 		}
