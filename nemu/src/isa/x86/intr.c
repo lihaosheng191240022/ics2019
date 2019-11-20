@@ -4,6 +4,9 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
    * That is, use ``NO'' to index the IDT.
    */
 	//printf("\033[32m todo in raise_intr\n");
+#ifdef MYDEBUG
+	printf("idtr.Limit=%d\n", cpu.idtr.Limit);
+#endif
 	s0 = cpu.idtr.Base + 8 * NO;
 	s1 = 0x0000ffff & vaddr_read(s0, 4);
 	s0 += 4;
