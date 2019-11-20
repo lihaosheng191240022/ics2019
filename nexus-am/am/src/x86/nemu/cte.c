@@ -49,9 +49,11 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), __am_vectrap, DPL_KERN);
 
   set_idt(idt, sizeof(idt));
-	printf("idt base = %08x\n", idt);
+#ifdef MYDEBUG
+	printf("idt base = %08x, idt limit = %d\n", idt, sizeof(idt));
 	printf("__am_vectrap = %x\n", __am_vectrap);
-  // register event handler
+#endif
+	// register event handler
   user_handler = handler;
 
   return 0;
