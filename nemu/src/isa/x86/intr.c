@@ -25,7 +25,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 	rtl_j(s1);
 #ifdef MYDEBUG
 	_my_debug_ printf("after jmp to __am_vectrap: cpu.pc=%08x\n", cpu.pc);
-	printf("after jmp: seq_pc=%08x\n", ret_addr);
+	_my_debug_ printf("after jmp: seq_pc=%08x\n", ret_addr);
 #endif
 }
 
