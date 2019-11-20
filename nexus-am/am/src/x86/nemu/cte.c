@@ -28,7 +28,7 @@ _Context* __am_irq_handle(_Context *c) {
 	printf("_Context c: c->cs=%08x\n", c->cs);
 	printf("_Context c: c->eflags=%08x\n", c->eflags);
 #endif
-	printf("c->irq=%d\n", c->irq);
+	printf("c->irq=%x\n", c->irq);
 	if (user_handler) {
     _Event ev = {0};
     switch (c->irq) {
