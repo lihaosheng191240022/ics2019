@@ -43,7 +43,9 @@ void cpu_exec(uint64_t n) {
 
   for (; n > 0; n --) {
     __attribute__((unused)) vaddr_t ori_pc = cpu.pc;
-
+#ifdef MYDEBUG
+	Assert(cpu.pc != 0x10078a, "cpu.pc can be 0x10078a\n");
+#endif
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
     __attribute__((unused)) vaddr_t seq_pc = exec_once();
