@@ -14,9 +14,18 @@ void __am_vecnull();
 
 _Context* __am_irq_handle(_Context *c) {
   _Context *next = c;
-	//-----
-	printf("hello, boy\n");	
-	//-----
+	printf("_Context c: c->edi=%08x\n", c->edi);
+	printf("_Context c: c->esi=%08x\n", c->esi);
+	printf("_Context c: c->ebp=%08x\n", c->ebp);
+	printf("_Context c: c->esp=%08x\n", c->esp);
+	printf("_Context c: c->ebx=%08x\n", c->ebx);
+	printf("_Context c: c->edx=%08x\n", c->edx);
+	printf("_Context c: c->ecx=%08x\n", c->ecx);
+	printf("_Context c: c->eax=%08x\n", c->eax);
+	printf("_Context c: c->irq=%d\n", c->irq);
+	printf("_Context c: c->eip=%08x\n", c->eip);
+	printf("_Context c: c->cs=%08x\n", c->cs);
+	printf("_Context c: c->eflags=%08x\n", c->eflags);
 	if (user_handler) {
     _Event ev = {0};
     switch (c->irq) {
