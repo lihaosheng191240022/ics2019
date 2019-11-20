@@ -93,6 +93,7 @@ make_EHelper(cwtl);
 make_EHelper(lidt);
 make_EHelper(int);
 make_EHelper(pusha);
+make_EHelper(popa);
 #ifdef DEBUG
 #define print_asm(...) \
   do { \
