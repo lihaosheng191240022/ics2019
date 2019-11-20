@@ -3,7 +3,7 @@
 
 struct _Context {
   struct _AddressSpace *as;
-  uintptr_t esi, ebx, eax, eip, edx, eflags, ecx, cs, esp, edi, ebp;
+  uintptr_t edi, esi, ebp, esp, ebx, edx, ecx, eax;
   int irq;
 };
 
