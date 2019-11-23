@@ -6,5 +6,7 @@
 int main(void){
 	//int a=1, b=2;
 	//nemu_assert(a+b==3);	
+	unsigned a = 1;
+	a = a<<0;
 	return 0;
 }
