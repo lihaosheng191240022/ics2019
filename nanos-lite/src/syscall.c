@@ -19,8 +19,7 @@ _Context* do_syscall(_Context *c) {
 												char ch = *((char *)a[2]+i);
 												_putc(ch);
 											}
-										}
-										break;	
+										}																												break;	
 		default: panic("Unhandled syscall ID = %d", a[0]);break;
   }
 
