@@ -111,13 +111,13 @@ make_DHelper(mov_G2E) {
  */
 //addition begin
 make_DHelper(Eb2G){
-	decode_op_rm(pc, id_src, true, id_dest, true);
 	id_src->width = 1;
+	decode_op_rm(pc, id_src, true, id_dest, true);
 }
 
 make_DHelper(Ew2G){
-	decode_op_rm(pc, id_src, true, id_dest, true);
 	id_src->width = 2;
+	decode_op_rm(pc, id_src, true, id_dest, true);
 }
 //addition end
 make_DHelper(E2G) {
