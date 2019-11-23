@@ -14,7 +14,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   /*pa3.2*/
 	ramdisk_read((void *)0x3000000, 0, 0x63f8);
 	ramdisk_read((void *)0x3008000, 0x7000, 0x8b8);	
-  return 0x30002e8;
+  //return 0x30002e8;
+
+	Elf_Ehdr Elfheader;
+	_my_debug_ printf("size of Elfheadr=%d\n", sizeof(Elf_Ehdr));
+	ramdisk_read(&Elfheader, 0, 52);
+	return Elfheader.e_entry;
+	
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
