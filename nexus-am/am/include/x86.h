@@ -2,7 +2,7 @@
 #define __X86_H__
 
 //my debug
-#define MYDEBUG printf("&&&&AM: ");
+#define MYDEBUG printf("&&&&&&&AM: ");
 #define _my_debug_ MYDEBUG
 
 // CPU rings
