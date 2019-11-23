@@ -12,13 +12,22 @@
 extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   /*pa3.2*/
-	ramdisk_read((void *)0x3000000, 0, 0x63f8);
-	ramdisk_read((void *)0x3008000, 0x7000, 0x8b8);	
+	//ramdisk_read((void *)0x3000000, 0, 0x63f8);
+	//ramdisk_read((void *)0x3008000, 0x7000, 0x8b8);	
   //return 0x30002e8;
 
 	Elf_Ehdr Elfheader;
 	_my_debug_ printf("size of Elfheadr=%d\n", sizeof(Elf_Ehdr));
 	ramdisk_read(&Elfheader, 0, 52);
+	Elf_Phdr Progheader;
+	size_t Phdrstart = Elfheader.e_phoff;
+	size_t Phdrsize = Elfheader.e_phentsize;
+	for(int i=0;i<Elfheader.e_phnum;i++){
+		ramdisk_read(&Progheader, Phdrstart + i * Phdrsize, Phdrsize);
+		if(Progheader.p_type==PT_LOAD){
+			ramdisk_read((void *)Progheader.p_vaddr, Progheader.p_offset, Progheader.p_memsz);
+		}
+	}
 	return Elfheader.e_entry;
 	
 }
