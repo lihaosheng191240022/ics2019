@@ -13,7 +13,14 @@ _Context* do_syscall(_Context *c) {
 		case SYS_exit:	_my_debug_ printf("next: handle SYS_exit\n"); _halt(0); break;
 		case SYS_yield:	_my_debug_ printf("next: handle SYS_yield\n"); _yield(); break;
 		case SYS_write:	_my_debug_ printf("next: handle SYS_write\n");
-									 _halt(0);break;	
+										_my_debug_ printf("fd=%d, count=%d\n", a[1], a[3]);
+										/*fd*/if(a[1]==1 || a[1]==2){
+											for(int i=0;i<a[3];i++){
+												char ch = *((char *)a[2]+i);
+												_putc(ch);
+											}
+										}
+										break;	
 		default: panic("Unhandled syscall ID = %d", a[0]);break;
   }
 
