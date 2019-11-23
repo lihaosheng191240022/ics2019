@@ -53,7 +53,7 @@ make_group(gp4,
 
 /* 0xff */
 make_group(gp5,
-    /*ff /0 inc*/EX(inc), /*ff /1*/EX(dec), /*0xff /2 call*/EX(call), EMPTY,
+    /*ff /0 inc*/EX(inc), /*ff /1*/IDEX(E, dec), /*0xff /2 call*/EX(call), EMPTY,
     /*ff /4 jmp*/EX(jmp), EMPTY, /*0xff /6 pushw/l*/EX(push), /*ff /7*/EMPTY)
 
 /* 0x0f 0x01*/
