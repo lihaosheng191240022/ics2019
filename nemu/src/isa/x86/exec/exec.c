@@ -38,7 +38,7 @@ make_group(gp1,
 
 /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
 make_group(gp2,
-    EMPTY, EMPTY, EMPTY, EMPTY,
+		/*d3 /0*/EX(rol), EMPTY, EMPTY, EMPTY,
     /*d3 /4*/EX(shl), /*/5 shr*/EX(shr), EMPTY, /*c1 /7*/EX(sar))
 
 /* 0xf6, 0xf7 */
