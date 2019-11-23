@@ -183,8 +183,8 @@ static OpcodeEntry opcode_table [512] = {
   /*from 90 to 9f all setcc one byte*/
 	/* 0x90 */	IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1),
   /* 0x94 */	IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1),
-  /* 0x98 TODO*/	IDEX(E, setcc), IDEX(E, setcc), IDEX(E, setcc), IDEX(E, setcc),
-  /* 0x9c TODO*/	IDEX(E, setcc), IDEX(E, setcc), IDEX(E, setcc), IDEX(E, setcc),
+  /* 0x98 TODO*/	IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1),
+  /* 0x9c TODO*/	IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1), IDEXW(E, setcc, 1),
   
 	/* 0xa0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xa4 */	EMPTY, EMPTY, EMPTY, EMPTY,
