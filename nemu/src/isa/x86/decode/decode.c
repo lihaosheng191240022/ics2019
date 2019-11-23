@@ -109,6 +109,17 @@ make_DHelper(mov_G2E) {
 /* Gb <- Eb
  * Gv <- Ev
  */
+//addition begin
+make_DHelper(Eb2G){
+	decode_op_rm(pc, id_src, true, id_dest, true);
+	id_src->width = 1;
+}
+
+make_DHelper(Ew2G){
+	decode_op_rm(pc, id_src, true, id_dest, true);
+	id_src->width = 2;
+}
+//addition end
 make_DHelper(E2G) {
   decode_op_rm(pc, id_src, true, id_dest, true);
 }

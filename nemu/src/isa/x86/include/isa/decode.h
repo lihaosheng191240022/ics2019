@@ -36,6 +36,11 @@ typedef union {
 void load_addr(vaddr_t *, ModR_M *, Operand *);
 void read_ModR_M(vaddr_t *, Operand *, bool, Operand *, bool);
 
+
+//addition begin
+make_DHelper(Eb2G);
+make_DHelper(Ew2G);
+//addition end
 make_DHelper(I2E);
 make_DHelper(I2a);
 make_DHelper(I2r);
