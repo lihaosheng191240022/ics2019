@@ -12,9 +12,9 @@
 extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   /*pa3.2*/
-	ramdisk_read((void *)0x3000000, 0, 0x5488);
-	ramdisk_read((void *)0x3007000, 0x6000, 0x8d8);	
-  return 0x30000f0;
+	ramdisk_read((void *)0x3000000, 0, 0x63f8);
+	ramdisk_read((void *)0x3008000, 0x7000, 0x8b8);	
+  return 0x30002e8;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
