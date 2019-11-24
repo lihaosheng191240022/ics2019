@@ -21,10 +21,9 @@ _Context* do_syscall(_Context *c) {
 											}
 										}																												break;	
 		case SYS_brk:	_my_debug_ printf("next: handle SYS_brk\n");
-									c->GPR1 = 0;																							break;
+									c->GPR1 = 1;																							break;
 		default: panic("Unhandled syscall ID = %d", a[0]);break;
   }
 
   return NULL;
-	//return c;
 }
