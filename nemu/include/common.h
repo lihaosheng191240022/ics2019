@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 //#define DEBUG
-//#define DIFF_TEST
+#define DIFF_TEST
 #define MYDEBUG printf("\033[43m&&&&&NEMU: \033[0m");
 #define _my_debug_   MYDEBUG
 
