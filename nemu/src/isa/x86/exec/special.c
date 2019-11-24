@@ -32,3 +32,30 @@ make_EHelper(nemu_trap) {
   print_asm("nemu trap");
   return;
 }
+
+make_EHelper(rol){
+  rtl_li(&s0, id_src->val);//tmp count
+  rtl_li(&s1, id_dest->val);
+  rtlreg_t mask = (id_dest->width==16)?(0x8000):(0x80000000);
+  rtlreg_t high_bit;
+  while(s0!=0){
+    high_bit = s1 & mask;
+    s1 = s1*2 + high_bit;
+    s0--;
+  }
+  operand_write(id_dest, &s1);
+
+  if(id_src->val==1){
+    rtl_get_CF(&s0);
+    if((s1&mask) != s0){
+      rtl_li(&s0, 1);
+      rtl_set_OF(&s0);
+    }else{
+      rtl_li(&s0, 0);
+      rtl_set_OF(&s0);
+    }
+  }
+  else{
+    //UB
+  }
+}
