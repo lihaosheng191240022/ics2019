@@ -7,7 +7,7 @@ make_EHelper(test) {
 		
 		// Assert(0, "seq_pc=%08x\n", decinfo.seq_pc);
 	}else if(decinfo.opcode==0xf7){
-		id_src->val = instr_fetch(&decinfo.seq_pc, id_dest->width);
+		// id_src->val = instr_fetch(&decinfo.seq_pc, id_dest->width);
 	}
 	rtl_and(&s0, &(id_dest->val), &(id_src->val));
 	rtl_li(&s1, 0);
