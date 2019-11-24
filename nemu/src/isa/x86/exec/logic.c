@@ -3,6 +3,11 @@
 
 make_EHelper(test) {
   /*pa2.2: test only modify EFLAGS*/
+	if(decinfo.opcode==0xf6){
+		id_src->val = instr_fetch(&decinfo.seq_pc, 1);
+	}else if(decinfo.opcode==0xf7){
+		id_src->val = instr_fetch(&decinfo.seq_pc, id_dest->width);
+	}
 	rtl_and(&s0, &(id_dest->val), &(id_src->val));
 	rtl_li(&s1, 0);
 	rtl_set_OF(&s1);

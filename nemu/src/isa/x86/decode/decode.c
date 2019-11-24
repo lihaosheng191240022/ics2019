@@ -166,9 +166,6 @@ make_DHelper(mov_I2r) {
 /* used by unary operations */
 //addition
 make_DHelper(I2x){
-	if(decinfo.opcode==0xf6){
-		id_src->width = 1;
-	}
 	decode_op_I(pc, id_src, true);
 }
 
