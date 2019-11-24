@@ -32,16 +32,16 @@ void load_addr(vaddr_t *pc, ModR_M *m, Operand *rm) {
     disp = instr_fetch(pc, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
 
-    rtl_addi(&s0, &s0, disp);
+    rtl_addi(&s0, &s0, disp);//s0 = disp
   }
 
   if (base_reg != -1) {
-    rtl_add(&s0, &s0, &reg_l(base_reg));
+    rtl_add(&s0, &s0, &reg_l(base_reg));//s0 = base_reg + disp
   }
 
   if (index_reg != -1) {
-    rtl_shli(&s1, &reg_l(index_reg), scale);
-    rtl_add(&s0, &s0, &s1);
+    rtl_shli(&s1, &reg_l(index_reg), scale);//s1 = index_reg << scale, only when having SIB
+    rtl_add(&s0, &s0, &s1);//s0 = base_reg + index_reg << scale + disp, only when having SIB
   }
   rtl_mv(&rm->addr, &s0);
 
