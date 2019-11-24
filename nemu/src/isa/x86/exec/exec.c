@@ -42,17 +42,17 @@ make_group(gp2,
     /*d3 /4*/EX(shl), /*/5 shr*/EX(shr), EMPTY, /*c1 /7*/EX(sar))
 
 /* 0xf6, 0xf7 */
-make_group(gp3,
-    /*f6 /0 test need imm*/EX(test), EMPTY, /*f7 /2 not*/EX(not), /*f7 /3 neg*/EX(neg),
+make_group(gp3,/*test has been handlesd in EHelper*/
+    /*f6 /0 test need imm8/v*/EX(test), EMPTY, /*f7 /2 not*/EX(not), /*f7 /3 neg*/EX(neg),
     /*f7 /4 mul*/EX(mul), /*/5 imul*/EX(imul1), /*f7 /6*/EX(div), /*f7 /7 idiv*/EX(idiv))
 
 /* 0xfe */
-make_group(gp4,
+make_group(gp4,/*Good Decode until now*/
     EMPTY, /*/1 dec*/EX(dec), EMPTY, EMPTY,
     EMPTY, EMPTY, EMPTY, EMPTY)
 
 /* 0xff */
-make_group(gp5,
+make_group(gp5,/*Good Decode until now*/
     /*ff /0 inc*/EX(inc), /*ff /1*/EX(dec), /*0xff /2 call*/EX(call), EMPTY,
     /*ff /4 jmp*/EX(jmp), EMPTY, /*0xff /6 pushw/l*/EX(push), /*ff /7*/EMPTY)
 
