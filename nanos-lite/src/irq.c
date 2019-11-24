@@ -13,7 +13,6 @@ static _Context* do_event(_Event e, _Context* c) {
   }
 
   return NULL;
-	//return c;
 }
 
 void init_irq(void) {
