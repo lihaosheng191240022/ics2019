@@ -4,8 +4,8 @@
 make_EHelper(test) {
   /*pa2.2: test only modify EFLAGS*/
 	if(decinfo.opcode==0xf6){
-		id_src->val = instr_fetch(&decinfo.seq_pc, 1);
-		Assert(0, "seq_pc=%08x\n", decinfo.seq_pc);
+		
+		// Assert(0, "seq_pc=%08x\n", decinfo.seq_pc);
 	}else if(decinfo.opcode==0xf7){
 		id_src->val = instr_fetch(&decinfo.seq_pc, id_dest->width);
 	}
