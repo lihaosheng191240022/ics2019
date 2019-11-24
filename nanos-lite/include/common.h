@@ -5,7 +5,7 @@
 #define HAS_CTE
 //#define HAS_VME
 #define MYDEBUG printf("&&&&Nanos: ");
-#define _my_debug_ MYDEBUG
+#define _my_debug_   MYDEBUG
 
 #include <am.h>
 #include <klib.h>
