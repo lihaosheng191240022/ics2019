@@ -164,6 +164,12 @@ make_DHelper(mov_I2r) {
 }
 
 /* used by unary operations */
+//addition
+make_DHelper(I2x){
+	decode_op_I(pc, id_src, true);
+}
+
+
 make_DHelper(I) {
   decode_op_I(pc, id_dest, true);
 }

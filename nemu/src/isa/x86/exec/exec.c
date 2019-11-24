@@ -43,7 +43,7 @@ make_group(gp2,
 
 /* 0xf6, 0xf7 */
 make_group(gp3,
-    /*f6 /0 test*/EX(test), EMPTY, /*f7 /2 not*/EX(not), /*f7 /3 neg*/EX(neg),
+    /*f6 /0 test need imm*/IDEX(I2x, test), EMPTY, /*f7 /2 not*/EX(not), /*f7 /3 neg*/EX(neg),
     /*f7 /4 mul*/EX(mul), /*/5 imul*/EX(imul1), /*f7 /6*/EX(div), /*f7 /7 idiv*/EX(idiv))
 
 /* 0xfe */

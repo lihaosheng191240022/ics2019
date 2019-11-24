@@ -2,14 +2,17 @@
 
 make_EHelper(add) {
   /*pa2.2 add.c*/
-	rtl_add(&s0, &(id_dest->val), &(id_src->val));
-	if(id_dest->type==OP_TYPE_REG){
-		rtl_sr(id_dest->reg, &s0, id_dest->width);
-	}else if(id_dest->type==OP_TYPE_MEM){
-		rtl_sm(&(id_dest->addr), &s0, id_dest->width);
-	}else{
-		Assert(0, "pc:%08x->add need more exec functions\n", cpu.pc);
-	}
+  rtl_li(&s0, id_dest->val);
+  rtl_li(&s1, id_src->val);
+	rtl_add(&s0, &s0, &s1);
+	operand_write(id_dest, &s0);
+  //if(id_dest->type==OP_TYPE_REG){
+	//	rtl_sr(id_dest->reg, &s0, id_dest->width);
+	//}else if(id_dest->type==OP_TYPE_MEM){
+	//	rtl_sm(&(id_dest->addr), &s0, id_dest->width);
+	//}else{
+	//	Assert(0, "pc:%08x->add need more exec functions\n", cpu.pc);
+	//}
 	/*update EFLAGS*/
 	//printf("add is successfully done\n");
 	rtl_update_ZFSF(&s0, id_dest->width);
