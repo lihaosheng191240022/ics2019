@@ -36,6 +36,7 @@ _Context* do_syscall(_Context *c) {
 									c->GPR1 = 0;																							
 									break;
 		case SYS_lseek: _my_debug_ printf("next: handle SYS_lseek\n");
+									_my_debug_ printf("offset = %u, len = %u\n", (size_t)a[2], (size_t)a[3]);
 									c->GPRx = fs_lseek((int)a[1], (size_t)a[2], (size_t)a[3]);
 									break;
 		default: panic("Unhandled syscall ID = %d", a[0]);
