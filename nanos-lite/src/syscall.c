@@ -18,7 +18,8 @@ _Context* do_syscall(_Context *c) {
 		case SYS_yield:	_my_debug_ printf("next: handle SYS_yield\n"); _yield(); 
 									break;
 		case SYS_open: _my_debug_ printf("next: handle SYS_open\n");
-									fs_open((char *)a[1], (int)a[2], (int)a[3]);
+									c->GPRx = fs_open((char *)a[1], (int)a[2], (int)a[3]);
+									_my_debug_ printf("open fd = %d\n", c->GPRx);
 									break;
 		case SYS_write:	_my_debug_ printf("next: handle SYS_write\n");
 										_my_debug_ printf("fd=%d, count=%d\n", a[1], a[3]);
