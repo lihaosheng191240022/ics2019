@@ -44,6 +44,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
 		}
 	}
+	fs_close(fd);
 	return elfheader.e_entry;
 }
 
