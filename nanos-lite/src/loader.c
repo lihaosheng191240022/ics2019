@@ -9,13 +9,14 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+#include"fs.h"
 extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   /*pa3.2*/
 	//ramdisk_read((void *)0x3000000, 0, 0x63f8);
 	//ramdisk_read((void *)0x3008000, 0x7000, 0x8b8);	
   //return 0x30002e8;
-
+/*
 	Elf_Ehdr Elfheader;
 	_my_debug_ printf("size of Elfheadr=%d\n", sizeof(Elf_Ehdr));
 	ramdisk_read(&Elfheader, 0, 52);
@@ -29,7 +30,21 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	return Elfheader.e_entry;
+	*/
+	Elf_Ehdr elfheader;
+	Elf_Phdr progheader;
 	
+	int fd = fs_open(filename, 0, 0);
+	fs_read(fd, &elfheader, sizeof(Elf_Ehdr));
+	fs_lseek(fd, elfheader.e_phoff, SEEK_SET);
+	size_t entry_size = elfheader.e_phentsize;
+	for(int i=0;i<elfheader.e_phnum;i++){
+		fs_read(fd, &progheader, entry_size);
+		if(progheader.p_type==PT_LOAD){
+			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
+		}
+	}
+	return elfheader.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
