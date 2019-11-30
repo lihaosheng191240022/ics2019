@@ -22,6 +22,7 @@ _Context* do_syscall(_Context *c) {
 									_my_debug_ printf("open %s fd = %d\n",(char *)a[1],  c->GPRx);
 									break;
 		case SYS_read: _my_debug_ printf("next: handle SYS_read\n");
+									_my_debug_ printf("fd = %d, len = %u", (int)a[1], (size_t)a[3]);
 									c->GPRx = fs_read((int)a[1], (void *)a[2], (size_t)a[3]);
 									break;
 		case SYS_write:	_my_debug_ printf("next: handle SYS_write\n");

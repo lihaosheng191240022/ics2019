@@ -41,6 +41,7 @@ void init_fs() {
 int fs_open(const char *pathname, int flags, int mode){
   for(int i=0;i<NR_FILES;i++){
     if(strcmp(pathname, file_table[i].name)==0){
+      file_table[i].disk_offset = 0;
       return i;
     }
   }
@@ -49,11 +50,16 @@ int fs_open(const char *pathname, int flags, int mode){
 
 int fs_close(int fd){
   assert(fd>=0&&fd<NR_FILES);
+  file_table[fd].disk_offset = 0;
   return 0;
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
+  /*read from file to buf*/
+
+  //for single file case
+  
   return 0;
 }
 
