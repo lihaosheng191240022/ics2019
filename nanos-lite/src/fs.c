@@ -60,7 +60,11 @@ extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t fs_read(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   /*read from file to buf*/
-  size_t ret =  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  ReadFn read_f = file_table[fd].read;
+  if(read_f==NULL){
+    read_f = ramdisk_read;
+  }
+  size_t ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
   //assert(file_table[fd].open_offset<=file_table[fd].size);
   return ret;
@@ -68,7 +72,11 @@ size_t fs_read(int fd, void *buf, size_t len){
 
 size_t fs_write(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
-  size_t ret =  ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  WriteFn write_f = file_table[fd].write;
+  if(write_f==NULL){
+    write_f = ramdisk_write;
+  }
+  size_t ret =  write_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
   assert(file_table[fd].open_offset<=file_table[fd].size);
   return ret;
