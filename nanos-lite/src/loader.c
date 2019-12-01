@@ -47,7 +47,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		fs_read(fd, &progheader, entry_size);
 		
 		if(progheader.p_type==PT_LOAD){
-			fs_lseek(fd, progheader.p_vaddr, SEEK_SET);
+			fs_lseek(fd, progheader.p_offset, SEEK_SET);
 			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
 		}
 	}
