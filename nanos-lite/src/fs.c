@@ -43,11 +43,19 @@ void init_fs() {
 
 //pa3.3
 int fs_open(const char *pathname, int flags, int mode){
+  
+  int fd_dev_events = -1;
   for(int i=0;i<NR_FILES;i++){
     if(strcmp(pathname, file_table[i].name)==0){
       file_table[i].open_offset = 0;
       return i;
     }
+    if(strcmp("/bin/events", file_table[i].name)==0){
+      fd_dev_events = i;
+    }
+  }
+  if(strcmp(pathname, "/dev/events")){
+    return fd_dev_events;
   }
   return -1;
 }
@@ -67,9 +75,10 @@ size_t fs_read(int fd, void *buf, size_t len){
   if(read_f==NULL){
     read_f = ramdisk_read;
   }
-  //if(fd==fs_open("/bin/events", 0, 0)){
-   // read_f = events_read;
-  //}
+  
+  if(strcmp(file_table[fd].name, "/dev/events")==0){
+    read_f = events_read;
+  }
   size_t ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
   //assert(file_table[fd].open_offset<=file_table[fd].size);
