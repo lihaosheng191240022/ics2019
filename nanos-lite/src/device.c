@@ -32,7 +32,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
 	
 	uint32_t current_time = uptime();
-	printf("current_time is %d\n", current_time);
+	//printf("current_time is %d\n", current_time);
 	char t[16] = {'\0'};
 	size_t i = 0;
 	while(current_time!=0){
@@ -49,6 +49,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	strcat(str2, "t ");
 	strcat(str2, t);
 	strcat(str2, "\n");
+	printf("time event is %s", str2);
 	size_t l2 = strlen(str2);
 	l2 = (l2<len)?(l2):(len);
 	memcpy(buf, str2, l2);
