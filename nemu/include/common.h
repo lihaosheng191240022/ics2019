@@ -3,8 +3,8 @@
 
 //#define DEBUG
 //#define DIFF_TEST
-#define MYDEBUG printf("\033[43m&&&&&NEMU: \033[0m");
-#define _my_debug_   MYDEBUG
+#define MYDEBUG 
+#define _my_debug_  printf("\033[43m&&&&&NEMU: \033[0m");
 
 #if _SHARE
 // do not enable these features while building a reference design

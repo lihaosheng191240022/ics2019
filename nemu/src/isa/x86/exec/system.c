@@ -30,7 +30,9 @@ make_EHelper(int) {
   rtl_li(&s0, id_dest->val);
 #ifdef MYDEBUG
 	Assert(cpu.pc!=decinfo.seq_pc, "cpu.pc=%08x\n", cpu.pc);
-	_my_debug_ printf("before int: cpu.pc=%08x, decinfo.pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
+//#ifdef MYDEBUG 
+	//_my_debug_ printf("before int: cpu.pc=%08x, decinfo.pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp); 
+//#endif
 #endif
 	rtl_push(&cpu.EFLAGS);
 	rtl_push(&cpu.cs);
@@ -43,7 +45,7 @@ make_EHelper(int) {
 	//rtl_pop(&cpu.cs);
 	//rtl_pop(&cpu.EFLAGS);
 #ifdef MYDEBUG
-	_my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp);
+	//#ifdef MYDEBUG _my_debug_ printf("after int: cpu.pc=%08x, decinfo.seq_pc=%08x, is_jmp=%d\n", cpu.pc, decinfo.seq_pc, decinfo.is_jmp); #endif
 #endif
 	//decinfo.is_jmp = false;
   print_asm("int %s", id_dest->str);

@@ -4,8 +4,8 @@
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_CTE
 //#define HAS_VME
-#define MYDEBUG printf("&&&&Nanos: ");
-#define _my_debug_   MYDEBUG
+#define MYDEBUG 
+#define _my_debug_  printf("&&&&Nanos: ");
 
 #include <am.h>
 #include <klib.h>
