@@ -80,7 +80,9 @@ size_t fs_write(int fd, void *buf, size_t len){
   }
   size_t ret =  write_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
-  assert(file_table[fd].open_offset<=file_table[fd].size);
+  if(fd>2){
+    assert(file_table[fd].open_offset<=file_table[fd].size);
+  }
   return ret;
 }
 
