@@ -37,7 +37,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		str[i] = '\n';
 		//assert(0);
 		//strcat(str, "\n");
-		size_t l = strlen(str);
+		size_t l = i+1;
 		l = (l<len)?(l):(len);
 		memcpy(buf, str, l);
 		return l;
