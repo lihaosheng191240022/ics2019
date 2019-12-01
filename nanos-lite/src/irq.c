@@ -5,9 +5,14 @@ extern _Context* do_syscall(_Context *c);
 static _Context* do_event(_Event e, _Context* c) {
   switch (e.event) {
 		case _EVENT_YIELD:
-			_my_debug_ printf("next: handle yield event\n"); break;
+#ifdef MYDEBUG
+			_my_debug_ printf("next: handle yield event\n"); 
+#endif
+			break;
 		case _EVENT_SYSCALL:
+#ifdef MYDEBUG
 			_my_debug_ printf("next: handle syscall event\n");
+#endif
 			do_syscall(c); break;
 		default: panic("Unhandled event ID = %d", e.event);
   }
