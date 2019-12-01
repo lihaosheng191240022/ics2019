@@ -30,7 +30,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	if(current_key!=_KEY_NONE){
 		//printf("current_key = %u\n", current_key);
 		char str[] = {'\0'};
-		//printf("keyname is %s\n", keyname[current_key]);
 		if(flag==0){
 			strcat(str, "ku ");
 		}else{
