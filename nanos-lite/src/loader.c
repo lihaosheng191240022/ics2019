@@ -35,8 +35,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	Elf_Phdr progheader;
 	
 	int fd = fs_open(filename, 0, 0);
+	fs_lseek(fd, 0, SEEK_SET);
 	fs_read(fd, &elfheader, sizeof(Elf_Ehdr));
 	//fs_lseek(fd, elfheader.e_phoff, SEEK_SET);
+	_my_debug_ printf("hello1\n");
 	size_t entry_size = elfheader.e_phentsize;
 	for(int i=0;i<elfheader.e_phnum;i++){
 		fs_lseek(fd, elfheader.e_phoff+i*entry_size, SEEK_SET);
@@ -46,6 +48,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
 		}
 	}
+	_my_debug_ printf("hello2\n");
 	fs_close(fd);
 	_my_debug_ printf("entry = %x\n", elfheader.e_entry);
 	return elfheader.e_entry;
