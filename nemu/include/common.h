@@ -3,7 +3,7 @@
 
 //#define DEBUG
 //#define DIFF_TEST
-#define MYDEBUG 
+//#define MYDEBUG 
 #define _my_debug_  printf("\033[43m&&&&&NEMU: \033[0m");
 
 #if _SHARE
