@@ -120,7 +120,8 @@ static char * number(char *str, long num, int base, int size, int precision, int
 	return str;
 }
 
-void itoa2(int num, char *s){
+//useless
+/*static void itoa2(int num, char *s){
 	size_t i = 0;
 	char buf[16] = {'\0'};
 	while(num!=0){
@@ -133,7 +134,7 @@ void itoa2(int num, char *s){
 		s[j] = buf[i-1-j];
 	}
 }
-
+*/
 int printf(const char *fmt, ...) {
   //for(size_t i=0;i<strlen(fmt);i++){
 	//	_putc(fmt[i]);

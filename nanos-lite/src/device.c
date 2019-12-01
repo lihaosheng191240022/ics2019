@@ -18,7 +18,39 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  //from offset to buf
+	int current_key = read_key();
+	if(current_key!=_KEY_NONE){
+		char str[64] = {'\0'};
+		strcat(str, keyname[current_key]);
+		strcat(str, "\n");
+		size_t l = strlen(str);
+		l = (l<len)?(l):(len);
+		memcpy(buf, str, l);
+		return l;
+	}
+
+	
+	uint32_t current_time = uptime();
+	char t[16] = {'\0'};
+	size_t i = 0;
+	while(current_time!=0){
+		t[i] = current_time%10;
+		current_time /= 10;
+		i++;
+	}
+	i--;
+	for(size_t j = 0;j<i;){
+		char tmp = t[j]; t[j] = t[i]; t[i] = tmp;
+		j++; i--;
+	}
+	char str2[64] = {'\0'};
+	strcat(str2, t);
+	strcat(str2, "\n");
+	size_t l2 = strlen(str2);
+	l2 = (l2<len)?(l2):(len);
+	memcpy(buf, str2, l2);
+	return l2;
 }
 
 static char dispinfo[128] __attribute__((used)) = {};
