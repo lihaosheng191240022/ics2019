@@ -25,7 +25,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	if(current_key!=_KEY_NONE){
 		char str[] = "hello, boy\n";
 		//char str[64] = {'\0'};
-		printf("keyname = %s\n", keyname[current_key]);
+		//printf("keyname = %s\n", keyname[current_key]);
 		//assert(0);
 		//strcat(str, keyname[current_key]);
 		//assert(0);
