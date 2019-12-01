@@ -25,7 +25,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 extern size_t serial_write(const void *buf, size_t offset, size_t len);
-extern size_t events_read(const void *buf, size_t offset, size_t len);
+extern size_t events_read(void *buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
@@ -66,6 +66,9 @@ size_t fs_read(int fd, void *buf, size_t len){
   ReadFn read_f = file_table[fd].read;
   if(read_f==NULL){
     read_f = ramdisk_read;
+  }
+  if(fd==fs_open("/bin/events", 0, 0)){
+    read_f = events_read;
   }
   size_t ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
