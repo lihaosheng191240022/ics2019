@@ -36,11 +36,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	
 	int fd = fs_open(filename, 0, 0);
 	fs_read(fd, &elfheader, sizeof(Elf_Ehdr));
-	fs_lseek(fd, elfheader.e_phoff, SEEK_SET);
+	//fs_lseek(fd, elfheader.e_phoff, SEEK_SET);
 	size_t entry_size = elfheader.e_phentsize;
 	for(int i=0;i<elfheader.e_phnum;i++){
+		fs_lseek(fd, elfheader.e_phoff+i*entry_size, SEEK_SET);
 		fs_read(fd, &progheader, entry_size);
 		if(progheader.p_type==PT_LOAD){
+			fs_lseek(fd, progheader.p_vaddr, SEEK_SET);
 			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
 		}
 	}
