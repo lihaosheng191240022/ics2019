@@ -6,7 +6,8 @@ int main() {
   printf("Start to receive events...\n");
   while (1) {
     char buf[256];
-    char *p = buf, ch;
+    //char buf[256] = {'\0'};
+		char *p = buf, ch;
     while ((ch = fgetc(fp)) != -1) {
       *p ++ = ch;
       if(ch == '\n') {
@@ -14,6 +15,8 @@ int main() {
         break;
       }
     }
+		//for debug
+		printf("content: %s\n", buf);
 
     int is_time = buf[0] == 't';
     time += is_time;
