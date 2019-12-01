@@ -45,6 +45,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		j++; i--;
 	}
 	char str2[64] = {'\0'};
+	strcat(str2, "t ");
 	strcat(str2, t);
 	strcat(str2, "\n");
 	size_t l2 = strlen(str2);
