@@ -4,7 +4,7 @@ int main() {
   FILE *fp = fopen("/dev/events", "r");
   int time = 0;
   printf("Start to receive events...\n");
-  while (time==0) {
+  while (1) {
     char buf[256];
     char *p = buf, ch;
     while ((ch = fgetc(fp)) != -1) {
@@ -23,6 +23,8 @@ int main() {
     else if (time % 1024 == 0) {
       printf("receive time event for the %dth time: %s", time, buf);
     }
+
+		break;
   }
 
   fclose(fp);
