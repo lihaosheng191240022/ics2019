@@ -27,9 +27,16 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		//assert(0);
 		//strcat(str, keyname[current_key]);
 		//assert(0);
-		strcpy(str, keyname[current_key]);
-		assert(0);
-		strcat(str, "\n");
+		//strcpy(str, keyname[current_key]);
+		size_t len = strlen(keyname[current_key]);
+		const char *p = keyname[current_key];
+		size_t i;
+		for(i=0;i<len;i++){
+			str[i] = p[i];
+		}
+		str[i] = '\n';
+		//assert(0);
+		//strcat(str, "\n");
 		size_t l = strlen(str);
 		l = (l<len)?(l):(len);
 		memcpy(buf, str, l);
