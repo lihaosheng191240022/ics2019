@@ -32,8 +32,9 @@ _Context* do_syscall(_Context *c) {
 												char ch = *((char *)a[2]+i);
 												_putc(ch);
 											}
+											c->GPRx = a[3];
 										}else{
-											assert(0);
+											c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 										}
 									break;	
 		case SYS_brk:	_my_debug_ printf("next: handle SYS_brk\n");
