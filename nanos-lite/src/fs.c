@@ -70,7 +70,7 @@ size_t fs_write(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   size_t ret =  ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
-  assert(file_table[fd].open_offset<=file_table[fd].size);
+ // assert(file_table[fd].open_offset<=file_table[fd].size);
   return ret;
 }
 
@@ -82,7 +82,7 @@ size_t fs_lseek(int fd, size_t offset, int whence){
                                   break;
     case SEEK_CUR:  file_table[fd].open_offset  += offset;
                                   break;
-    case SEEK_END:  assert(0); file_table[fd].open_offset = file_table[fd].size + offset;
+    case SEEK_END:  file_table[fd].open_offset = file_table[fd].size + offset;
                                   break;
     default:                assert(0);
       
