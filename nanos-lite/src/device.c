@@ -23,24 +23,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	int current_key = read_key();
 	assert(current_key>=0);
 	if(current_key!=_KEY_NONE){
+		printf("current_key = %u\n", current_key);
 		char str[] = "hello, boy\n";
-		//char str[64] = {'\0'};
-		//printf("keyname = %s\n", keyname[current_key]);
-		//assert(0);
-		//strcat(str, keyname[current_key]);
-		//assert(0);
-		//strcpy(str, keyname[current_key]);
-		//size_t len = strlen(keyname[current_key]);
-		/*const char *p = keyname[current_key];
-		size_t i;
-		for(i=0;i<len;i++){
-			str[i] = p[i];
-		}
-		str[i] = '\n';
-		//assert(0);
-		//strcat(str, "\n");
-		size_t l = i+1;
-		*/
+		
 		size_t l = strlen(str);
 		l = (l<len)?(l):(len);
 		memcpy(buf, str, l);
