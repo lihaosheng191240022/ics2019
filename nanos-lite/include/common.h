@@ -4,7 +4,7 @@
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_CTE
 //#define HAS_VME
-#define MYDEBUG 
+//#define MYDEBUG 
 #define _my_debug_  printf("&&&&Nanos: ");
 
 #include <am.h>
