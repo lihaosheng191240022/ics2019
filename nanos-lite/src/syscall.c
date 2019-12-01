@@ -27,15 +27,15 @@ _Context* do_syscall(_Context *c) {
 									break;
 		case SYS_write:	_my_debug_ printf("next: handle SYS_write\n");
 										_my_debug_ printf("fd=%d, count=%d\n", a[1], a[3]);
-										/*fd*/if(a[1]==1 || a[1]==2){
-											for(int i=0;i<a[3];i++){
-												char ch = *((char *)a[2]+i);
-												_putc(ch);
-											}
-											c->GPRx = a[3];
-										}else{
+										//if(a[1]==1 || a[1]==2){
+										//	for(int i=0;i<a[3];i++){
+										//		char ch = *((char *)a[2]+i);
+										//		_putc(ch);
+										//	}
+										//	c->GPRx = a[3];
+										//}else{
 											c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
-										}
+										//}
 									break;	
 		case SYS_brk:	_my_debug_ printf("next: handle SYS_brk\n");
 									c->GPR1 = 0;																							
