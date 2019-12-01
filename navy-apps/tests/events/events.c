@@ -16,7 +16,7 @@ int main() {
       }
     }
 		//for debug
-		printf("content: %c\n", buf[0]);
+		printf("content: %s\n", buf);
 
     int is_time = buf[0] == 't';
     time += is_time;

@@ -49,7 +49,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	strcat(str2, "t ");
 	strcat(str2, t);
 	strcat(str2, "\n");
-	printf("time event is %s", str2);
+	//printf("time event is %s", str2);
 	size_t l2 = strlen(str2);
 	l2 = (l2<len)?(l2):(len);
 	memcpy(buf, str2, l2);
