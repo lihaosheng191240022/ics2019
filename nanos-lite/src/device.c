@@ -21,9 +21,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //from offset to buf
 	int current_key = read_key();
 	if(current_key!=_KEY_NONE){
-		assert(0);
 		char str[64] = {'\0'};
 		strcat(str, keyname[current_key]);
+		assert(0);
 		strcat(str, "\n");
 		size_t l = strlen(str);
 		l = (l<len)?(l):(len);
