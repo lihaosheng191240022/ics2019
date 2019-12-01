@@ -21,11 +21,12 @@ static const char *keyname[256] __attribute__((used)) = {
 size_t events_read(void *buf, size_t offset, size_t len) {
   //from offset to buf
 	int current_key = read_key();
+	current_key &= 0x7fff;
 	assert(current_key>=0);
 	if(current_key!=_KEY_NONE){
 		printf("current_key = %u\n", current_key);
 		char str[] = "hello, boy\n";
-		
+		printf("keyname is %s\n", keyname[current_key]);
 		size_t l = strlen(str);
 		l = (l<len)?(l):(len);
 		memcpy(buf, str, l);
