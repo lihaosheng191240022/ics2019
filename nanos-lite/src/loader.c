@@ -40,9 +40,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	//fs_lseek(fd, elfheader.e_phoff, SEEK_SET);
 	_my_debug_ printf("hello1\n");
 	size_t entry_size = elfheader.e_phentsize;
-	for(int i=0;i<elfheader.e_phnum;i++){
+	size_t entry_num = elfheader.e_phnum;
+	_my_debug_ printf("entry_size = %u, entry_num = %u\n", entry_size, entry_num);
+	for(size_t i=0;i<entry_num;i++){
 		fs_lseek(fd, elfheader.e_phoff+i*entry_size, SEEK_SET);
 		fs_read(fd, &progheader, entry_size);
+		
 		if(progheader.p_type==PT_LOAD){
 			fs_lseek(fd, progheader.p_vaddr, SEEK_SET);
 			fs_read(fd, (void *)progheader.p_vaddr, progheader.p_memsz);
