@@ -54,18 +54,19 @@ int fs_close(int fd){
   return 0;
 }
 
+extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
+extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t fs_read(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   /*read from file to buf*/
-
-  //for single file case
+  return ramdisk_read(buf, file_table[fd].disk_offset, len);
   
-  return 0;
+  //return 0;
 }
 
 size_t fs_write(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
-  return 0;
+  return ramdisk_write(buf, file_table[fd].disk_offset, len);
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
