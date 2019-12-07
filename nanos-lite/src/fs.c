@@ -24,8 +24,15 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
-extern size_t serial_write(const void *buf, size_t offset, size_t len);
+extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 extern size_t events_read(void *buf, size_t offset, size_t len);
+extern size_t dispinfo_read(void *buf, size_t offset, size_t len);
+
+extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+extern size_t serial_write(const void *buf, size_t offset, size_t len);
+extern size_t fb_write(const void *buf, size_t offset, size_t len);
+extern size_t fbsync_write(const void *buf, size_t offset, size_t len);
+
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
@@ -37,25 +44,29 @@ static Finfo file_table[] __attribute__((used)) = {
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
 
+static int get_fd(char *n){
+  for(int i=0;i<NR_FILES;i++){
+    if(strcmp(n, file_table[i].name)==0){
+      return i;
+    }
+  }
+  return -1;
+}
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  int fd_dev_fb = get_fd("/dev/fb");
+  if(fd_dev_fb!=-1){
+    file_table[fd_dev_fb].size = screen_width()*screen_height()*4;
+  }
 }
 
 //pa3.3
 int fs_open(const char *pathname, int flags, int mode){
-  
-  int fd_dev_events = -1;
   for(int i=0;i<NR_FILES;i++){
     if(strcmp(pathname, file_table[i].name)==0){
       file_table[i].open_offset = 0;
       return i;
     }
-    if(strcmp("/bin/events", file_table[i].name)==0){
-      fd_dev_events = i;
-    }
-  }
-  if(strcmp(pathname, "/dev/events")){
-    return fd_dev_events;
   }
   return -1;
 }
@@ -66,19 +77,17 @@ int fs_close(int fd){
   return 0;
 }
 
-extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
-extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t fs_read(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   /*read from file to buf*/
   ReadFn read_f = file_table[fd].read;
-  if(read_f==NULL){
-    read_f = ramdisk_read;
-  }
-  
   if(strcmp(file_table[fd].name, "/dev/events")==0){
     read_f = events_read;
   }
+  else if(read_f==NULL){
+    read_f = ramdisk_read;
+  }
+  
   size_t ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
   file_table[fd].open_offset += len;
   //assert(file_table[fd].open_offset<=file_table[fd].size);
