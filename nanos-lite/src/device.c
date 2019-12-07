@@ -2,6 +2,20 @@
 #include <amdev.h>
 
 #include"klib.h"
+static void int2str(int x, char *p){
+	size_t i = 0;
+	while(x!=0){
+		p[i] = '0'+(x%10);
+		x /= 10;
+		i++;
+	}
+	p[i] = '\0';
+	i--;
+	for(size_t j = 0;j<i;){
+		char tmp = p[i]; p[i] = p[j]; p[j] = tmp;
+		j++; i--;
+	}
+}
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   //pa3.3
 	for(size_t i=0;i<len;i++){
@@ -70,18 +84,30 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	return l2;
 }
 
-static char dispinfo[128] __attribute__((used)) = {};
+static char dispinfo[128] __attribute__((used)) = {'\0'};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  //assert(offset>=0 && (offset+len)<=128);
+	//printf("in dispinfo_read: dispinfo = %s\n", dispinfo);
+	//if(len>128){
+	//	len = 128;
+	//}
+	printf("offset=%u, len=%u\n", offset, len);
+	printf("dispinfo=%s", dispinfo);
+	memcpy(buf, dispinfo, len);
+	//memset(buf+128, '\0', len);
+	//memcpy(buf, dispinfo, len);
+	return len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  assert(0);
+	return 0;
 }
 
 size_t fbsync_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  draw_sync();
+	return len;
 }
 
 void init_device() {
@@ -90,4 +116,17 @@ void init_device() {
 
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
+	int w = screen_width();
+	int h = screen_height();
+	strcat(dispinfo, "WIDTH:");
+	char tmp[64] = {'\0'};
+	int2str(w, tmp);
+	strcat(dispinfo, tmp);
+	
+	strcat(dispinfo, "\nHEIGHT:");
+	int2str(h, tmp);
+	strcat(dispinfo, tmp);
+	strcat(dispinfo, "\n");
+	//printf("in init_device: dispinfo = %s", dispinfo);
+
 }
