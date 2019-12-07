@@ -84,6 +84,9 @@ size_t fs_read(int fd, void *buf, size_t len){
   if(strcmp(file_table[fd].name, "/dev/events")==0){
     read_f = events_read;
   }
+  else if(strcmp(file_table[fd].name, "/proc/dispinfo")==0){
+    read_f = dispinfo_read;
+  }
   else if(read_f==NULL){
     read_f = ramdisk_read;
   }
@@ -97,7 +100,13 @@ size_t fs_read(int fd, void *buf, size_t len){
 size_t fs_write(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   WriteFn write_f = file_table[fd].write;
-  if(write_f==NULL){
+  if(strcmp(file_table[fd].name, "/dev/fb")==0){
+    write_f = fb_write;
+  }
+  else if(strcmp(file_table[fd].name, "/dev/fbsync")==0){
+    write_f = fbsync_write;
+  }
+  else if(write_f==NULL){
     write_f = ramdisk_write;
   }
   size_t ret =  write_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
