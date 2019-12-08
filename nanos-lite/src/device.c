@@ -95,13 +95,14 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//printf("offset=%u, len=%u\n", offset, len);
 	//printf("dispinfo=%s", dispinfo);
 	
-	memcpy(buf, dispinfo, len);
+	memcpy(buf, dispinfo+offset, len);
 	//memset(buf+128, '\0', len);
 	//memcpy(buf, dispinfo, len);
 	return len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+	assert(offset%4==0);
 	int n = offset/4;
 	int x = n/screen_width();
 	int y = n%screen_width();
