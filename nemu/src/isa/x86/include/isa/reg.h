@@ -36,6 +36,7 @@ typedef struct {
   vaddr_t pc;
 	rtlreg_t EFLAGS;
 	rtlreg_t cs;//pa3.1
+	rtlreg_t ss, ds, es, fs, gs;//pa3.3
 	struct{
 		uint16_t Limit;
 		uint32_t Base;

@@ -46,5 +46,6 @@ void isa_difftest_attach(void) {
 	ref_difftest_memcpy_from_dut(0x100000, &pmem[0x100000], PMEM_SIZE);
 	//ref_difftest_getregs(&cpu);
 	ref_difftest_setregs(&cpu);
+	
 	//ref_difftest_exec(20);
 }
