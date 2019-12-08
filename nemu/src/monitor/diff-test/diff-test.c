@@ -15,7 +15,10 @@ static bool is_detach = false;
 // this is used to let ref skip instructions which
 // can not produce consistent behavior with NEMU
 void difftest_skip_ref() {
-  is_skip_ref = true;
+  
+	if(is_detach) return;//pa3.3 difftest
+	
+	is_skip_ref = true;
 	//if such an instruction is one of the instruction packing in QEMU
 	//(see below), we end the process of catching up with QEMU's pc to
 	//keep the consistent behavior in our best.
@@ -32,7 +35,10 @@ void difftest_skip_ref() {
 //   Let REF run `nr_ref` instructions first.
 //   We expect that DUT will catch up with REF within `nr_dut` instructions.
 void difftest_skip_dut(int nr_ref, int nr_dut) {
-  skip_dut_nr_instr += nr_dut;
+  
+	if(is_detach) return;//pa3.3 difftest
+
+	skip_dut_nr_instr += nr_dut;
 
   while (nr_ref -- > 0) {
     ref_difftest_exec(1);
