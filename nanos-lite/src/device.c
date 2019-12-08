@@ -94,6 +94,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//}
 	//printf("offset=%u, len=%u\n", offset, len);
 	//printf("dispinfo=%s", dispinfo);
+	
 	memcpy(buf, dispinfo, len);
 	//memset(buf+128, '\0', len);
 	//memcpy(buf, dispinfo, len);

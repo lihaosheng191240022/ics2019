@@ -58,6 +58,10 @@ void init_fs() {
   if(fd_dev_fb!=-1){
     file_table[fd_dev_fb].size = screen_width()*screen_height()*4;
   }
+  int fd_proc_dispinfo = get_fd("/proc/dispinfo");
+  if(fd_proc_dispinfo!=-1){
+    file_table[fd_proc_dispinfo].size = 128;
+  }
 }
 
 //pa3.3
