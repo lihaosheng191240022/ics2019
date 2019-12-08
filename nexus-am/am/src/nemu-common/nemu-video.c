@@ -71,7 +71,7 @@ void __am_vga_init() {
 	uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 	//printf("FB_ADDR=%x\n", FB_ADDR);
 	for(i = 0; i < size; i++){
-		fb[i] = 0xff00;
+		fb[i] = 0x0000;//black
 	}
 	uint32_t tmp = inl(SCREEN_ADDR);
 	uint32_t width = (tmp & 0xffff0000) >> 16;
