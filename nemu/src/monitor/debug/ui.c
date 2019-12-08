@@ -7,6 +7,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#include "cpu/decode.h"
 void cpu_exec(uint64_t);
 /***pa1.1***/
 extern void isa_reg_display(void);
@@ -135,6 +136,7 @@ static int cmd_info(char *args){
 	}else{
 		 	if(strcmp(arg,"r") == 0){
 				isa_reg_display();
+				printf("last pc = 0x%08x\n", decinfo.last_pc);
 			}else if(strcmp(arg,"w") == 0){
 				printf("watchpoints:\n");
 				show_all_wp();
