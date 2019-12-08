@@ -58,6 +58,7 @@ void init_fs() {
   if(fd_dev_fb!=-1){
     file_table[fd_dev_fb].size = screen_width()*screen_height()*4;
   }
+  /*
   int fd_proc_dispinfo = get_fd("/proc/dispinfo");
   if(fd_proc_dispinfo!=-1){
     file_table[fd_proc_dispinfo].size = 128;
@@ -70,6 +71,7 @@ void init_fs() {
   if(fd_dev_fbsync!=-1){
     file_table[fd_dev_fbsync].size = 1000000;
   }
+  */
 }
 
 //pa3.3
@@ -109,8 +111,13 @@ size_t fs_read(int fd, void *buf, size_t len){
   else if(read_f==NULL){
     read_f = ramdisk_read;
   }
-  
-  size_t ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+
+  size_t ret;
+  if(read_f==ramdisk_read){
+    ret =  read_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  }else{
+    ret = read_f(buf, file_table[fd].open_offset, len);
+  }
   file_table[fd].open_offset += len;
   //assert(file_table[fd].open_offset<=file_table[fd].size);
   return ret;
@@ -128,7 +135,14 @@ size_t fs_write(int fd, void *buf, size_t len){
   else if(write_f==NULL){
     write_f = ramdisk_write;
   }
-  size_t ret =  write_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+
+  size_t ret;
+  if(write_f==ramdisk_write){
+    ret =  write_f(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  }else{
+    ret = write_f(buf, file_table[fd].open_offset, len);
+  }
+
   file_table[fd].open_offset += len;
   if(fd>2){
     assert(file_table[fd].open_offset<=file_table[fd].size);
