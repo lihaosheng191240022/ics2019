@@ -62,6 +62,14 @@ void init_fs() {
   if(fd_proc_dispinfo!=-1){
     file_table[fd_proc_dispinfo].size = 128;
   }
+  int fd_dev_events = get_fd("/dev/events");
+  if(fd_dev_events!=-1){
+    file_table[fd_dev_events].size = 1000000;
+  }
+  int fd_dev_fbsync = get_fd("/dev/fbsync");
+  if(fd_dev_fbsync!=-1){
+    file_table[fd_dev_fbsync].size = 1000000;
+  }
 }
 
 //pa3.3
@@ -84,6 +92,12 @@ int fs_close(int fd){
 size_t fs_read(int fd, void *buf, size_t len){
   assert(fd>=0&&fd<NR_FILES);
   /*read from file to buf*/
+  if(len>file_table[fd].size){
+    len = file_table[fd].size;
+  }
+  if(file_table[fd].open_offset+len>file_table[fd].size){
+    len = file_table[fd].size - file_table[fd].open_offset;
+  }
   ReadFn read_f = file_table[fd].read;
   if(strcmp(file_table[fd].name, "/dev/events")==0){
     read_f = events_read;
