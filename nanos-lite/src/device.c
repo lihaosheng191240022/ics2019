@@ -103,8 +103,8 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	assert(offset%4==0);
 	int n = offset/4;
-	int x = n/screen_width();
-	int y = n%screen_width();
+	int x = n%screen_width();
+	int y = n/screen_width();
 	draw_rect((uint32_t *)buf, x, y, len/4, 1);
 	return len;
 }
