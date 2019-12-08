@@ -15,6 +15,9 @@ extern WP *new_wp(char *expr);
 extern void delete_wp(int index);
 extern void show_me_free();
 extern void show_all_wp();
+/*pa3.3*/
+extern void difftest_detach();
+extern void difftest_attach();
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -80,11 +83,12 @@ static struct {
 
 
 static int cmd_attach(char *args){
+	difftest_attach();
 	return 0;
 }
 static int cmd_detach(char *args){
+	difftest_detach();
 	return 0;
-	
 }
 static int cmd_b(char *args){
 	char *arg = strtok(NULL, " ");
