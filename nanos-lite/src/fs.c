@@ -144,9 +144,9 @@ size_t fs_write(int fd, void *buf, size_t len){
   }
 
   file_table[fd].open_offset += len;
-  if(fd>2){
-    assert(file_table[fd].open_offset<=file_table[fd].size);
-  }
+  //if(fd>2){
+   // assert(file_table[fd].open_offset<=file_table[fd].size);
+  //}
   return ret;
 }
 
