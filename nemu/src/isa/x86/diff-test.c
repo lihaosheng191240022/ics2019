@@ -44,7 +44,6 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 void isa_difftest_attach(void) {
 	ref_difftest_memcpy_from_dut(0, &pmem[0], 0x7c00);
 	ref_difftest_memcpy_from_dut(0x100000, &pmem[0x100000], PMEM_SIZE);
-	CPU_state r;
-	ref_difftest_getregs(&r);
-	ref_difftest_setregs(&r);
+	//ref_difftest_getregs(&cpu);
+	ref_difftest_setregs(&cpu);
 }
